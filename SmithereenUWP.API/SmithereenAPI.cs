@@ -1,8 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SmithereenUWP.API.Methods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Web.Http;
@@ -13,6 +16,9 @@ namespace SmithereenUWP.API
     public sealed class SmithereenAPI
     {
         public const string VERSION = "1.0";
+        public const int ERROR_UNKNOWN = -1;
+        public const int ERROR_INVALID_RESPONSE = -2;
+        public const int ERROR_DOMAIN_NOT_RESOLVED = -3;
 
         private readonly HttpClient _client;
 
@@ -52,26 +58,41 @@ namespace SmithereenUWP.API
             {
                 if (!string.IsNullOrEmpty(AccessToken)) hrm.Headers.Authorization = new HttpCredentialsHeaderValue("Bearer", AccessToken);
                 hrm.Content = new HttpFormUrlEncodedContent(parameters);
+                hrm.Headers.AcceptEncoding.Add(new HttpContentCodingWithQualityHeaderValue("UTF-8"));
                 using (var response = await _client.SendRequestAsync(hrm))
                 {
-                    return await response.Content.ReadAsStringAsync();
+                    var buffer = await response.Content.ReadAsBufferAsync();
+                    byte[] resultByteArray = buffer.ToArray();
+                    return Encoding.UTF8.GetString(resultByteArray, 0, resultByteArray.Length);
                 }
             }
         }
 
         public async Task<T> CallMethodAsync<T>(string method, Dictionary<string, string> parameters = null)
         {
-            string response = await SendRequestAsync(method, parameters);
+            try
+            {
+                string response = await SendRequestAsync(method, parameters);
 
-            JObject json = JObject.Parse(response);
-            if (json["error"] != null)
+                JObject json = JObject.Parse(response);
+                if (json["error"] != null)
+                {
+                    int code = json["error"]["error_code"].Value<int>();
+                    string message = json["error"]["error_msg"].Value<string>();
+                    throw new SmithereenAPIException(code, message);
+                }
+                else
+                {
+                    return json["response"].ToObject<T>();
+                }
+            } catch (JsonReaderException jrex)
             {
-                int code = json["error"]["error_code"].Value<int>();
-                string message = json["error"]["error_msg"].Value<string>();
-                throw new SmithereenAPIException(code, message);
-            } else
+                throw new SmithereenAPIException(ERROR_INVALID_RESPONSE, "Expected JSON but non-JSON response received");
+            } catch (COMException comex)
             {
-                return json["response"].ToObject<T>();
+                if (comex.Message.Contains("The server name or address could not be resolved"))
+                    throw new SmithereenAPIException(ERROR_DOMAIN_NOT_RESOLVED, "Server unreachable");
+                throw comex;
             }
         }
     }

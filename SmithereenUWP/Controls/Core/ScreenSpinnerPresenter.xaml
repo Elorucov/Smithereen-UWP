@@ -1,0 +1,21 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SmithereenUWP.Controls.Core">
+    <Style TargetType="local:ScreenSpinnerPresenter" xmlns:local="using:SmithereenUWP.Controls.Core">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:ScreenSpinnerPresenter">
+                    <Border
+                        Background="{ThemeResource ContentDialogBackgroundThemeBrush}"
+                        BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
+                        BorderThickness="1"
+                        Width="88"
+                        Height="88">
+                        <ProgressRing Width="44" Height="44" HorizontalAlignment="Center" VerticalAlignment="Center" IsActive="True" Foreground="{ThemeResource SystemControlForegroundAccentBrush}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
