@@ -1,4 +1,5 @@
 ﻿using SmithereenUWP.API.Objects.Main;
+using SmithereenUWP.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,9 +36,14 @@ namespace SmithereenUWP.Pages.Wizard
             base.OnNavigatedTo(e);
 
             _serverInfo = e.Parameter as ServerInfo;
-            Name.Text = _serverInfo.Name;
+            ServerName.Text = _serverInfo.Name;
             Domain.Text = _serverInfo.Domain;
             ShortDesc.Text = _serverInfo.ShortDescription;
+        }
+
+        private void OpenExternalAuth(object sender, RoutedEventArgs e)
+        {
+            new Action(async () => await Functions.LaunchOAuthAsync(_serverInfo.Domain))();
         }
     }
 }

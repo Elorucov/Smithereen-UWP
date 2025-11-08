@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Padding="0,0,0,12">
-            <TextBlock x:Name="Name" Style="{StaticResource TitleTextBlockStyle}" TextAlignment="Center" TextTrimming="CharacterEllipsis"/>
+            <TextBlock x:Name="ServerName" Style="{StaticResource TitleTextBlockStyle}" TextAlignment="Center" TextTrimming="CharacterEllipsis"/>
             <TextBlock x:Name="Domain" Style="{StaticResource BaseTextBlockStyle}" TextAlignment="Center"/>
         </StackPanel>
 
@@ -28,7 +28,7 @@
         </ScrollViewer>
 
         <StackPanel Grid.Row="2">
-            <Button x:Name="SignInButton" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Stretch" Content="Sign in"/>
+            <Button x:Name="SignInButton" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Stretch" Content="Sign in" Click="OpenExternalAuth"/>
         </StackPanel>
     </Grid>
 </Page>

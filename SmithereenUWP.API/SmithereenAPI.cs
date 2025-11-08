@@ -85,7 +85,7 @@ namespace SmithereenUWP.API
                 {
                     return json["response"].ToObject<T>();
                 }
-            } catch (JsonReaderException jrex)
+            } catch (JsonReaderException)
             {
                 throw new SmithereenAPIException(ERROR_INVALID_RESPONSE, "Expected JSON but non-JSON response received");
             } catch (COMException comex)

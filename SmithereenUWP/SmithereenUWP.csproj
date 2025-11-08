@@ -125,9 +125,12 @@
     <Compile Include="Controls\Core\ScreenSpinnerPresenter.cs" />
     <Compile Include="Controls\Popups\ScreenSpinner.cs" />
     <Compile Include="Core\AppInfo.cs" />
+    <Compile Include="Core\AppParameters.cs" />
+    <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\ExceptionHelper.cs" />
+    <Compile Include="Core\Functions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Wizard\ServerInfoPage.xaml.cs">
@@ -163,9 +166,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Pages\MainPage.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Wizard\ServerInfoPage.xaml">
       <SubType>Designer</SubType>
@@ -183,6 +186,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
+    </PackageReference>
+    <PackageReference Include="QueryString.NET">
+      <Version>1.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
