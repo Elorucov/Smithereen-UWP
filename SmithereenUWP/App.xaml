@@ -21,6 +21,8 @@
                     <StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
+
+                    <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemChromeMediumColor}"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
                     <!-- Resources for AccentButtonStyle -->
@@ -36,6 +38,8 @@
                     <StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
+
+                    <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemChromeMediumColor}"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
                     <!-- Resources for AccentButtonStyle -->
@@ -51,9 +55,20 @@
                     <StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
+
+                    <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemAccentColorDark1}"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 
+            <Style x:Key="ControlButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="MinWidth" Value="48" />
+                <Setter Property="MinHeight" Value="48" />
+                <Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+            
             <Style x:Key="AccentButtonStyle" TargetType="Button">
                 <Setter Property="Foreground" Value="{ThemeResource AccentButtonForeground}" />
                 <Setter Property="Background" Value="{ThemeResource AccentButtonBackground}" />

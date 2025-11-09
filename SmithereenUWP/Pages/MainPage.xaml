@@ -6,9 +6,66 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loading="Page_Loading">
 
     <Grid>
-        <TextBlock Text="Hello world!"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle x:Name="L" Grid.Column="0" Grid.RowSpan="5"/>
+        <Rectangle x:Name="R" Grid.Column="2" Grid.RowSpan="5"/>
+        <Rectangle x:Name="T" Grid.Row="0" Grid.ColumnSpan="3"/>
+        <Rectangle x:Name="B" Grid.Row="4" Grid.ColumnSpan="3"/>
+
+        <Border x:Name="PageContent" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="3" BorderBrush="Red" BorderThickness="4"/>
+
+        <Border x:Name="NarrowPageHeaderBackground" Visibility="Collapsed" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Grid.ColumnSpan="4" Grid.RowSpan="2"/>
+        <Grid x:Name="NarrowPageHeader" Visibility="Collapsed" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Height="48">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="MenuButton" Style="{StaticResource ControlButtonStyle}" Content="" Click="OpenNarrowMenu"/>
+
+            <ContentPresenter x:Name="PageHeaderContentNarrow" Grid.Column="1" Padding="16,0" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="16" LineHeight="23" FontWeight="SemiBold" Content="Gregory Klyushnikov">
+            </ContentPresenter>
+        </Grid>
+
+        <Grid x:Name="NarrowMenuLayer" Visibility="Collapsed" Grid.ColumnSpan="4" Grid.RowSpan="5" Background="Transparent" Tapped="CloseNarrowMenu"/>
+        <Grid x:Name="NarrowMenuContainer" Visibility="Collapsed" Grid.ColumnSpan="2" Grid.RowSpan="5" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"/>
+        <Grid x:Name="NarrowMenu" Visibility="Collapsed" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Width="240">
+            <TextBlock Text="Narrow menu"/>
+        </Grid>
+
+        <Border x:Name="WidePageHeaderBackground" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Grid x:Name="WidePageHeader" Grid.Column="2" Grid.Row="1" Height="48">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <ContentPresenter x:Name="PageHeaderContentWide" Grid.Column="1" Padding="16,0" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="16" LineHeight="23" FontWeight="SemiBold" Content="Gregory Klyushnikov">
+            </ContentPresenter>
+        </Grid>
+
+        <Grid x:Name="WideMenuContainer" Grid.ColumnSpan="2" Grid.RowSpan="5" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"/>
+        <Grid x:Name="WideMenu" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Width="320">
+            <TextBlock Text="Wide menu"/>
+        </Grid>
     </Grid>
 </Page>

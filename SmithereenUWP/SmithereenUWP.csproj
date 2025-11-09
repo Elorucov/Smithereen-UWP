@@ -129,6 +129,7 @@
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\ExceptionHelper.cs" />
     <Compile Include="Core\Functions.cs" />
+    <Compile Include="Core\SystemUI.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
