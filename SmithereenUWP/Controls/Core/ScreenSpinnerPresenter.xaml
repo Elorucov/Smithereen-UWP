@@ -7,7 +7,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:ScreenSpinnerPresenter">
                     <Border
-                        Background="{ThemeResource ContentDialogBackgroundThemeBrush}"
+                        Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
                         BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
                         BorderThickness="1"
                         Width="88"

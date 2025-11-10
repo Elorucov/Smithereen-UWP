@@ -1,4 +1,5 @@
 ﻿using SmithereenUWP.Core;
+using SmithereenUWP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,6 +40,8 @@ namespace SmithereenUWP.Pages
             SizeChanged += MainPage_SizeChanged;
             AppView.VisibleBoundsChanged += MainPage_VisibleBoundsChanged;
             CoreAppView.TitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
+
+            DataContext = new SessionViewModel();
         }
 
         private void MainPage_Unloaded(object sender, RoutedEventArgs e)
@@ -102,28 +105,30 @@ namespace SmithereenUWP.Pages
             {
                 Grid.SetColumn(PageContent, 1);
                 Grid.SetColumnSpan(PageContent, 2);
-                
+                Grid.SetColumn(PageHeaderBackground, 0);
+                Grid.SetColumnSpan(PageHeaderBackground, 4);
+                Grid.SetColumn(PageHeader, 1);
+                Grid.SetColumnSpan(PageHeader, 2);
+
                 WideMenuContainer.Visibility = Visibility.Collapsed;
                 WideMenu.Visibility = Visibility.Collapsed;
-                WidePageHeaderBackground.Visibility = Visibility.Collapsed;
-                WidePageHeader.Visibility = Visibility.Collapsed;
+                MenuButton.Visibility = Visibility.Visible;
 
                 ToggleNarrowMenuVisibility(false);
-                NarrowPageHeaderBackground.Visibility = Visibility.Visible;
-                NarrowPageHeader.Visibility = Visibility.Visible;
             } else
             {
                 Grid.SetColumn(PageContent, 2);
                 Grid.SetColumnSpan(PageContent, 1);
+                Grid.SetColumn(PageHeaderBackground, 2);
+                Grid.SetColumnSpan(PageHeaderBackground, 2);
+                Grid.SetColumn(PageHeader, 2);
+                Grid.SetColumnSpan(PageHeader, 1);
 
                 ToggleNarrowMenuVisibility(false);
-                NarrowPageHeaderBackground.Visibility = Visibility.Collapsed;
-                NarrowPageHeader.Visibility = Visibility.Collapsed;
 
                 WideMenuContainer.Visibility = Visibility.Visible;
                 WideMenu.Visibility = Visibility.Visible;
-                WidePageHeaderBackground.Visibility = Visibility.Visible;
-                WidePageHeader.Visibility = Visibility.Visible;
+                MenuButton.Visibility = Visibility.Collapsed;
             }
         }
 
