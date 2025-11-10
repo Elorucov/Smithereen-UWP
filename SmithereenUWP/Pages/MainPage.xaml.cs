@@ -1,4 +1,5 @@
 ﻿using SmithereenUWP.Core;
+using SmithereenUWP.DataModels;
 using SmithereenUWP.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -29,9 +31,11 @@ namespace SmithereenUWP.Pages
         const double WIDE_MIN_WIDTH = 720;
 
         private double oldWidth = -1;
+        private AppPage _currentPage;
 
         private ApplicationView AppView => ApplicationView.GetForCurrentView();
         private CoreApplicationView CoreAppView => CoreApplication.GetCurrentView();
+        private SessionViewModel ViewModel => DataContext as SessionViewModel;
 
         public MainPage()
         {
@@ -40,8 +44,6 @@ namespace SmithereenUWP.Pages
             SizeChanged += MainPage_SizeChanged;
             AppView.VisibleBoundsChanged += MainPage_VisibleBoundsChanged;
             CoreAppView.TitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
-
-            DataContext = new SessionViewModel();
         }
 
         private void MainPage_Unloaded(object sender, RoutedEventArgs e)
@@ -51,6 +53,8 @@ namespace SmithereenUWP.Pages
             AppView.VisibleBoundsChanged -= MainPage_VisibleBoundsChanged;
             CoreAppView.TitleBar.LayoutMetricsChanged -= TitleBar_LayoutMetricsChanged;
             Loading -= Page_Loading;
+            Loaded -= Page_Loaded;
+            PageContent.Navigated -= PageContent_Navigated;
         }
 
         private void Page_Loading(FrameworkElement sender, object args)
@@ -58,6 +62,12 @@ namespace SmithereenUWP.Pages
             SystemUI.ExtendView();
             SetupInsets();
             RefreshLayout();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            DataContext = new SessionViewModel();
+            PageContent.Navigate(ViewModel.SelectedMenuItem.PageType);
         }
 
         private void MainPage_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -91,6 +101,8 @@ namespace SmithereenUWP.Pages
             R.Width = Math.Max(0, r);
             T.Height = t;
             B.Height = Math.Max(0, b);
+
+            UpdateCurrentPageSizeProperties();
         }
 
         private void RefreshLayout()
@@ -147,6 +159,39 @@ namespace SmithereenUWP.Pages
         private void CloseNarrowMenu(object sender, TappedRoutedEventArgs e)
         {
             ToggleNarrowMenuVisibility(false);
+        }
+
+        private void MainMenu_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ToggleNarrowMenuVisibility(false);
+
+            MainMenuItem choosed = e.ClickedItem as MainMenuItem;
+            ViewModel.SelectedMenuItem = choosed;
+            PageContent.Navigate(choosed.PageType);
+        }
+
+        private void PageContent_Navigated(object sender, NavigationEventArgs e)
+        {
+            Frame frame = sender as Frame;
+            var page = frame.Content as AppPage;
+            if (page == null) return;
+
+            _currentPage = page;
+            CheckCurrentPageProperties();
+            UpdateCurrentPageSizeProperties();
+        }
+
+        private void CheckCurrentPageProperties()
+        {
+            if (_currentPage == null) return;
+            PageHeaderContent.Content = _currentPage.Title;
+        }
+
+        private void UpdateCurrentPageSizeProperties()
+        {
+            if (_currentPage == null) return;
+            double topPadding = T.Height + PageHeader.ActualHeight;
+            _currentPage.TopPadding = topPadding;
         }
     }
 }

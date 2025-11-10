@@ -3,12 +3,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SmithereenUWP.Pages"
+    xmlns:vm="using:SmithereenUWP.ViewModels"
     xmlns:models="using:SmithereenUWP.DataModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    Loading="Page_Loading">
+    Loading="Page_Loading" Loaded="Page_Loaded">
 
     <Page.Resources>
         <DataTemplate x:Key="MenuItemTemplate" x:DataType="models:MainMenuItem">
@@ -20,6 +21,11 @@
                 <FontIcon FontSize="16" Glyph="{x:Bind Icon}" VerticalAlignment="Center" Margin="0,0,12,0"/>
                 <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{x:Bind Label}"/>
             </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="MenuTemplate" x:DataType="vm:SessionViewModel">
+            <ListView ItemsSource="{x:Bind MenuItems, Mode=OneWay}" SelectedItem="{x:Bind SelectedMenuItem, Mode=OneWay}" ItemTemplate="{StaticResource MenuItemTemplate}"
+                      SelectionMode="Single" SingleSelectionFollowsFocus="False" IsItemClickEnabled="True" ItemClick="MainMenu_ItemClick"/>
         </DataTemplate>
     </Page.Resources>
     
@@ -43,7 +49,7 @@
         <Rectangle x:Name="T" Grid.Row="0" Grid.ColumnSpan="3"/>
         <Rectangle x:Name="B" Grid.Row="4" Grid.ColumnSpan="3"/>
 
-        <Border x:Name="PageContent" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="3" BorderBrush="Red" BorderThickness="4"/>
+        <Frame x:Name="PageContent" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="4" Navigated="PageContent_Navigated"/>
 
         <Border x:Name="PageHeaderBackground" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" Grid.RowSpan="2"/>
         <Grid x:Name="PageHeader" Grid.Row="1" Height="48">
@@ -55,19 +61,14 @@
 
             <Button x:Name="MenuButton" Style="{StaticResource ControlButtonStyle}" Content="" Click="OpenNarrowMenu"/>
 
-            <ContentPresenter x:Name="PageHeaderContentNarrow" Grid.Column="1" Padding="16,0" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="16" LineHeight="23" FontWeight="SemiBold" Content="Gregory Klyushnikov">
-            </ContentPresenter>
+            <ContentPresenter x:Name="PageHeaderContent" Grid.Column="1" Padding="16,0" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="16" LineHeight="23" FontWeight="SemiBold"/>
         </Grid>
 
         <Grid x:Name="NarrowMenuLayer" Visibility="Collapsed" Grid.ColumnSpan="4" Grid.RowSpan="5" Background="Transparent" Tapped="CloseNarrowMenu"/>
         <Grid x:Name="NarrowMenuContainer" Visibility="Collapsed" Grid.ColumnSpan="2" Grid.RowSpan="5" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"/>
-        <Grid x:Name="NarrowMenu" Visibility="Collapsed" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Width="240">
-            <ListView ItemsSource="{Binding MenuItems}" ItemTemplate="{StaticResource MenuItemTemplate}"/>
-        </Grid>
+        <ContentControl x:Name="NarrowMenu" Visibility="Collapsed" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Width="240" HorizontalContentAlignment="Stretch" ContentTemplate="{StaticResource MenuTemplate}"/>
 
         <Grid x:Name="WideMenuContainer" Grid.ColumnSpan="2" Grid.RowSpan="5" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"/>
-        <Grid x:Name="WideMenu" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Width="320">
-            <ListView ItemsSource="{Binding MenuItems}" ItemTemplate="{StaticResource MenuItemTemplate}"/>
-        </Grid>
+        <ContentControl x:Name="WideMenu" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Width="320" HorizontalContentAlignment="Stretch" ContentTemplate="{StaticResource MenuTemplate}"/>
     </Grid>
 </Page>

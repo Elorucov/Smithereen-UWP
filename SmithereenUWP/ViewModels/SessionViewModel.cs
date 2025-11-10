@@ -1,4 +1,5 @@
 ﻿using SmithereenUWP.DataModels;
+using SmithereenUWP.Pages.News;
 using SmithereenUWP.ViewModels.Base;
 using System;
 using System.Collections.Generic;
@@ -11,20 +12,29 @@ namespace SmithereenUWP.ViewModels
 {
     public class SessionViewModel : BaseViewModel
     {
-        private readonly IReadOnlyCollection<MainMenuItem> _menuItems = new List<MainMenuItem>
+        private readonly ReadOnlyCollection<MainMenuItem> _menuItems = new List<MainMenuItem>
         {
-            new MainMenuItem('', "My profile", null),
-            new MainMenuItem('', "My friends", null),
-            new MainMenuItem('', "My photos", null),
-            new MainMenuItem('', "My messages", null),
-            new MainMenuItem('', "My groups", null),
-            new MainMenuItem('', "My events", null),
-            new MainMenuItem('', "My news", null),
-            new MainMenuItem('', "My feedback", null),
-            new MainMenuItem('', "My bookmarks", null),
-            new MainMenuItem('', "My settings", null),
+            // new MainMenuItem('', "My profile", null),
+            new MainMenuItem('', "My news", typeof(NewsPage)),
+            new MainMenuItem('', "My friends", typeof(NewsPage)),
+            new MainMenuItem('', "My photos", typeof(NewsPage)),
+            new MainMenuItem('', "My messages", typeof(NewsPage)),
+            new MainMenuItem('', "My groups", typeof(NewsPage)),
+            new MainMenuItem('', "My events", typeof(NewsPage)),
+            new MainMenuItem('', "My feedback", typeof(NewsPage)),
+            new MainMenuItem('', "My bookmarks", typeof(NewsPage)),
+            new MainMenuItem('', "My settings", typeof(NewsPage)),
         }.AsReadOnly();
 
-        public IReadOnlyCollection<MainMenuItem> MenuItems => _menuItems;
+        private MainMenuItem _selectedMenuItem;
+
+        public ReadOnlyCollection<MainMenuItem> MenuItems => _menuItems;
+
+        public MainMenuItem SelectedMenuItem { get { return _selectedMenuItem; } set { _selectedMenuItem = value; OnPropertyChanged(); } }
+
+        public SessionViewModel()
+        {
+            SelectedMenuItem = MenuItems.ElementAt(0);
+        }
     }
 }

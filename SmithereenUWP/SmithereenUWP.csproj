@@ -133,8 +133,12 @@
     <Compile Include="Core\SystemUI.cs" />
     <Compile Include="DataModels\MainMenuItem.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Pages\AppPage.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\News\NewsPage.xaml.cs">
+      <DependentUpon>NewsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Wizard\ServerInfoPage.xaml.cs">
       <DependentUpon>ServerInfoPage.xaml</DependentUpon>
@@ -175,6 +179,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\News\NewsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
