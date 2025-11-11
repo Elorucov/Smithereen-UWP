@@ -85,10 +85,12 @@ namespace SmithereenUWP.API
                 {
                     return json["response"].ToObject<T>();
                 }
-            } catch (JsonReaderException)
+            }
+            catch (JsonReaderException)
             {
                 throw new SmithereenAPIException(ERROR_INVALID_RESPONSE, "Expected JSON but non-JSON response received");
-            } catch (COMException comex)
+            }
+            catch (COMException comex)
             {
                 if (comex.Message.Contains("The server name or address could not be resolved"))
                     throw new SmithereenAPIException(ERROR_DOMAIN_NOT_RESOLVED, "Server unreachable");

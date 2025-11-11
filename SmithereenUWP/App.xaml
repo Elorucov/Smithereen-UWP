@@ -142,6 +142,13 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <DataTemplate x:Key="TitlebarContent">
+                <Grid x:Name="CustomTitleBarRoot" Background="Transparent">
+                    <Image x:Name="WindowIcon" Margin="8" Width="16" Height="16" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Center" Source="/Assets/Square44x44Logo.png"/>
+                    <TextBlock x:Name="WindowName" FontSize="12" TextTrimming="CharacterEllipsis" Margin="32,8,0,0" Text="Smithereen"/>
+                </Grid>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
     

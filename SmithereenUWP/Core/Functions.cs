@@ -1,16 +1,10 @@
 ﻿using Microsoft.QueryStringDotNET;
 using SmithereenUWP.Pages;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Core;
-using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.System.Profile;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -41,7 +35,7 @@ namespace SmithereenUWP.Core
 
                 string fragment = protArgs.Uri.Fragment.Substring(1);
                 var queries = QueryString.Parse(fragment);
-                if (queries.Contains("state") && queries["state"] == _temporaryAuthState 
+                if (queries.Contains("state") && queries["state"] == _temporaryAuthState
                     && queries.Contains("user_id") && queries.Contains("access_token") && int.TryParse(queries["user_id"], out int uid))
                 {
                     AppParameters.CurrentUserId = uid;

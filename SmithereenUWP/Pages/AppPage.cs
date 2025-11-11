@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmithereenUWP.ViewModels.Base;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -26,6 +23,15 @@ namespace SmithereenUWP.Pages
         {
             get { return (double)GetValue(TopPaddingProperty); }
             set { SetValue(TopPaddingProperty, value); }
+        }
+    }
+
+    public class AppPage<T> : AppPage where T : BaseViewModel
+    {
+        public T ViewModel => DataContext as T;
+        public AppPage()
+        {
+            DataContext = Activator.CreateInstance<T>();
         }
     }
 }

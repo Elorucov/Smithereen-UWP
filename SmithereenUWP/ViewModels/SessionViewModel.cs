@@ -1,12 +1,12 @@
-﻿using SmithereenUWP.DataModels;
+﻿using SmithereenUWP.API;
+using SmithereenUWP.Core;
+using SmithereenUWP.DataModels;
 using SmithereenUWP.Pages.News;
 using SmithereenUWP.ViewModels.Base;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 
 namespace SmithereenUWP.ViewModels
 {
@@ -25,16 +25,28 @@ namespace SmithereenUWP.ViewModels
             new MainMenuItem('', "My bookmarks", typeof(NewsPage)),
             new MainMenuItem('', "My settings", typeof(NewsPage)),
         }.AsReadOnly();
+        private readonly SmithereenAPI _api;
 
         private MainMenuItem _selectedMenuItem;
 
         public ReadOnlyCollection<MainMenuItem> MenuItems => _menuItems;
+        public SmithereenAPI API => _api;
 
         public MainMenuItem SelectedMenuItem { get { return _selectedMenuItem; } set { _selectedMenuItem = value; OnPropertyChanged(); } }
 
+        public static SessionViewModel Current => CoreApplication.Properties["svm"] as SessionViewModel;
+
         public SessionViewModel()
         {
+            _api = new SmithereenAPI(AppParameters.CurrentServer, AppInfo.UserAgent);
             SelectedMenuItem = MenuItems.ElementAt(1);
         }
+
+        public void SetAsCurrent()
+        {
+            CoreApplication.Properties["svm"] = this;
+        }
+
+
     }
 }

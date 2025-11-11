@@ -2,21 +2,11 @@
 using SmithereenUWP.DataModels;
 using SmithereenUWP.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
@@ -68,6 +58,7 @@ namespace SmithereenUWP.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             DataContext = new SessionViewModel();
+            ViewModel.SetAsCurrent();
             PageContent.Navigate(ViewModel.SelectedMenuItem.PageType);
         }
 
@@ -128,7 +119,8 @@ namespace SmithereenUWP.Pages
                 MenuButton.Visibility = Visibility.Visible;
 
                 ToggleNarrowMenuVisibility(false);
-            } else
+            }
+            else
             {
                 Grid.SetColumn(PageContent, 2);
                 Grid.SetColumnSpan(PageContent, 1);
@@ -168,7 +160,7 @@ namespace SmithereenUWP.Pages
 
             MainMenuItem choosed = e.ClickedItem as MainMenuItem;
             ViewModel.SelectedMenuItem = choosed;
-            PageContent.Navigate(choosed.PageType, null, new EntranceNavigationTransitionInfo());
+            PageContent.Navigate(choosed.PageType, null, new DrillInNavigationTransitionInfo());
         }
 
         private void PageContent_Navigated(object sender, NavigationEventArgs e)

@@ -151,6 +151,7 @@
     <Compile Include="ViewModels\Base\CommonViewModel.cs" />
     <Compile Include="ViewModels\Base\ItemsViewModel.cs" />
     <Compile Include="ViewModels\Base\PlaceholderViewModel.cs" />
+    <Compile Include="ViewModels\NewsViewModel.cs" />
     <Compile Include="ViewModels\SessionViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
