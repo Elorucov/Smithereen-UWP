@@ -14,13 +14,13 @@ namespace SmithereenUWP.ViewModels
     {
         private readonly ReadOnlyCollection<MainMenuItem> _menuItems = new List<MainMenuItem>
         {
-            // new MainMenuItem('', "My profile", null),
-            new MainMenuItem('', "My news", typeof(NewsPage)),
+            new MainMenuItem('', "My profile", typeof(NewsPage)),
             new MainMenuItem('', "My friends", typeof(NewsPage)),
             new MainMenuItem('', "My photos", typeof(NewsPage)),
             new MainMenuItem('', "My messages", typeof(NewsPage)),
             new MainMenuItem('', "My groups", typeof(NewsPage)),
             new MainMenuItem('', "My events", typeof(NewsPage)),
+            new MainMenuItem('', "My news", typeof(NewsPage)),
             new MainMenuItem('', "My feedback", typeof(NewsPage)),
             new MainMenuItem('', "My bookmarks", typeof(NewsPage)),
             new MainMenuItem('', "My settings", typeof(NewsPage)),
@@ -34,7 +34,7 @@ namespace SmithereenUWP.ViewModels
 
         public SessionViewModel()
         {
-            SelectedMenuItem = MenuItems.ElementAt(0);
+            SelectedMenuItem = MenuItems.ElementAt(1);
         }
     }
 }

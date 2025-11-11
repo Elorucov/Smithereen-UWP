@@ -15,6 +15,7 @@ namespace SmithereenUWP.Core
 
         const string uid = "uid";
         const string at = "at";
+        const string server = "server";
 
         #endregion
 
@@ -28,6 +29,12 @@ namespace SmithereenUWP.Core
         {
             get => adc.Values[at] != null && adc.Values[at] is string s ? s : null;
             set => adc.Values[at] = value;
+        }
+
+        public static string CurrentServer
+        {
+            get => adc.Values[server] != null && adc.Values[server] is string s ? s : null;
+            set => adc.Values[server] = value;
         }
     }
 }

@@ -68,7 +68,7 @@ namespace SmithereenUWP
             {
                 if (rootFrame.Content == null)
                 {
-                    if (AppParameters.CurrentUserId > 0 && !string.IsNullOrEmpty(AppParameters.CurrentUserAccessToken))
+                    if (AppParameters.CurrentUserId > 0 && !string.IsNullOrEmpty(AppParameters.CurrentUserAccessToken) && !string.IsNullOrEmpty(AppParameters.CurrentServer))
                     {
                         rootFrame.Navigate(typeof(MainPage), e.Arguments);
                     } else
