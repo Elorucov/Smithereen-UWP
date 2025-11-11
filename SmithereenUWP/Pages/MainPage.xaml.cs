@@ -178,6 +178,7 @@ namespace SmithereenUWP.Pages
         {
             if (_currentPage == null) return;
             PageHeaderContent.Content = _currentPage.Title;
+            HeaderAfterContent.Content = _currentPage.HeaderAfterContent;
         }
 
         private void UpdateCurrentPageSizeProperties()

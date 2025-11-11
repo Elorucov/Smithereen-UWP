@@ -61,7 +61,8 @@
 
             <Button x:Name="MenuButton" Style="{StaticResource ControlButtonStyle}" Content="" Click="OpenNarrowMenu"/>
 
-            <ContentPresenter x:Name="PageHeaderContent" Grid.Column="1" Padding="16,0" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="16" LineHeight="23" FontWeight="SemiBold"/>
+            <ContentPresenter x:Name="PageHeaderContent" Grid.Column="1" Padding="16,0" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="SemiBold"/>
+            <ContentPresenter x:Name="HeaderAfterContent" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"/>
         </Grid>
 
         <Grid x:Name="NarrowMenuLayer" Visibility="Collapsed" Grid.ColumnSpan="4" Grid.RowSpan="5" Background="Transparent" Tapped="CloseNarrowMenu"/>

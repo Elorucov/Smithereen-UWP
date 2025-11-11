@@ -8,15 +8,24 @@ namespace SmithereenUWP.Pages
     public class AppPage : Page
     {
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
-            nameof(Title), typeof(string), typeof(AppPage), new PropertyMetadata(default));
+            nameof(Title), typeof(object), typeof(AppPage), new PropertyMetadata(default));
+
+        public static readonly DependencyProperty HeaderAfterContentProperty = DependencyProperty.Register(
+            nameof(HeaderAfterContent), typeof(object), typeof(AppPage), new PropertyMetadata(default));
 
         public static readonly DependencyProperty TopPaddingProperty = DependencyProperty.Register(
             nameof(TopPadding), typeof(double), typeof(AppPage), new PropertyMetadata(0));
 
-        public string Title
+        public object Title
         {
-            get { return (string)GetValue(TitleProperty); }
+            get { return GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
+        }
+
+        public object HeaderAfterContent
+        {
+            get { return GetValue(HeaderAfterContentProperty); }
+            set { SetValue(HeaderAfterContentProperty, value); }
         }
 
         public double TopPadding

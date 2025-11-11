@@ -1,5 +1,4 @@
 ﻿<local:NewsPageBase
-    x:Name="Root"
     x:Class="SmithereenUWP.Pages.News.NewsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,10 +8,42 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="News"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    SizeChanged="NewsPageBase_SizeChanged">
+    <local:NewsPageBase.HeaderAfterContent>
+        <Button Style="{StaticResource ControlButtonStyle}" Content=""/>
+    </local:NewsPageBase.HeaderAfterContent>
 
-    <StackPanel>
-        <Border x:Name="Test"/>
-        <TextBlock Text="{Binding Test}"/>
-    </StackPanel>
+    <Grid x:Name="Root" MaxWidth="960">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto" MaxWidth="240"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="PostsList" VerticalAlignment="Top">
+            <ListView.Header>
+                <StackPanel>
+                    <Border x:Name="PostsListTopPadding"/>
+
+                    <GridView x:Name="SectionsNarrow" Style="{StaticResource HorizontalTabsGVStyle}" SingleSelectionFollowsFocus="False" ItemsSource="{Binding Sections}" SelectedItem="{Binding CurrentSection, Mode=TwoWay}"/>
+
+                    <StackPanel VerticalAlignment="Top" Margin="12,0" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource ListBoxBorderThemeBrush}">
+                        <TextBox PlaceholderText="What's new?" Margin="0,12" MaxLength="1024"/>
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <HyperlinkButton Content="Attach"/>
+                            </StackPanel>
+
+                            <Button Style="{StaticResource AccentButtonStyle}" Grid.Column="1" Content="Post"/>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </ListView.Header>
+        </ListView>
+
+        <GridView x:Name="SectionsWide" Grid.Column="1" Style="{StaticResource VerticalTabsGVStyle}" Width="240" SingleSelectionFollowsFocus="False" ItemsSource="{Binding Sections}" SelectedItem="{Binding CurrentSection, Mode=TwoWay}"/>
+    </Grid>
 </local:NewsPageBase>

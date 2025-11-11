@@ -39,14 +39,12 @@ namespace SmithereenUWP.ViewModels
         public SessionViewModel()
         {
             _api = new SmithereenAPI(AppParameters.CurrentServer, AppInfo.UserAgent);
-            SelectedMenuItem = MenuItems.ElementAt(1);
+            SelectedMenuItem = MenuItems.ElementAt(6);
         }
 
         public void SetAsCurrent()
         {
             CoreApplication.Properties["svm"] = this;
         }
-
-
     }
 }

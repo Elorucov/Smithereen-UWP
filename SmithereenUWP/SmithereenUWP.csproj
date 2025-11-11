@@ -131,6 +131,7 @@
     <Compile Include="Core\Functions.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Core\SystemUI.cs" />
+    <Compile Include="DataModels\Entity.cs" />
     <Compile Include="DataModels\MainMenuItem.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Pages\AppPage.cs" />
