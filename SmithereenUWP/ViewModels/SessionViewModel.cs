@@ -38,7 +38,10 @@ namespace SmithereenUWP.ViewModels
 
         public SessionViewModel()
         {
-            _api = new SmithereenAPI(AppParameters.CurrentServer, AppInfo.UserAgent);
+            _api = new SmithereenAPI(AppParameters.CurrentServer, AppInfo.UserAgent)
+            {
+                AccessToken = AppParameters.CurrentUserAccessToken
+            };
             SelectedMenuItem = MenuItems.ElementAt(6);
         }
 

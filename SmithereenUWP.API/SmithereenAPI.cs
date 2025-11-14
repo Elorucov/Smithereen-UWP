@@ -29,6 +29,7 @@ namespace SmithereenUWP.API
 
         #region Methods
 
+        public NewsfeedMethods Newsfeed { get; private set; }
         public ServerMethods Server { get; private set; }
 
         #endregion
@@ -43,6 +44,7 @@ namespace SmithereenUWP.API
             ServerURL = serverUrl;
             UserAgent = userAgent;
 
+            Newsfeed = new NewsfeedMethods(this);
             Server = new ServerMethods(this);
         }
 

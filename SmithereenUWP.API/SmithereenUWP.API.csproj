@@ -11,7 +11,7 @@
     <AssemblyName>SmithereenUWP.API</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.14393.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.26100.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -124,8 +124,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Methods\MethodSectionBase.cs" />
+    <Compile Include="Methods\NewsfeedMethods.cs" />
     <Compile Include="Methods\ServerMethods.cs" />
+    <Compile Include="Objects\Main\Attachment.cs" />
+    <Compile Include="Objects\Main\Audio.cs" />
+    <Compile Include="Objects\Main\BoardTopic.cs" />
+    <Compile Include="Objects\Main\Graffiti.cs" />
+    <Compile Include="Objects\Main\Group.cs" />
+    <Compile Include="Objects\Main\Photo.cs" />
+    <Compile Include="Objects\Main\Poll.cs" />
+    <Compile Include="Objects\Main\Video.cs" />
+    <Compile Include="Objects\Main\WallPost.cs" />
     <Compile Include="Objects\Main\ServerInfo.cs" />
+    <Compile Include="Objects\Main\User.cs" />
+    <Compile Include="Objects\Response\NewsfeedGetResponse.cs" />
     <Compile Include="SmithereenAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmithereenAPIException.cs" />

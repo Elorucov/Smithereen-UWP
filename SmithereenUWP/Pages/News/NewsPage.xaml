@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Title="News"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    SizeChanged="NewsPageBase_SizeChanged">
+    SizeChanged="NewsPageBase_SizeChanged" Loaded="NewsPageBase_Loaded">
     <local:NewsPageBase.HeaderAfterContent>
         <Button Style="{StaticResource ControlButtonStyle}" Content=""/>
     </local:NewsPageBase.HeaderAfterContent>
@@ -19,14 +19,14 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="Auto" MaxWidth="240"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="PostsList" VerticalAlignment="Top">
+        <ListView x:Name="PostsList" VerticalAlignment="Top" ItemsSource="{Binding Items}">
             <ListView.Header>
                 <StackPanel>
                     <Border x:Name="PostsListTopPadding"/>
 
                     <GridView x:Name="SectionsNarrow" Style="{StaticResource HorizontalTabsGVStyle}" SingleSelectionFollowsFocus="False" ItemsSource="{Binding Sections}" SelectedItem="{Binding CurrentSection, Mode=TwoWay}"/>
 
-                    <StackPanel VerticalAlignment="Top" Margin="12,0" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource ListBoxBorderThemeBrush}">
+                    <StackPanel VerticalAlignment="Top" Margin="12,0" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}">
                         <TextBox PlaceholderText="What's new?" Margin="0,12" MaxLength="1024"/>
                         <Grid Margin="0,0,0,12">
                             <Grid.ColumnDefinitions>
@@ -42,6 +42,9 @@
                     </StackPanel>
                 </StackPanel>
             </ListView.Header>
+            <ListView.Footer>
+                <ProgressRing HorizontalAlignment="Center" Width="36" Height="36" Margin="12" IsActive="{Binding IsLoading}"/>
+            </ListView.Footer>
         </ListView>
 
         <GridView x:Name="SectionsWide" Grid.Column="1" Style="{StaticResource VerticalTabsGVStyle}" Width="240" SingleSelectionFollowsFocus="False" ItemsSource="{Binding Sections}" SelectedItem="{Binding CurrentSection, Mode=TwoWay}"/>

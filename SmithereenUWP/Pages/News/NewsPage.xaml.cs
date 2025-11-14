@@ -1,4 +1,5 @@
 ﻿using SmithereenUWP.ViewModels;
+using System;
 using Windows.UI.Xaml;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -36,6 +37,14 @@ namespace SmithereenUWP.Pages.News
                 SectionsWide.Visibility = Visibility.Collapsed;
                 SectionsNarrow.Visibility = Visibility.Visible;
             }
+        }
+
+        private void NewsPageBase_Loaded(object sender, RoutedEventArgs e)
+        {
+            new Action(async () =>
+            {
+                await ViewModel.LoadNewsAsync();
+            })();
         }
     }
 }
