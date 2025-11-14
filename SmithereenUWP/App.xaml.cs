@@ -67,7 +67,6 @@ namespace SmithereenUWP
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
-                _launched = true;
             }
         }
 
