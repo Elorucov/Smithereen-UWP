@@ -21,7 +21,6 @@
                     <StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
-
                     <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemChromeMediumColor}"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
@@ -38,7 +37,6 @@
                     <StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
-
                     <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemChromeMediumColor}"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
@@ -55,10 +53,11 @@
                     <StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
-
                     <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemAccentColorDark1}"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
+
+            <FontFamily x:Key="SymbolThemeFontFamily">ms-appx:///Assets/Fonts/segmdl2.ttf#Segoe MDL2 Assets</FontFamily>
 
             <Style x:Key="ControlButtonStyle" TargetType="Button">
                 <Setter Property="Background" Value="Transparent" />
@@ -515,6 +514,30 @@
                         </ItemsPanelTemplate>
                     </Setter.Value>
                 </Setter>
+            </Style>
+
+            <Style TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            </Style>
+
+            <Style x:Key="WallPostHyperlinkStyle" TargetType="HyperlinkButton">
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Height" Value="16"/>
+                <Setter Property="MinHeight" Value="16"/>
+            </Style>
+
+            <Style x:Key="ContentTextStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="LineHeight" Value="20"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style>
+
+            <Style x:Key="ContentAuthorTextStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="LineHeight" Value="20"/>
+                <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

@@ -1,4 +1,5 @@
 ﻿using SmithereenUWP.API.Objects.Response;
+using SmithereenUWP.Core;
 using SmithereenUWP.DataModels;
 using SmithereenUWP.ViewModels.Base;
 using System;
@@ -11,7 +12,7 @@ namespace SmithereenUWP.ViewModels
 {
     public class NewsViewModel : ItemsViewModel<NewsfeedItem>
     {
-        private readonly ReadOnlyCollection<Entity> _sections = new List<Entity> { 
+        private readonly ReadOnlyCollection<Entity> _sections = new List<Entity> {
             new Entity(-1, "Friends"),
             new Entity(-2, "Groups"),
             new Entity(-3, "Comments")
@@ -32,23 +33,28 @@ namespace SmithereenUWP.ViewModels
             CurrentSection = Sections.First();
         }
 
-        public async Task LoadNewsAsync() {
+        public async Task LoadNewsAsync()
+        {
             if (IsLoading) return;
             IsLoading = true;
             try
             {
                 List<string> filters = new List<string>() { "post", "photo", "photo_tag", "friend", "group", "event", "board", "relation" };
 
-                var response = await SessionViewModel.Current.API.Newsfeed.GetAsync(filters, 25, _startFrom);
+                var response = await SessionViewModel.Current.API.Newsfeed.GetAsync(filters, 25, _startFrom, fields: Constants.RequiredUserAndGroupFields);
                 _startFrom = response.NextFrom;
 
+                CacheManager.CacheUsers(response.Profiles);
                 foreach (var item in response.Items)
                 {
                     Items.Add(item);
                 }
-            } catch (Exception ex) { 
+            }
+            catch (Exception ex)
+            {
                 PlaceholderViewModel.GetForException(ex, async () => await LoadNewsAsync());
-            } finally
+            }
+            finally
             {
                 IsLoading = false;
             }

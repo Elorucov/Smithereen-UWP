@@ -122,10 +122,18 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Attachments\WallPostView.xaml.cs">
+      <DependentUpon>WallPostView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Core\ScreenSpinnerPresenter.cs" />
+    <Compile Include="Controls\FixedFontIcon.cs" />
+    <Compile Include="Controls\HyperlinkActionButton.xaml.cs">
+      <DependentUpon>HyperlinkActionButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Popups\ScreenSpinner.cs" />
     <Compile Include="Core\AppInfo.cs" />
     <Compile Include="Core\AppParameters.cs" />
+    <Compile Include="Core\CacheManager.cs" />
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\ExceptionHelper.cs" />
     <Compile Include="Core\Functions.cs" />
@@ -135,6 +143,7 @@
     <Compile Include="DataModels\MainMenuItem.cs" />
     <Compile Include="DataTemplateSelectors\NewsfeedItemDataTemplateSelector.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\SmithereenExtensions.cs" />
     <Compile Include="Pages\AppPage.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -160,6 +169,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\Fonts\SEGMDL2.TTF" />
     <None Include="SmithereenUWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +187,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\Attachments\WallPostView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Core\ScreenSpinnerPresenter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\HyperlinkActionButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

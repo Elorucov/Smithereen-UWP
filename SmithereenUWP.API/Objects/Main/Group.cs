@@ -1,10 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmithereenUWP.API.Objects.Main
 {
@@ -41,7 +36,7 @@ namespace SmithereenUWP.API.Objects.Main
         Owner
     }
 
-    public sealed class Group
+    public sealed class Group : IWithAvatar
     {
         [JsonProperty("id")]
         public int Id { get; private set; }
@@ -81,5 +76,14 @@ namespace SmithereenUWP.API.Objects.Main
 
         [JsonProperty("is_member")]
         public bool IsMember { get; private set; }
+
+        [JsonProperty("photo_50")]
+        public string Photo50 { get; private set; }
+
+        [JsonProperty("photo_100")]
+        public string Photo100 { get; private set; }
+
+        [JsonProperty("photo_200")]
+        public string Photo200 { get; private set; }
     }
 }

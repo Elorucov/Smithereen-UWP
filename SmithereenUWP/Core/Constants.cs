@@ -11,5 +11,10 @@ namespace SmithereenUWP.Core
         {
             "friends", "photos", "account", "wall", "groups", "messages", "likes", "newsfeed", "notifications", "offline"
         }.AsReadOnly();
+
+        public static readonly IReadOnlyList<string> RequiredUserAndGroupFields = new List<string>
+        {
+            "photo_100"
+        }.AsReadOnly();
     }
 }

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SmithereenUWP.Pages.News"
     xmlns:p="using:SmithereenUWP.Pages"
+    xmlns:att="using:SmithereenUWP.Controls.Attachments"
     xmlns:dts="using:SmithereenUWP.DataTemplateSelectors"
     xmlns:smr="using:SmithereenUWP.API.Objects.Response"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -18,15 +19,21 @@
 
     <local:NewsPageBase.Resources>
         <DataTemplate x:Key="PostTemplate" x:DataType="smr:NewsfeedItem">
-            <TextBlock Text="Post"/>
+            <Border Padding="0,12" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                <att:WallPostView Post="{x:Bind Post}"/>
+            </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="PhotoTemplate" x:DataType="smr:NewsfeedItem">
-            <TextBlock Text="Photo"/>
+            <Border Padding="0,12" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                <TextBlock Text="Photo"/>
+            </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="FeedItemTemplate" x:DataType="smr:NewsfeedItem">
-            <TextBlock Text="Other"/>
+            <Border Padding="0,12" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                <TextBlock Text="Other"/>
+            </Border>
         </DataTemplate>
 
         <dts:NewsfeedItemDataTemplateSelector x:Key="FeedDTS" Post="{StaticResource PostTemplate}" Photo="{StaticResource PhotoTemplate}" Other="{StaticResource FeedItemTemplate}"/>
@@ -37,7 +44,7 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="Auto" MaxWidth="240"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="PostsList" VerticalAlignment="Top" ItemsSource="{Binding Items}" ItemTemplateSelector="{StaticResource FeedDTS}">
+        <ListView x:Name="PostsList" VerticalAlignment="Top" SelectionMode="None" ItemsSource="{Binding Items}" ItemTemplateSelector="{StaticResource FeedDTS}">
             <ListView.Header>
                 <StackPanel>
                     <Border x:Name="PostsListTopPadding"/>

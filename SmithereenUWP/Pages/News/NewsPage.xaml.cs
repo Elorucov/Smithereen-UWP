@@ -32,7 +32,8 @@ namespace SmithereenUWP.Pages.News
             {
                 SectionsNarrow.Visibility = Visibility.Collapsed;
                 SectionsWide.Visibility = Visibility.Visible;
-            } else
+            }
+            else
             {
                 SectionsWide.Visibility = Visibility.Collapsed;
                 SectionsNarrow.Visibility = Visibility.Visible;

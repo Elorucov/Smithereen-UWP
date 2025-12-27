@@ -1,0 +1,57 @@
+﻿<UserControl
+    x:Class="SmithereenUWP.Controls.Attachments.WallPostView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SmithereenUWP.Controls.Attachments"
+    xmlns:ctrls="using:SmithereenUWP.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <StackPanel>
+        <Grid x:Name="PostHeader">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image x:Name="PostAuthorAvatar" Width="36" Height="36"></Image>
+            <StackPanel Grid.Column="1" Margin="12,0,0,0" Orientation="Vertical">
+                <StackPanel.RenderTransform>
+                    <TranslateTransform Y="-2"/>
+                </StackPanel.RenderTransform>
+                <StackPanel x:Name="PostAuthorEx" Orientation="Horizontal">
+                    <ctrls:FixedFontIcon x:Name="RepostIcon" Margin="0,2,6,0" Foreground="{ThemeResource HyperlinkPressedForegroundThemeBrush}" Visibility="Collapsed"/>
+                    <TextBlock x:Name="PostAuthor" Style="{StaticResource ContentAuthorTextStyle}" Foreground="{ThemeResource SystemControlForegroundAccentBrush}"/>
+                </StackPanel>
+                <TextBlock x:Name="PostInfo" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel x:Name="PostContent">
+            <TextBlock x:Name="PostText" Margin="0,12,0,0" Style="{StaticResource ContentTextStyle}"/>
+        </StackPanel>
+
+        <StackPanel x:Name="Reposts" Margin="0,12,0,0" Padding="10,0,0,0" BorderBrush="{ThemeResource SystemColorHighlightBrush}" BorderThickness="2,0,0,0" Visibility="Collapsed">
+            <Border x:Name="RepostInRepost" Margin="0,12,0,0" Padding="10,0,0,0" BorderBrush="{ThemeResource SystemColorHighlightBrush}" BorderThickness="2,0,0,0" Visibility="Collapsed">
+            </Border>
+        </StackPanel>
+
+        <ctrls:HyperlinkActionButton x:Name="ForeignLinkButton" Margin="0,12,0,0" Visibility="Collapsed"/>
+
+        <Grid x:Name="PostFooter" Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <ctrls:HyperlinkActionButton x:Name="CommentButton" Label="Comments"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <ctrls:HyperlinkActionButton x:Name="ShareButton" Margin="12,0,0,0" IconGlyph=""/>
+                <ctrls:HyperlinkActionButton x:Name="LikeButton" Margin="12,0,0,0" Label="Like"/>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</UserControl>

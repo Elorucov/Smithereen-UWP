@@ -1,11 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SmithereenUWP.API.Objects.Main;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmithereenUWP.API.Objects.Response
 {
