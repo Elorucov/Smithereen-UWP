@@ -16,28 +16,13 @@ namespace SmithereenUWP.Pages.News
         public NewsPage()
         {
             InitializeComponent();
-
+            SectionsNarrow.DataContext = ViewModel;
             RegisterPropertyChangedCallback(TopPaddingProperty, TopPaddingChanged);
         }
 
         private void TopPaddingChanged(DependencyObject sender, DependencyProperty dp)
         {
             PostsListTopPadding.Height = TopPadding;
-            SectionsWide.Margin = new Thickness(0, TopPadding, 0, 0);
-        }
-
-        private void NewsPageBase_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (e.NewSize.Width >= 960)
-            {
-                SectionsNarrow.Visibility = Visibility.Collapsed;
-                SectionsWide.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                SectionsWide.Visibility = Visibility.Collapsed;
-                SectionsNarrow.Visibility = Visibility.Visible;
-            }
         }
 
         private void NewsPageBase_Loaded(object sender, RoutedEventArgs e)

@@ -4,6 +4,7 @@ using SmithereenUWP.Controls.Popups;
 using SmithereenUWP.Core;
 using SmithereenUWP.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -43,9 +44,9 @@ namespace SmithereenUWP.Pages.Wizard
             {
                 await new ContentDialog
                 {
-                    Title = "Error",
-                    Content = "Invalid URL",
-                    PrimaryButtonText = "Close"
+                    Title = Locale.Get("error"),
+                    Content = Locale.Get("invalid_server_url"),
+                    PrimaryButtonText = Locale.Get("close")
                 }.ShowAsync();
                 return;
             }
@@ -64,6 +65,14 @@ namespace SmithereenUWP.Pages.Wizard
             {
                 await ex.ShowAsync();
             }
+        }
+
+        private void SetupServerSuggestion(object sender, RoutedEventArgs e)
+        {
+            ServerUrlBox.ItemsSource = new List<string>
+            {
+                "friends.grishka.me"
+            };
         }
     }
 }

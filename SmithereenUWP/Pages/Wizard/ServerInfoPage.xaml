@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SmithereenUWP.Pages.Wizard"
+    xmlns:ext="using:SmithereenUWP.Extensions"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -23,12 +24,12 @@
         <ScrollViewer Grid.Row="1">
             <StackPanel>
                 <TextBlock x:Name="ShortDesc" TextWrapping="Wrap" Margin="0,0,0,12"/>
-                <HyperlinkButton Content="About server"/>
+                <HyperlinkButton ext:UIExt.LocKey="about_server"/>
             </StackPanel>
         </ScrollViewer>
 
         <StackPanel Grid.Row="2">
-            <Button x:Name="SignInButton" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Stretch" Content="Sign in" Click="OpenExternalAuth"/>
+            <Button x:Name="LogInButton" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Stretch" ext:UIExt.LocKey="log_in" Click="OpenExternalAuth"/>
         </StackPanel>
     </Grid>
 </Page>

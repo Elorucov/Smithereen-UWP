@@ -4,6 +4,7 @@ using SmithereenUWP.Pages.Wizard;
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -32,6 +33,7 @@ namespace SmithereenUWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Windows.Foundation.Size(320, 500));
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -65,6 +67,9 @@ namespace SmithereenUWP
                         rootFrame.Navigate(typeof(WelcomePage), e.Arguments);
                     }
                 }
+
+                // ApplicationLanguages.PrimaryLanguageOverride = null;
+
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
@@ -74,6 +79,7 @@ namespace SmithereenUWP
         {
             base.OnActivated(args);
 
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Windows.Foundation.Size(320, 500));
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,

@@ -1,21 +1,25 @@
 ﻿<local:NewsPageBase
+    x:Name="PageRoot"
     x:Class="SmithereenUWP.Pages.News.NewsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SmithereenUWP.Pages.News"
     xmlns:p="using:SmithereenUWP.Pages"
+    xmlns:ext="using:SmithereenUWP.Extensions"
     xmlns:att="using:SmithereenUWP.Controls.Attachments"
     xmlns:dts="using:SmithereenUWP.DataTemplateSelectors"
     xmlns:smr="using:SmithereenUWP.API.Objects.Response"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="News"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    SizeChanged="NewsPageBase_SizeChanged" Loaded="NewsPageBase_Loaded">
+    Loaded="NewsPageBase_Loaded">
     <local:NewsPageBase.HeaderAfterContent>
         <Button Style="{StaticResource ControlButtonStyle}" Content=""/>
     </local:NewsPageBase.HeaderAfterContent>
+    <local:NewsPageBase.Title>
+        <GridView x:Name="SectionsNarrow" HorizontalAlignment="Center" Margin="-16,0" Style="{StaticResource HorizontalTabsGVStyle}" SingleSelectionFollowsFocus="False" ItemsSource="{Binding Sections}" SelectedItem="{Binding CurrentSection, Mode=TwoWay}"/>
+    </local:NewsPageBase.Title>
 
     <local:NewsPageBase.Resources>
         <DataTemplate x:Key="PostTemplate" x:DataType="smr:NewsfeedItem">
@@ -39,30 +43,24 @@
         <dts:NewsfeedItemDataTemplateSelector x:Key="FeedDTS" Post="{StaticResource PostTemplate}" Photo="{StaticResource PhotoTemplate}" Other="{StaticResource FeedItemTemplate}"/>
     </local:NewsPageBase.Resources>
 
-    <Grid x:Name="Root" MaxWidth="960">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="Auto" MaxWidth="240"/>
-        </Grid.ColumnDefinitions>
+    <Grid x:Name="Root" MaxWidth="720">
         <ListView x:Name="PostsList" VerticalAlignment="Top" SelectionMode="None" ItemsSource="{Binding Items}" ItemTemplateSelector="{StaticResource FeedDTS}">
             <ListView.Header>
                 <StackPanel>
                     <Border x:Name="PostsListTopPadding"/>
 
-                    <GridView x:Name="SectionsNarrow" Style="{StaticResource HorizontalTabsGVStyle}" SingleSelectionFollowsFocus="False" ItemsSource="{Binding Sections}" SelectedItem="{Binding CurrentSection, Mode=TwoWay}"/>
-
                     <StackPanel VerticalAlignment="Top" Margin="12,0" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}">
-                        <TextBox PlaceholderText="What's new?" Margin="0,12" MaxLength="1024"/>
+                        <TextBox ext:UIExt.PlaceholderLocKey="write_on_own_wall" Margin="0,12" MaxLength="1024"/>
                         <Grid Margin="0,0,0,12">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel>
-                                <HyperlinkButton Content="Attach"/>
+                                <HyperlinkButton ext:UIExt.LocKey="attach"/>
                             </StackPanel>
 
-                            <Button Style="{StaticResource AccentButtonStyle}" Grid.Column="1" Content="Post"/>
+                            <Button Style="{StaticResource AccentButtonStyle}" Grid.Column="1" ext:UIExt.LocKey="send"/>
                         </Grid>
                     </StackPanel>
                 </StackPanel>
@@ -71,7 +69,5 @@
                 <ProgressRing HorizontalAlignment="Center" Width="36" Height="36" Margin="12" IsActive="{Binding IsLoading}"/>
             </ListView.Footer>
         </ListView>
-
-        <GridView x:Name="SectionsWide" Grid.Column="1" Style="{StaticResource VerticalTabsGVStyle}" Width="240" SingleSelectionFollowsFocus="False" ItemsSource="{Binding Sections}" SelectedItem="{Binding CurrentSection, Mode=TwoWay}"/>
     </Grid>
 </local:NewsPageBase>

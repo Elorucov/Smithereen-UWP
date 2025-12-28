@@ -13,9 +13,9 @@ namespace SmithereenUWP.ViewModels
     public class NewsViewModel : ItemsViewModel<NewsfeedItem>
     {
         private readonly ReadOnlyCollection<Entity> _sections = new List<Entity> {
-            new Entity(-1, "Friends"),
-            new Entity(-2, "Groups"),
-            new Entity(-3, "Comments")
+            new Entity(-1, Locale.Get("feed_tab_friends")),
+            new Entity(-2, Locale.Get("feed_tab_groups")),
+            new Entity(-3, Locale.Get("feed_tab_comments"))
         }.AsReadOnly();
 
         private Entity _currentSection;

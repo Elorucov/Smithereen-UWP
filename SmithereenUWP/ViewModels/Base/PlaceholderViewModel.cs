@@ -25,7 +25,7 @@ namespace SmithereenUWP.ViewModels.Base
             {
                 Header = err.Item1,
                 Content = err.Item2,
-                ActionButton = "Retry",
+                ActionButton = Locale.Get("retry"),
                 ActionButtonCommand = action != null ? new RelayCommand(o => { action.Invoke(); }) : null,
             };
         }

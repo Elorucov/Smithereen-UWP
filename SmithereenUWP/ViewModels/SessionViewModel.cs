@@ -14,16 +14,16 @@ namespace SmithereenUWP.ViewModels
     {
         private readonly ReadOnlyCollection<MainMenuItem> _menuItems = new List<MainMenuItem>
         {
-            new MainMenuItem('', "My profile", typeof(NewsPage)),
-            new MainMenuItem('', "My friends", typeof(NewsPage)),
-            new MainMenuItem('', "My photos", typeof(NewsPage)),
-            new MainMenuItem('', "My messages", typeof(NewsPage)),
-            new MainMenuItem('', "My groups", typeof(NewsPage)),
-            new MainMenuItem('', "My events", typeof(NewsPage)),
-            new MainMenuItem('', "My news", typeof(NewsPage)),
-            new MainMenuItem('', "My feedback", typeof(NewsPage)),
-            new MainMenuItem('', "My bookmarks", typeof(NewsPage)),
-            new MainMenuItem('', "My settings", typeof(NewsPage)),
+            new MainMenuItem('', Locale.Get("my_profile"), typeof(NewsPage)),
+            new MainMenuItem('', Locale.Get("my_friends"), typeof(NewsPage)),
+            new MainMenuItem('', Locale.Get("my_photos"), typeof(NewsPage)),
+            new MainMenuItem('', Locale.Get("my_messages"), typeof(NewsPage)),
+            new MainMenuItem('', Locale.Get("my_groups"), typeof(NewsPage)),
+            new MainMenuItem('', Locale.Get("my_events"), typeof(NewsPage)),
+            new MainMenuItem('', Locale.Get("my_news"), typeof(NewsPage)),
+            new MainMenuItem('', Locale.Get("my_feedback"), typeof(NewsPage)),
+            new MainMenuItem('', Locale.Get("my_bookmarks"), typeof(NewsPage)),
+            new MainMenuItem('', Locale.Get("my_settings"), typeof(NewsPage)),
         }.AsReadOnly();
         private readonly SmithereenAPI _api;
 
