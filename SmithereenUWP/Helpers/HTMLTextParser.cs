@@ -63,11 +63,9 @@ namespace SmithereenUWP.Helpers
             return blocks;
         }
 
-        // TODO this method seams to be removing necessary spaces in #text nodes
         private static string CleanText(string input)
         {
             var clean = Windows.Data.Html.HtmlUtilities.ConvertToText(input);
-            //clean = System.Net.WebUtility.HtmlEncode(clean);
             if (clean == "\0")
                 clean = "\n";
             return clean;
@@ -144,7 +142,7 @@ namespace SmithereenUWP.Helpers
                     return new LineBreak();
                 case "#text":
                     if (!string.IsNullOrEmpty(node.InnerText))
-                        return new Run { Text = node.InnerText };
+                        return new Run { Text = CleanText(node.InnerText) };
                     break;
                 default:
                     return GenerateSpanWNewLine(node);
