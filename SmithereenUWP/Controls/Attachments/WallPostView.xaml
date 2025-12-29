@@ -30,7 +30,7 @@
         </Grid>
 
         <StackPanel x:Name="PostContent">
-            <TextBlock x:Name="PostText" Margin="0,12,0,0" Style="{StaticResource ContentTextStyle}"/>
+            <RichTextBlock x:Name="PostText" Margin="0,12,0,0" Style="{StaticResource ContentRichTextStyle}"/>
         </StackPanel>
 
         <StackPanel x:Name="Reposts" Margin="0,12,0,0" Padding="10,0,0,0" BorderBrush="{ThemeResource SystemColorHighlightBrush}" BorderThickness="2,0,0,0" Visibility="Collapsed">

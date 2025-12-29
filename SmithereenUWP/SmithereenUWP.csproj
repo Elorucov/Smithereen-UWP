@@ -144,9 +144,11 @@
     <Compile Include="DataModels\MainMenuItem.cs" />
     <Compile Include="DataTemplateSelectors\NewsfeedItemDataTemplateSelector.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\RichTextBlockExt.cs" />
     <Compile Include="Extensions\UIExt.cs" />
     <Compile Include="Extensions\TextBlockExt.cs" />
     <Compile Include="Extensions\SmithereenExtensions.cs" />
+    <Compile Include="Helpers\HTMLTextParser.cs" />
     <Compile Include="Pages\AppPage.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -230,6 +232,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack">
+      <Version>1.12.4</Version>
+    </PackageReference>
     <PackageReference Include="MessageFormat">
       <Version>7.1.3</Version>
     </PackageReference>

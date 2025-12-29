@@ -1,5 +1,6 @@
 ﻿using SmithereenUWP.API.Objects.Main;
 using SmithereenUWP.Core;
+using SmithereenUWP.Extensions;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -28,7 +29,7 @@ namespace SmithereenUWP.Pages.Wizard
             _serverInfo = e.Parameter as ServerInfo;
             ServerName.Text = _serverInfo.Name;
             Domain.Text = _serverInfo.Domain;
-            ShortDesc.Text = _serverInfo.ShortDescription;
+            RichTextBlockExt.SetHtml(ShortDesc, _serverInfo.ShortDescription);
         }
 
         private void OpenExternalAuth(object sender, RoutedEventArgs e)

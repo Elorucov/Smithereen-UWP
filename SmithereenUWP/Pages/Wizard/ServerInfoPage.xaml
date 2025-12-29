@@ -23,7 +23,7 @@
 
         <ScrollViewer Grid.Row="1">
             <StackPanel>
-                <TextBlock x:Name="ShortDesc" TextWrapping="Wrap" Margin="0,0,0,12"/>
+                <RichTextBlock x:Name="ShortDesc" TextWrapping="Wrap" Margin="0,0,0,12"/>
                 <HyperlinkButton ext:UIExt.LocKey="about_server"/>
             </StackPanel>
         </ScrollViewer>

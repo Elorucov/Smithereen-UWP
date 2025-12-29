@@ -1,5 +1,6 @@
 ﻿using SmithereenUWP.API.Objects.Main;
 using SmithereenUWP.Core;
+using SmithereenUWP.Extensions;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -92,7 +93,7 @@ namespace SmithereenUWP.Controls.Attachments
             PostInfo.Text = time;
 
             // Post text
-            PostText.Text = !string.IsNullOrEmpty(Post.Text) ? Post.Text.Trim() : string.Empty;
+            RichTextBlockExt.SetHtml(PostText, Post.Text);
             PostText.Visibility = !string.IsNullOrEmpty(Post.Text) ? Visibility.Visible : Visibility.Collapsed;
 
             // Attachments
