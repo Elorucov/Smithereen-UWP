@@ -1,6 +1,7 @@
 ﻿using SmithereenUWP.DataModels;
 using SmithereenUWP.Helpers;
 using System;
+using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,7 +10,7 @@ namespace SmithereenUWP.Controls
 {
     internal class MediaGridPanel : Panel
     {
-        public const int MAX_WIDTH = 400;
+        public const int MAX_WIDTH = 500;
         private const int GAP = 4;
 
         private double[] columnStarts, columnEnds, rowStarts, rowEnds = null;
@@ -34,13 +35,20 @@ namespace SmithereenUWP.Controls
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            if (Layout == null)
+            if (Layout == null || availableSize.Width < 100 || availableSize.Height < 100)
             {
                 return base.MeasureOverride(availableSize);
             }
 
             double width = Math.Min(MAX_WIDTH, availableSize.Width);
             double height = Math.Round(width * ((double)Layout.height / (double)PhotoLayout.MAX_WIDTH));
+
+            if (MaxHeight != double.PositiveInfinity && MaxHeight < height)
+            {
+                width = MaxHeight / height * width;
+                height = MaxHeight;
+            }
+
             if (Layout.width < PhotoLayout.MAX_WIDTH)
             {
                 width = Math.Round(width * (Layout.width / (double)PhotoLayout.MAX_WIDTH));
@@ -60,7 +68,9 @@ namespace SmithereenUWP.Controls
             for (int i = 0; i < Layout.columnSizes.Length; i++)
             {
                 columnStarts[i] = offset;
-                offset += Math.Round(Layout.columnSizes[i] / (double)Layout.width * width);
+                var tileWidth = Layout.columnSizes[i] / (double)Layout.width * width;
+                if (tileWidth < 1) Debug.WriteLine($"{nameof(MediaGridPanel)}: One of tiles has width less than 1px! Column size: {Layout.columnSizes[i]}; Layout width: {Layout.width}; Width: {width}");
+                offset += Math.Round(tileWidth);
                 columnEnds[i] = offset;
                 offset += GAP;
             }
@@ -69,7 +79,9 @@ namespace SmithereenUWP.Controls
             for (int i = 0; i < Layout.rowSizes.Length; i++)
             {
                 rowStarts[i] = offset;
-                offset += Math.Round(Layout.rowSizes[i] / (double)Layout.height * height);
+                var tileHeight =(double)Layout.rowSizes[i] / (double)Layout.height * height;
+                if (tileHeight < 1) Debug.WriteLine($"{nameof(MediaGridPanel)}: One of tiles has height less than 1px! Row size: {Layout.rowSizes[i]}; Layout height: {Layout.height}; Height: {height}");
+                offset += Math.Round(tileHeight);
                 rowEnds[i] = offset;
                 offset += GAP;
             }
@@ -85,19 +97,20 @@ namespace SmithereenUWP.Controls
                 double h = rowEnds[tile.startRow + rowSpan] - rowStarts[tile.startRow];
                 element.Measure(new Size(w, h));
             }
-            return new Size(availableSize.Width, height);
+            return new Size(width, height);
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            if (Layout == null || rowStarts == null)
+            if (Layout == null || finalSize.Width < 100 || finalSize.Height < 100 || rowStarts == null)
                 return base.ArrangeOverride(finalSize);
 
-            int maxWidth = MAX_WIDTH;
-            if (Layout.width < PhotoLayout.MAX_WIDTH)
-            {
-                maxWidth = (int)Math.Round(finalSize.Width * (Layout.width / (double)PhotoLayout.MAX_WIDTH));
-            }
+            //int maxWidth = MAX_WIDTH;
+            //if (Layout.width < PhotoLayout.MAX_WIDTH)
+            //{
+            //    maxWidth = (int)Math.Round(finalSize.Width * (Layout.width / (double)PhotoLayout.MAX_WIDTH));
+            //}
+            double maxWidth = (int)DesiredSize.Width;
 
             double calculatedHeight = 0;
             for (int i = 0; i < Children.Count; i++)

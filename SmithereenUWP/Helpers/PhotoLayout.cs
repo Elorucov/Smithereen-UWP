@@ -254,7 +254,7 @@ namespace SmithereenUWP.Helpers
                 {
                     tries.Add(new int[] { firstLine, cnt - firstLine }, new double[]{
                                 CalculateMultiThumbsHeight(ratiosCropped.GetRange(0, firstLine), MAX_WIDTH, GAP),
-                                CalculateMultiThumbsHeight(ratiosCropped.GetRange(firstLine, ratiosCropped.Count), MAX_WIDTH, GAP)
+                                CalculateMultiThumbsHeight(ratiosCropped.GetRange(firstLine, ratiosCropped.Count - firstLine), MAX_WIDTH, GAP)
                         }
                     );
                 }
@@ -266,8 +266,8 @@ namespace SmithereenUWP.Helpers
                     {
                         tries.Add(new int[] { firstLine, secondLine, cnt - firstLine - secondLine }, new double[]{
                                     CalculateMultiThumbsHeight(ratiosCropped.GetRange(0, firstLine), MAX_WIDTH, GAP),
-                                    CalculateMultiThumbsHeight(ratiosCropped.GetRange(firstLine, firstLine+secondLine), MAX_WIDTH, GAP),
-                                    CalculateMultiThumbsHeight(ratiosCropped.GetRange(firstLine+secondLine, ratiosCropped.Count), MAX_WIDTH, GAP)
+                                    CalculateMultiThumbsHeight(ratiosCropped.GetRange(firstLine, secondLine), MAX_WIDTH, GAP),
+                                    CalculateMultiThumbsHeight(ratiosCropped.GetRange(firstLine+secondLine, ratiosCropped.Count - (firstLine+secondLine)), MAX_WIDTH, GAP)
                             }
                         );
                     }

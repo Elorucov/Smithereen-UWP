@@ -4,6 +4,7 @@ using SmithereenUWP.Extensions;
 using SmithereenUWP.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -98,6 +99,14 @@ namespace SmithereenUWP.Controls.Attachments
             string time = DateTimeOffset.FromUnixTimeSeconds(Post.Date).ToLocalTime().ToString("g");
             PostInfo.Text = time;
 
+            // Spoiler
+            if (!string.IsNullOrEmpty(Post.ContentWarning))
+            {
+                PostContent.Visibility = Visibility.Collapsed;
+                SpoilerButton.Label = Post.ContentWarning;
+                SpoilerButton.Visibility = Visibility.Visible;
+            }
+
             // Post text
             RichTextBlockExt.SetHtml(PostText, Post.Text);
             PostText.Visibility = !string.IsNullOrEmpty(Post.Text) ? Visibility.Visible : Visibility.Collapsed;
@@ -175,7 +184,9 @@ namespace SmithereenUWP.Controls.Attachments
             {
                 MediaGridPanel previewsGrid = new MediaGridPanel
                 {
-                    Margin = new Thickness(0, 12, 0, 0)
+                    Margin = new Thickness(0, 12, 0, 0),
+                    MaxHeight = 512,
+                    Tag = Post.Id
                 };
 
                 var layout = PhotoLayout.MakeLayout(previews);
@@ -266,7 +277,7 @@ namespace SmithereenUWP.Controls.Attachments
 
         private void UpdateUI()
         {
-            PostContent.Visibility = IsContentVisible ? Visibility.Visible : Visibility.Collapsed;
+            PostContentRoot.Visibility = IsContentVisible ? Visibility.Visible : Visibility.Collapsed;
 
             RepostIcon.Visibility = IsRepost ? Visibility.Visible : Visibility.Collapsed;
             RepostIcon.Glyph = RepostIconGlyph != null ? RepostIconGlyph : string.Empty;
@@ -309,6 +320,19 @@ namespace SmithereenUWP.Controls.Attachments
             LikeButton.IconGlyph = interactPost.Likes?.UserLikes == true ? "" : "";
 
             PostFooter.Visibility = Visibility.Visible;
+        }
+
+        private void ToggleSpoiler(object sender, RoutedEventArgs e)
+        {
+            if (PostContent.Visibility == Visibility.Collapsed)
+            {
+                PostContent.Visibility = Visibility.Visible;
+                SpoilerButton.IconGlyph = "";
+            } else
+            {
+                PostContent.Visibility = Visibility.Collapsed;
+                SpoilerButton.IconGlyph = "";
+            }
         }
     }
 }

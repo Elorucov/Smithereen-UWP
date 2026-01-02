@@ -29,10 +29,11 @@
             </StackPanel>
         </Grid>
 
-        <StackPanel x:Name="PostContent">
-            <RichTextBlock x:Name="PostText" Margin="0,12,0,0" Style="{StaticResource ContentRichTextStyle}"/>
-            <StackPanel x:Name="PostAttachments">
-                
+        <StackPanel x:Name="PostContentRoot">
+            <ctrls:HyperlinkActionButton x:Name="SpoilerButton" Margin="0,12,0,0" Visibility="Collapsed" Padding="6" IconGlyph="" Click="ToggleSpoiler"/>
+            <StackPanel x:Name="PostContent">
+                <RichTextBlock x:Name="PostText" Margin="0,12,0,0" Style="{StaticResource ContentRichTextStyle}"/>
+                <StackPanel x:Name="PostAttachments"/>
             </StackPanel>
         </StackPanel>
 
