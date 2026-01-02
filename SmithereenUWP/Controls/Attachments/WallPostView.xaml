@@ -31,6 +31,9 @@
 
         <StackPanel x:Name="PostContent">
             <RichTextBlock x:Name="PostText" Margin="0,12,0,0" Style="{StaticResource ContentRichTextStyle}"/>
+            <StackPanel x:Name="PostAttachments">
+                
+            </StackPanel>
         </StackPanel>
 
         <StackPanel x:Name="Reposts" Margin="0,12,0,0" Padding="10,0,0,0" BorderBrush="{ThemeResource SystemColorHighlightBrush}" BorderThickness="2,0,0,0" Visibility="Collapsed">

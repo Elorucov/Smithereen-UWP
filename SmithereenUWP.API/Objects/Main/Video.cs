@@ -2,7 +2,7 @@
 
 namespace SmithereenUWP.API.Objects.Main
 {
-    public sealed class Video
+    public sealed class Video : ISizedAttachment
     {
         [JsonProperty("url")]
         public string Url { get; private set; }

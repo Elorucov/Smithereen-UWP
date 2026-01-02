@@ -1,9 +1,14 @@
 ﻿using SmithereenUWP.API.Objects.Main;
 using SmithereenUWP.Core;
 using SmithereenUWP.Extensions;
+using SmithereenUWP.Helpers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -60,7 +65,7 @@ namespace SmithereenUWP.Controls.Attachments
             _pid = RegisterPropertyChangedCallback(PostProperty, (a, b) => { RenderPost(); UpdateUI(); });
             _rid = RegisterPropertyChangedCallback(IsRepostProperty, (a, b) => { UpdateUI(); CheckAndRenderForeignLink(); UpdateCounters(); });
             _gid = RegisterPropertyChangedCallback(RepostIconGlyphProperty, (a, b) => UpdateUI());
-            _cid = RegisterPropertyChangedCallback(RepostIconGlyphProperty, (a, b) => UpdateUI());
+            _cid = RegisterPropertyChangedCallback(IsContentVisibleProperty, (a, b) => UpdateUI());
             Unloaded += WallPostView_Unloaded;
         }
 
@@ -70,6 +75,7 @@ namespace SmithereenUWP.Controls.Attachments
             UnregisterPropertyChangedCallback(PostProperty, _pid);
             UnregisterPropertyChangedCallback(IsRepostProperty, _rid);
             UnregisterPropertyChangedCallback(RepostIconGlyphProperty, _gid);
+            UnregisterPropertyChangedCallback(IsContentVisibleProperty, _cid);
         }
 
         private void RenderPost()
@@ -97,7 +103,7 @@ namespace SmithereenUWP.Controls.Attachments
             PostText.Visibility = !string.IsNullOrEmpty(Post.Text) ? Visibility.Visible : Visibility.Collapsed;
 
             // Attachments
-            // TODO
+            AddAttachmentsInUI();
 
             // Reposts
             if (Post.RepostHistory != null && Post.RepostHistory.Count > 0)
@@ -132,6 +138,130 @@ namespace SmithereenUWP.Controls.Attachments
             UpdateCounters();
 
             Visibility = Visibility.Visible;
+        }
+
+        private void AddAttachmentsInUI()
+        {
+            PostAttachments.Children.Clear();
+            if (Post?.Attachments == null || Post.Attachments.Count == 0) return;
+
+            List<ISizedAttachment> previews = new List<ISizedAttachment>();
+            Poll poll = null;
+            List<string> unknown = new List<string>();
+
+            foreach (var attachment in Post.Attachments)
+            {
+                switch (attachment.Type)
+                {
+                    case AttachmentType.Graffiti:
+                        previews.Add(attachment.Graffiti);
+                        break;
+                    case AttachmentType.Photo:
+                        previews.Add(attachment.Photo);
+                        break;
+                    case AttachmentType.Poll:
+                        poll = attachment.Poll;
+                        break;
+                    case AttachmentType.Video:
+                        previews.Add(attachment.Video);
+                        break;
+                    default:
+                        unknown.Add(attachment.Type.ToString());
+                        break;
+                }
+            }
+
+            if (previews.Count > 0)
+            {
+                MediaGridPanel previewsGrid = new MediaGridPanel
+                {
+                    Margin = new Thickness(0, 12, 0, 0)
+                };
+
+                var layout = PhotoLayout.MakeLayout(previews);
+                previewsGrid.Layout = layout;
+                var tiles = layout.tiles;
+
+                for (int i = 0; i < previews.Count; i++)
+                {
+                    var preview = previews[i];
+
+                    if (preview is Graffiti graffiti)
+                    {
+                        new Action(async () =>
+                        {
+                            var bitmap = new BitmapImage();
+                            bitmap.UriSource = new Uri(graffiti.Url);
+
+                            var graffitiView = new Image
+                            {
+                                Source = bitmap,
+                                HorizontalAlignment = HorizontalAlignment.Center,
+                                VerticalAlignment = VerticalAlignment.Center,
+                                Stretch = Stretch.UniformToFill
+                            };
+                            MediaGridPanel.SetTile(graffitiView, tiles[i]);
+                            previewsGrid.Children.Add(graffitiView);
+                        })();
+                    }
+                    else if (preview is Photo photo)
+                    {
+                        new Action(async () =>
+                        {
+                            var bitmap = new BitmapImage();
+                            var ps = photo.Sizes.Where(s => s.Type == "x").FirstOrDefault();
+                            bitmap.UriSource = new Uri(ps.Url);
+
+                            var tempPhotoView = new Image
+                            {
+                                Source = bitmap,
+                                HorizontalAlignment = HorizontalAlignment.Center,
+                                VerticalAlignment = VerticalAlignment.Center,
+                                Stretch = Stretch.UniformToFill
+                            };
+                            MediaGridPanel.SetTile(tempPhotoView, tiles[i]);
+                            previewsGrid.Children.Add(tempPhotoView);
+                        })();
+                    }
+                    else if (preview is Video video)
+                    {
+                        var b = new Border
+                        {
+                            Background = new SolidColorBrush(Color.FromArgb(32, 128, 128, 128)),
+                            Child = new TextBlock
+                            {
+                                Text = "Video",
+                                FontStyle = Windows.UI.Text.FontStyle.Italic,
+                                Margin = new Thickness(12, 12, 0, 0)
+                            }
+                        };
+                        MediaGridPanel.SetTile(b, tiles[i]);
+                        previewsGrid.Children.Add(b);
+                    }
+                }
+
+                PostAttachments.Children.Add(previewsGrid);
+            }
+
+            if (poll != null)
+            {
+                PostAttachments.Children.Add(new TextBlock
+                {
+                    FontStyle = Windows.UI.Text.FontStyle.Italic,
+                    Text = $"Poll is not supported yet.",
+                    Margin = new Thickness(0, 12, 0, 0)
+                });
+            }
+
+            foreach (var atchType in unknown)
+            {
+                PostAttachments.Children.Add(new TextBlock
+                {
+                    FontStyle = Windows.UI.Text.FontStyle.Italic,
+                    Text = $"Unsupported attachment type: {atchType}",
+                    Margin = new Thickness(0, 12, 0, 0)
+                });
+            }
         }
 
         private void UpdateUI()

@@ -131,6 +131,7 @@
     <Compile Include="Objects\Main\BoardTopic.cs" />
     <Compile Include="Objects\Main\Graffiti.cs" />
     <Compile Include="Objects\Main\Group.cs" />
+    <Compile Include="Objects\Main\ISizedAttachment.cs" />
     <Compile Include="Objects\Main\IWithAvatar.cs" />
     <Compile Include="Objects\Main\Photo.cs" />
     <Compile Include="Objects\Main\Poll.cs" />

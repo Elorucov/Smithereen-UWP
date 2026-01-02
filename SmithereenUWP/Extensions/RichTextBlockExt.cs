@@ -22,7 +22,7 @@ namespace SmithereenUWP.Extensions
         private static void HtmlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var richText = d as RichTextBlock;
-            if (richText == null) return;
+            if (richText == null || e.NewValue == null) return;
 
             var xhtml = e.NewValue as string;
             HTMLTextParser.Parse(xhtml, richText);

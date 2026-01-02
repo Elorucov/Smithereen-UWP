@@ -18,10 +18,10 @@ namespace SmithereenUWP.API.Objects.Main
         public string Url { get; private set; }
     }
 
-    public sealed class Photo
+    public sealed class Photo : ISizedAttachment
     {
         [JsonProperty("id")]
-        public int Id { get; private set; }
+        public string Id { get; private set; }
 
         [JsonProperty("ap_id")]
         public string ActivityPubId { get; private set; }
@@ -30,7 +30,7 @@ namespace SmithereenUWP.API.Objects.Main
         public string Url { get; private set; }
 
         [JsonProperty("album_id")]
-        public int AlbumId { get; private set; }
+        public string AlbumId { get; private set; }
 
         [JsonProperty("owner_id")]
         public int OwnerId { get; private set; }

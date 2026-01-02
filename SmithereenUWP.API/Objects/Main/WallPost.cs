@@ -93,7 +93,7 @@ namespace SmithereenUWP.API.Objects.Main
         [JsonProperty("reposts")]
         public WallPostRepostsInfo Reposts { get; private set; }
 
-        [JsonProperty("attachment")]
+        [JsonProperty("attachments")]
         public List<Attachment> Attachments { get; private set; }
 
         [JsonProperty("content_warning")]

@@ -130,6 +130,7 @@
     <Compile Include="Controls\HyperlinkActionButton.xaml.cs">
       <DependentUpon>HyperlinkActionButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MediaGridPanel.cs" />
     <Compile Include="Controls\Popups\ScreenSpinner.cs" />
     <Compile Include="Core\AppInfo.cs" />
     <Compile Include="Core\AppParameters.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Core\SystemUI.cs" />
     <Compile Include="DataModels\Entity.cs" />
     <Compile Include="DataModels\MainMenuItem.cs" />
+    <Compile Include="DataModels\TiledLayoutResult.cs" />
     <Compile Include="DataTemplateSelectors\NewsfeedItemDataTemplateSelector.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\RichTextBlockExt.cs" />
@@ -149,6 +151,7 @@
     <Compile Include="Extensions\TextBlockExt.cs" />
     <Compile Include="Extensions\SmithereenExtensions.cs" />
     <Compile Include="Helpers\HTMLTextParser.cs" />
+    <Compile Include="Helpers\PhotoLayout.cs" />
     <Compile Include="Pages\AppPage.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

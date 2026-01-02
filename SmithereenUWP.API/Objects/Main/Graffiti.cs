@@ -2,7 +2,7 @@
 
 namespace SmithereenUWP.API.Objects.Main
 {
-    public sealed class Graffiti
+    public sealed class Graffiti : ISizedAttachment
     {
         [JsonProperty("url")]
         public string Url { get; private set; }
