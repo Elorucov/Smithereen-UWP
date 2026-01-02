@@ -2,8 +2,10 @@
 using SmithereenUWP.Pages;
 using SmithereenUWP.Pages.Wizard;
 using System;
+using System.IO;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,6 +26,7 @@ namespace SmithereenUWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.UnhandledException += App_UnhandledException;
         }
 
         /// <summary>
@@ -33,6 +36,8 @@ namespace SmithereenUWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            CoreApplication.UnhandledErrorDetected += CoreApplication_UnhandledErrorDetected;
+
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Windows.Foundation.Size(320, 500));
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -73,6 +78,37 @@ namespace SmithereenUWP
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+        }
+
+        private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            OnFail(e.Exception, "App");
+        }
+
+        private void CoreApplication_UnhandledErrorDetected(object sender, UnhandledErrorDetectedEventArgs e)
+        {
+            try
+            {
+                e.UnhandledError.Propagate();
+            }
+            catch (Exception ex) {
+                OnFail(ex, "CoreApplication");
+            }
+        }
+
+        private void OnFail(Exception ex, string from)
+        {
+            Window.Current.Content = new ScrollViewer
+            {
+                Content = new TextBlock
+                {
+                    Margin = new Thickness(12),
+                    TextWrapping = TextWrapping.Wrap,
+                    Text = $"[Temporary crash handler]\nAn error occured.\n\nFrom: {from}\nHResult: 0x{ex.HResult.ToString("x8")}\nMessage: {ex.Message.Trim()}\n\nStack trace:\n{ex.StackTrace}"
+                }
+            };
+            Window.Current.Activate();
         }
 
         protected override void OnActivated(IActivatedEventArgs args)
