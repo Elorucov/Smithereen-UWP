@@ -13,7 +13,7 @@ namespace SmithereenUWP.Helpers
         public const int MAX_WIDTH = 1000;
         public const int MAX_HEIGHT = 1777; // 9:16
         public const int MIN_HEIGHT = 475; // ~2:1
-        private const double GAP = 2;
+        public const double GAP = 2;
 
         public static TiledLayoutResult MakeLayout(List<ISizedAttachment> thumbs)
         {
@@ -81,7 +81,7 @@ namespace SmithereenUWP.Helpers
                     result.tiles = new Tile[]{
                         new Tile(1, 1, 0, 0),
                         new Tile(1, 1, 0, 1)
-                };
+                    };
                 }
                 else if (allAreWide)
                 {
@@ -101,7 +101,7 @@ namespace SmithereenUWP.Helpers
                     result.tiles = new Tile[]{
                         new Tile(1, 1, 0, 0),
                         new Tile(1, 1, 0, 1)
-                };
+                    };
                 }
                 else if (allAreSquare)
                 {
@@ -116,7 +116,7 @@ namespace SmithereenUWP.Helpers
                     result.tiles = new Tile[]{
                         new Tile(1, 1, 0, 0),
                         new Tile(1, 1, 1, 0)
-                };
+                    };
                 }
                 else
                 {
@@ -132,7 +132,7 @@ namespace SmithereenUWP.Helpers
                     result.tiles = new Tile[]{
                         new Tile(1, 1, 0, 0),
                         new Tile(1, 1, 1, 0)
-                };
+                    };
                 }
             }
             else if (cnt == 3)
@@ -157,7 +157,7 @@ namespace SmithereenUWP.Helpers
                         new Tile(2, 1, 0, 0),
                         new Tile(1, 1, 0, 1),
                         new Tile(1, 1, 1, 1)
-                };
+                    };
                 }
                 else
                 { // 2nd and 3rd photos are on the right part
@@ -174,7 +174,7 @@ namespace SmithereenUWP.Helpers
                         new Tile(1, 2, 0, 0),
                         new Tile(1, 1, 1, 0),
                         new Tile(1, 1, 1, 1)
-                };
+                    };
                 }
             }
             else if (cnt == 4)
@@ -202,7 +202,7 @@ namespace SmithereenUWP.Helpers
                         new Tile(1, 1, 0, 1),
                         new Tile(1, 1, 1, 1),
                         new Tile(1, 1, 2, 1),
-                };
+                    };
                 }
                 else
                 { // 2nd, 3rd and 4th photos are on the right part
@@ -222,7 +222,7 @@ namespace SmithereenUWP.Helpers
                         new Tile(1, 1, 1, 0),
                         new Tile(1, 1, 1, 1),
                         new Tile(1, 1, 1, 2),
-                };
+                    };
                 }
             }
             else

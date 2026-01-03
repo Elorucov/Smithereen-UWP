@@ -8,6 +8,9 @@
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemChromeMediumColor}"/>
+                    <SolidColorBrush x:Key="LightAccentBlockBackgroundBrush" Color="{StaticResource SystemAccentColorDark3}"/>
+                    <SolidColorBrush x:Key="LightAccentBlockForegroundBrush" Color="{StaticResource SystemAccentColorLight3}"/>
                     <!-- Resources for AccentButtonStyle -->
                     <StaticResource x:Key="AccentButtonBackground" ResourceKey="SystemControlForegroundAccentBrush" />
                     <StaticResource x:Key="AccentButtonBackgroundPointerOver" ResourceKey="SystemControlForegroundAccentBrush" />
@@ -21,9 +24,11 @@
                     <StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
-                    <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemChromeMediumColor}"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
+                    <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemChromeMediumColor}"/>
+                    <SolidColorBrush x:Key="LightAccentBlockBackgroundBrush" Color="{StaticResource SystemAccentColorDark3}"/>
+                    <SolidColorBrush x:Key="LightAccentBlockForegroundBrush" Color="{StaticResource SystemAccentColorLight3}"/>
                     <!-- Resources for AccentButtonStyle -->
                     <StaticResource x:Key="AccentButtonBackground" ResourceKey="SystemControlForegroundAccentBrush" />
                     <StaticResource x:Key="AccentButtonBackgroundPointerOver" ResourceKey="SystemControlForegroundAccentBrush" />
@@ -37,9 +42,11 @@
                     <StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
-                    <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemChromeMediumColor}"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemAccentColorDark1}"/>
+                    <SolidColorBrush x:Key="LightAccentBlockBackgroundBrush" Color="{StaticResource SystemAccentColorLight3}"/>
+                    <SolidColorBrush x:Key="LightAccentBlockForegroundBrush" Color="{StaticResource SystemAccentColorDark3}"/>
                     <!-- Resources for AccentButtonStyle -->
                     <StaticResource x:Key="AccentButtonBackground" ResourceKey="SystemControlForegroundAccentBrush" />
                     <StaticResource x:Key="AccentButtonBackgroundPointerOver" ResourceKey="SystemControlForegroundAccentBrush" />
@@ -53,7 +60,6 @@
                     <StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
                     <StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
-                    <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemAccentColorDark1}"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 

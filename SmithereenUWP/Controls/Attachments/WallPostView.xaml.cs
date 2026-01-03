@@ -103,8 +103,12 @@ namespace SmithereenUWP.Controls.Attachments
             if (!string.IsNullOrEmpty(Post.ContentWarning))
             {
                 PostContent.Visibility = Visibility.Collapsed;
-                SpoilerButton.Label = Post.ContentWarning;
+                SpoilerLabel.Text = Post.ContentWarning;
                 SpoilerButton.Visibility = Visibility.Visible;
+            } else
+            {
+                PostContent.Visibility = Visibility.Visible;
+                SpoilerButton.Visibility = Visibility.Collapsed;
             }
 
             // Post text
@@ -327,11 +331,11 @@ namespace SmithereenUWP.Controls.Attachments
             if (PostContent.Visibility == Visibility.Collapsed)
             {
                 PostContent.Visibility = Visibility.Visible;
-                SpoilerButton.IconGlyph = "";
+                SpoilerIcon.Glyph = "";
             } else
             {
                 PostContent.Visibility = Visibility.Collapsed;
-                SpoilerButton.IconGlyph = "";
+                SpoilerIcon.Glyph = "";
             }
         }
     }

@@ -30,7 +30,12 @@
         </Grid>
 
         <StackPanel x:Name="PostContentRoot">
-            <ctrls:HyperlinkActionButton x:Name="SpoilerButton" Margin="0,12,0,0" Visibility="Collapsed" Padding="6" IconGlyph="" Click="ToggleSpoiler"/>
+            <Button x:Name="SpoilerButton" Margin="0,12,0,0" Visibility="Collapsed" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="4,4,4,5" Background="{ThemeResource LightAccentBlockBackgroundBrush}" Foreground="{ThemeResource LightAccentBlockForegroundBrush}" Click="ToggleSpoiler">
+                <StackPanel Orientation="Horizontal">
+                    <ctrls:FixedFontIcon x:Name="SpoilerIcon" Glyph=""/>
+                    <TextBlock x:Name="SpoilerLabel" Margin="6,0,0,0" FontSize="14"/>
+                </StackPanel>
+            </Button>
             <StackPanel x:Name="PostContent">
                 <RichTextBlock x:Name="PostText" Margin="0,12,0,0" Style="{StaticResource ContentRichTextStyle}"/>
                 <StackPanel x:Name="PostAttachments"/>

@@ -11,7 +11,6 @@ namespace SmithereenUWP.Controls
     internal class MediaGridPanel : Panel
     {
         public const int MAX_WIDTH = 500;
-        private const int GAP = 4;
 
         private double[] columnStarts, columnEnds, rowStarts, rowEnds = null;
 
@@ -69,21 +68,21 @@ namespace SmithereenUWP.Controls
             {
                 columnStarts[i] = offset;
                 var tileWidth = Layout.columnSizes[i] / (double)Layout.width * width;
-                if (tileWidth < 1) Debug.WriteLine($"{nameof(MediaGridPanel)}: One of tiles has width less than 1px! Column size: {Layout.columnSizes[i]}; Layout width: {Layout.width}; Width: {width}");
+                if (tileWidth < 1) Debug.WriteLine($"{nameof(MediaGridPanel)}: One of tiles has width less than 1px! Tile width: {tileWidth} Column size: {Layout.columnSizes[i]}; Layout width: {Layout.width}; Width: {width}");
                 offset += Math.Round(tileWidth);
                 columnEnds[i] = offset;
-                offset += GAP;
+                offset += PhotoLayout.GAP;
             }
             columnEnds[Layout.columnSizes.Length - 1] = width;
             offset = 0;
             for (int i = 0; i < Layout.rowSizes.Length; i++)
             {
                 rowStarts[i] = offset;
-                var tileHeight =(double)Layout.rowSizes[i] / (double)Layout.height * height;
-                if (tileHeight < 1) Debug.WriteLine($"{nameof(MediaGridPanel)}: One of tiles has height less than 1px! Row size: {Layout.rowSizes[i]}; Layout height: {Layout.height}; Height: {height}");
+                var tileHeight = (double)Layout.rowSizes[i] / (double)Layout.height * height;
+                if (tileHeight < 1) Debug.WriteLine($"{nameof(MediaGridPanel)}: One of tiles has height less than 1px! Tile height: {tileHeight}, Row size: {Layout.rowSizes[i]}; Layout height: {Layout.height}; Height: {height}");
                 offset += Math.Round(tileHeight);
                 rowEnds[i] = offset;
-                offset += GAP;
+                offset += PhotoLayout.GAP;
             }
             rowEnds[Layout.rowSizes.Length - 1] = height;
 
@@ -105,11 +104,6 @@ namespace SmithereenUWP.Controls
             if (Layout == null || finalSize.Width < 100 || finalSize.Height < 100 || rowStarts == null)
                 return base.ArrangeOverride(finalSize);
 
-            //int maxWidth = MAX_WIDTH;
-            //if (Layout.width < PhotoLayout.MAX_WIDTH)
-            //{
-            //    maxWidth = (int)Math.Round(finalSize.Width * (Layout.width / (double)PhotoLayout.MAX_WIDTH));
-            //}
             double maxWidth = (int)DesiredSize.Width;
 
             double calculatedHeight = 0;
