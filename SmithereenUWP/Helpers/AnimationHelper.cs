@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Foundation.Metadata;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,7 +18,14 @@ namespace SmithereenUWP.Helpers
 
         public static void ShowAnimated(Panel panel, double durationMs = 0)
         {
+            if (!ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 4))
+            {
+                panel.Visibility = Visibility.Visible;
+                return;
+            }
+
             if (durationMs <= 0) durationMs = DURATION_MS;
+
             long id = 0;
             id = panel.RegisterPropertyChangedCallback(UIElement.VisibilityProperty, (a, b) =>
             {
@@ -37,7 +45,14 @@ namespace SmithereenUWP.Helpers
 
         public static void HideAnimated(Panel panel, double durationMs = 0)
         {
+            if (!ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 4))
+            {
+                panel.Visibility = Visibility.Visible;
+                return;
+            }
+
             if (durationMs <= 0) durationMs = DURATION_MS;
+
             AnimateChildren(panel, durationMs, true);
             new System.Action(async () =>
             {
