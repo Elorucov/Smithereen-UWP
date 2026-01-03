@@ -36,7 +36,7 @@ namespace SmithereenUWP.Helpers
                 }
                 else
                 {
-                    AnimateChildren(panel, durationMs);
+                    AnimateChildren(panel, out var totalChildrenCount, durationMs);
                 }
                 panel.UnregisterPropertyChangedCallback(UIElement.VisibilityProperty, id);
             });
@@ -53,10 +53,10 @@ namespace SmithereenUWP.Helpers
 
             if (durationMs <= 0) durationMs = DURATION_MS;
 
-            AnimateChildren(panel, durationMs, true);
+            AnimateChildren(panel, out var totalChildrenCount, durationMs, true);
             new System.Action(async () =>
             {
-                await Task.Delay((int)DURATION_MS);
+                await Task.Delay((int)DURATION_MS + (totalChildrenCount * 16));
                 panel.Visibility = Visibility.Collapsed;
             })();
         }
@@ -66,7 +66,7 @@ namespace SmithereenUWP.Helpers
             Panel panel = sender as Panel;
             double durationMs = (double)panel.Resources[DURATION_RESOURCE_KEY];
             panel.SizeChanged -= Panel_SizeChanged;
-            AnimateChildren(panel, durationMs);
+            AnimateChildren(panel, out var totalChildrenCount, durationMs);
         }
 
         private static void AddChildrenRecursive(Panel panel, List<UIElement> list)
@@ -85,7 +85,7 @@ namespace SmithereenUWP.Helpers
             }
         }
 
-        private static void AnimateChildren(Panel panel, double durationMs = 200, bool reverse = false)
+        private static void AnimateChildren(Panel panel, out int totalChildrenCount, double durationMs = 200, bool reverse = false)
         {
             List<UIElement> children = new List<UIElement>();
             List<CompositionAnimationGroup> translationAnimations = new List<CompositionAnimationGroup>();
@@ -98,6 +98,7 @@ namespace SmithereenUWP.Helpers
             rootVisual.Clip = compositor.CreateInsetClip();
             rootVisual.Clip.Offset = new Vector2(0, 0);
             AddChildrenRecursive(panel, children);
+            totalChildrenCount = children.Count;
 
             foreach (var child in children)
             {
