@@ -4,7 +4,6 @@ using SmithereenUWP.Extensions;
 using SmithereenUWP.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -105,7 +104,8 @@ namespace SmithereenUWP.Controls.Attachments
                 PostContent.Visibility = Visibility.Collapsed;
                 SpoilerLabel.Text = Post.ContentWarning;
                 SpoilerButton.Visibility = Visibility.Visible;
-            } else
+            }
+            else
             {
                 PostContent.Visibility = Visibility.Visible;
                 SpoilerButton.Visibility = Visibility.Collapsed;
@@ -330,12 +330,13 @@ namespace SmithereenUWP.Controls.Attachments
         {
             if (PostContent.Visibility == Visibility.Collapsed)
             {
-                PostContent.Visibility = Visibility.Visible;
                 SpoilerIcon.Glyph = "";
-            } else
+                AnimationHelper.ShowAnimated(PostContent);
+            }
+            else
             {
-                PostContent.Visibility = Visibility.Collapsed;
                 SpoilerIcon.Glyph = "";
+                AnimationHelper.HideAnimated(PostContent);
             }
         }
     }

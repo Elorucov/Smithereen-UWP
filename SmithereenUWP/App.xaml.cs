@@ -2,7 +2,6 @@
 using SmithereenUWP.Pages;
 using SmithereenUWP.Pages.Wizard;
 using System;
-using System.IO;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -92,7 +91,8 @@ namespace SmithereenUWP
             {
                 e.UnhandledError.Propagate();
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 OnFail(ex, "CoreApplication");
             }
         }
