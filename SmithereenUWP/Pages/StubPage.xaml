@@ -1,0 +1,17 @@
+﻿<local:StubPageBase
+    x:Class="SmithereenUWP.Pages.StubPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SmithereenUWP.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Under development"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Margin="9" VerticalAlignment="Center">
+        <Image Margin="3" Width="192" Height="192" HorizontalAlignment="Center" Source="https://elor.top/res/images/pensive.png"/>
+        <TextBlock Margin="3" TextWrapping="Wrap" TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" Text="This page is under development"/>
+        <TextBlock Margin="3" TextWrapping="Wrap" TextAlignment="Center" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Text="It's not ready yet. Please wait for the next versions."/>
+    </StackPanel>
+</local:StubPageBase>

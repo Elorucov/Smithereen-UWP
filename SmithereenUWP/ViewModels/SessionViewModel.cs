@@ -1,6 +1,7 @@
 ﻿using SmithereenUWP.API;
 using SmithereenUWP.Core;
 using SmithereenUWP.DataModels;
+using SmithereenUWP.Pages;
 using SmithereenUWP.Pages.News;
 using SmithereenUWP.ViewModels.Base;
 using System.Collections.Generic;
@@ -14,16 +15,16 @@ namespace SmithereenUWP.ViewModels
     {
         private readonly ReadOnlyCollection<MainMenuItem> _menuItems = new List<MainMenuItem>
         {
-            new MainMenuItem('', Locale.Get("my_profile"), typeof(NewsPage)),
-            new MainMenuItem('', Locale.Get("my_friends"), typeof(NewsPage)),
-            new MainMenuItem('', Locale.Get("my_photos"), typeof(NewsPage)),
-            new MainMenuItem('', Locale.Get("my_messages"), typeof(NewsPage)),
-            new MainMenuItem('', Locale.Get("my_groups"), typeof(NewsPage)),
-            new MainMenuItem('', Locale.Get("my_events"), typeof(NewsPage)),
+            new MainMenuItem('', Locale.Get("my_profile"), typeof(StubPage)),
+            new MainMenuItem('', Locale.Get("my_friends"), typeof(StubPage)),
+            new MainMenuItem('', Locale.Get("my_photos"), typeof(StubPage)),
+            new MainMenuItem('', Locale.Get("my_messages"), typeof(StubPage)),
+            new MainMenuItem('', Locale.Get("my_groups"), typeof(StubPage)),
+            new MainMenuItem('', Locale.Get("my_events"), typeof(StubPage)),
             new MainMenuItem('', Locale.Get("my_news"), typeof(NewsPage)),
-            new MainMenuItem('', Locale.Get("my_feedback"), typeof(NewsPage)),
-            new MainMenuItem('', Locale.Get("my_bookmarks"), typeof(NewsPage)),
-            new MainMenuItem('', Locale.Get("my_settings"), typeof(NewsPage)),
+            new MainMenuItem('', Locale.Get("my_feedback"), typeof(StubPage)),
+            new MainMenuItem('', Locale.Get("my_bookmarks"), typeof(StubPage)),
+            new MainMenuItem('', Locale.Get("my_settings"), typeof(StubPage)),
         }.AsReadOnly();
         private readonly SmithereenAPI _api;
 
