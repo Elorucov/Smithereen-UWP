@@ -231,4 +231,13 @@
   <data name="attach" xml:space="preserve">
     <value>Attach</value>
   </data>
+  <data name="leave_comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="like" xml:space="preserve">
+    <value>Like</value>
+  </data>
+  <data name="comments" xml:space="preserve">
+    <value>Comments</value>
+  </data>
 </root>

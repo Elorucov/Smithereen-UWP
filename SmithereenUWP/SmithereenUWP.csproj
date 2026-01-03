@@ -139,6 +139,7 @@
     </Compile>
     <Compile Include="Controls\MediaGridPanel.cs" />
     <Compile Include="Controls\Popups\ScreenSpinner.cs" />
+    <Compile Include="Converters\LocalizationConverter.cs" />
     <Compile Include="Core\AppInfo.cs" />
     <Compile Include="Core\AppParameters.cs" />
     <Compile Include="Core\CacheManager.cs" />
@@ -154,8 +155,6 @@
     <Compile Include="DataTemplateSelectors\NewsfeedItemDataTemplateSelector.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\RichTextBlockExt.cs" />
-    <Compile Include="Extensions\UIExt.cs" />
-    <Compile Include="Extensions\TextBlockExt.cs" />
     <Compile Include="Extensions\SmithereenExtensions.cs" />
     <Compile Include="Helpers\HTMLTextParser.cs" />
     <Compile Include="Helpers\PhotoLayout.cs" />

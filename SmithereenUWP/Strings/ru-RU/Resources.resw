@@ -231,4 +231,13 @@
   <data name="attach" xml:space="preserve">
     <value>Прикрепить</value>
   </data>
+  <data name="leave_comment" xml:space="preserve">
+    <value>Комментировать</value>
+  </data>
+  <data name="like" xml:space="preserve">
+    <value>Мне нравится</value>
+  </data>
+  <data name="comments" xml:space="preserve">
+    <value>Комментарии</value>
+  </data>
 </root>
