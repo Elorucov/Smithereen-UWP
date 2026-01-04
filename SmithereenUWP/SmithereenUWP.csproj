@@ -160,6 +160,12 @@
     <Compile Include="Helpers\HTMLTextParser.cs" />
     <Compile Include="Helpers\PhotoLayout.cs" />
     <Compile Include="Pages\AppPage.cs" />
+    <Compile Include="Pages\Dev\DevMenu.xaml.cs">
+      <DependentUpon>DevMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Dev\DevSettings.xaml.cs">
+      <DependentUpon>DevSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -224,6 +230,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\HyperlinkActionButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Dev\DevMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Dev\DevSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

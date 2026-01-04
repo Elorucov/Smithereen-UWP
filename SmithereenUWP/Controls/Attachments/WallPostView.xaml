@@ -28,6 +28,7 @@
                 </StackPanel>
                 <TextBlock x:Name="PostInfo" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
             </StackPanel>
+            <TextBlock x:Name="dbg" Grid.ColumnSpan="2" Visibility="Collapsed" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="12" FontFamily="Lucida Console" Foreground="Red"/>
         </Grid>
 
         <StackPanel x:Name="PostContentRoot">

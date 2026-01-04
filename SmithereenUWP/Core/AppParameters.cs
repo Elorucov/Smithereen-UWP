@@ -8,28 +8,56 @@ namespace SmithereenUWP.Core
 
         #region Constants
 
-        const string uid = "uid";
-        const string at = "at";
-        const string server = "server";
+        const string USER_ID = "uid";
+        const string ACCESS_TOKEN = "at";
+        const string SERVER = "server";
+        const string DEBUG_WALL = "dwall";
+
+        #endregion
+
+        #region Getters
+
+        private static bool GetBoolean(string key)
+        {
+            return adc.Values[key] != null && adc.Values[key] is bool b ? b : false;
+        }
+
+        private static int GetInt32(string key)
+        {
+            return adc.Values[key] != null && adc.Values[key] is int i ? i : 0;
+        }
+
+        private static string GetString(string key)
+        {
+            return adc.Values[key] != null && adc.Values[key] is string s ? s : null;
+        }
 
         #endregion
 
         public static int CurrentUserId
         {
-            get => adc.Values[uid] != null && adc.Values[uid] is int i ? i : 0;
-            set => adc.Values[uid] = value;
+            get => GetInt32(USER_ID);
+            set => adc.Values[USER_ID] = value;
         }
 
         public static string CurrentUserAccessToken
         {
-            get => adc.Values[at] != null && adc.Values[at] is string s ? s : null;
-            set => adc.Values[at] = value;
+            get => GetString(ACCESS_TOKEN);
+            set => adc.Values[ACCESS_TOKEN] = value;
         }
 
         public static string CurrentServer
         {
-            get => adc.Values[server] != null && adc.Values[server] is string s ? s : null;
-            set => adc.Values[server] = value;
+            get => GetString(SERVER);
+            set => adc.Values[SERVER] = value;
+        }
+
+        // Debug
+
+        public static bool WallDebug
+        {
+            get => GetBoolean(DEBUG_WALL);
+            set => adc.Values[DEBUG_WALL] = value;
         }
     }
 }

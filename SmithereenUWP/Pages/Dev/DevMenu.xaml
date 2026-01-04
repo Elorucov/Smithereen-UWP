@@ -1,0 +1,46 @@
+﻿<Page
+    x:Class="SmithereenUWP.Pages.Dev.DevMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SmithereenUWP.Pages.Dev"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Height="48" RequestedTheme="Dark">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="0"/>
+                        <GradientStop Color="{ThemeResource SystemAccentColor}" Offset="0.5"/>
+                        <GradientStop Color="{ThemeResource SystemAccentColorDark3}" Offset="0.5"/>
+                        <GradientStop Color="{ThemeResource SystemAccentColorDark3}" Offset="0.6"/>
+                        <GradientStop Color="{ThemeResource SystemAccentColorDark1}" Offset="1"/>
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Border.Background>
+            <StackPanel Margin="16,0" VerticalAlignment="Center">
+                <TextBlock FontSize="16" FontWeight="SemiBold" Text="SMITHEWIN DEBUG MENU" LineStackingStrategy="BlockLineHeight" LineHeight="18"/>
+                <TextBlock x:Name="uid" Style="{StaticResource CaptionTextBlockStyle}"/>
+            </StackPanel>
+        </Border>
+        <ListView x:Name="Menu" Grid.Row="1" Background="Transparent" SelectedIndex="-1" IsItemClickEnabled="True" ItemClick="Menu_ItemClick">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:DebugMenuItem">
+                    <TextBlock Text="{x:Bind Name}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Rectangle Grid.Row="1" VerticalAlignment="Top" Height="1">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="{ThemeResource SystemAccentColorDark3}"/>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Grid>
+</Page>

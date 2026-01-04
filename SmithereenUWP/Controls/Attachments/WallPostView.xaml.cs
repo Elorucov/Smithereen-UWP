@@ -4,6 +4,7 @@ using SmithereenUWP.Extensions;
 using SmithereenUWP.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -53,14 +54,22 @@ namespace SmithereenUWP.Controls.Attachments
             set { SetValue(IsContentVisibleProperty, value); }
         }
 
+        static uint _instances = 0;
+        readonly uint _instanceSerialNumber = 0;
+        readonly bool _wallDebug = AppParameters.WallDebug;
+
         long _pid = 0;
         long _rid = 0;
         long _gid = 0;
         long _cid = 0;
 
+
         public WallPostView()
         {
             this.InitializeComponent();
+
+            _instances++;
+            _instanceSerialNumber = _instances;
 
             _pid = RegisterPropertyChangedCallback(PostProperty, (a, b) => { RenderPost(); UpdateUI(); });
             _rid = RegisterPropertyChangedCallback(IsRepostProperty, (a, b) => { UpdateUI(); CheckAndRenderForeignLink(); UpdateCounters(); });
@@ -80,12 +89,15 @@ namespace SmithereenUWP.Controls.Attachments
 
         private void RenderPost()
         {
+            Stopwatch sw = Stopwatch.StartNew();
+
             if (Reposts.Children.Count == 2) Reposts.Children.RemoveAt(0);
             RepostInRepost.Child = null;
             RepostInRepost.Visibility = Visibility.Collapsed;
             if (Post == null)
             {
                 Visibility = Visibility.Collapsed;
+                dbg.Text = string.Empty;
                 return;
             }
 
@@ -144,11 +156,20 @@ namespace SmithereenUWP.Controls.Attachments
                     RepostInRepost.Visibility = Visibility.Visible;
                 }
                 if (Reposts.Children.Count > 0) Reposts.Visibility = Visibility.Visible;
+            } else
+            {
+                Reposts.Visibility = Visibility.Collapsed;
             }
 
             CheckAndRenderForeignLink();
-
             UpdateCounters();
+
+            sw.Stop();
+            if (_wallDebug)
+            {
+                dbg.Text = $"Render took {sw.ElapsedMilliseconds} ms. PID: {Post.Id}   SN: {_instanceSerialNumber}";
+                dbg.Visibility = Visibility.Visible;
+            }
 
             Visibility = Visibility.Visible;
         }
