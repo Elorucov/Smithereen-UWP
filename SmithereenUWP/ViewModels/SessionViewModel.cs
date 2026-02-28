@@ -3,6 +3,7 @@ using SmithereenUWP.Core;
 using SmithereenUWP.DataModels;
 using SmithereenUWP.Pages;
 using SmithereenUWP.Pages.News;
+using SmithereenUWP.Pages.Profile;
 using SmithereenUWP.ViewModels.Base;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +16,7 @@ namespace SmithereenUWP.ViewModels
     {
         private readonly ReadOnlyCollection<MainMenuItem> _menuItems = new List<MainMenuItem>
         {
-            new MainMenuItem('', Locale.Get("my_profile"), typeof(StubPage)),
+            new MainMenuItem('', Locale.Get("my_profile"), typeof(ProfilePage)),
             new MainMenuItem('', Locale.Get("my_friends"), typeof(StubPage)),
             new MainMenuItem('', Locale.Get("my_photos"), typeof(StubPage)),
             new MainMenuItem('', Locale.Get("my_messages"), typeof(StubPage)),
@@ -35,7 +36,9 @@ namespace SmithereenUWP.ViewModels
 
         public MainMenuItem SelectedMenuItem { get { return _selectedMenuItem; } set { _selectedMenuItem = value; OnPropertyChanged(); } }
 
-        public static SessionViewModel Current => CoreApplication.Properties["svm"] as SessionViewModel;
+        public static SessionViewModel Current => CoreApplication.Properties.ContainsKey("svm") 
+                                        ? CoreApplication.Properties["svm"] as SessionViewModel
+                                        : null;
 
         public SessionViewModel()
         {

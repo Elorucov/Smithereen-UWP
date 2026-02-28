@@ -156,7 +156,8 @@ namespace SmithereenUWP.Controls.Attachments
                     RepostInRepost.Visibility = Visibility.Visible;
                 }
                 if (Reposts.Children.Count > 0) Reposts.Visibility = Visibility.Visible;
-            } else
+            }
+            else
             {
                 Reposts.Visibility = Visibility.Collapsed;
             }

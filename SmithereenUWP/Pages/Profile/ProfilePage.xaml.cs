@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using SmithereenUWP.ViewModels;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace SmithereenUWP.Pages.Profile
 {
+    public class ProfilePageBase : AppPage<ProfileViewModel> { }
+
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ProfilePage : Page
+    public sealed partial class ProfilePage : ProfilePageBase
     {
         public ProfilePage()
         {
             this.InitializeComponent();
+            RegisterPropertyChangedCallback(TopPaddingProperty, TopPaddingChanged);
+        }
+
+        private void TopPaddingChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            ContentRootWrap.Padding = new Thickness(0, TopPadding, 0, 0);
         }
     }
 }

@@ -40,10 +40,12 @@ namespace SmithereenUWP.Core
                 {
                     if (App.Current.Activated)
                     {
-                        new Action(async () => {
+                        new Action(async () =>
+                        {
                             var view = await OpenNewViewAsync(typeof(DevMenu), "Dev menu");
                         })();
-                    } else
+                    }
+                    else
                     {
                         (Window.Current.Content as Frame).Navigate(typeof(DevMenu));
                     }
@@ -75,7 +77,8 @@ namespace SmithereenUWP.Core
             Window newWindow = null;
             var newAV = CoreApplication.CreateNewView();
             bool result = false;
-            await newAV.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => {
+            await newAV.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
                 newWindow = Window.Current;
                 var newAppView = ApplicationView.GetForCurrentView();
                 newAppView.Title = title;
@@ -89,7 +92,8 @@ namespace SmithereenUWP.Core
 
                 result = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.Custom, currentAV.Id, ViewSizePreference.Custom);
             });
-            if (closeOnMainWindowClosing) currentAV.Consolidated += async (a, b) => {
+            if (closeOnMainWindowClosing) currentAV.Consolidated += async (a, b) =>
+            {
                 await newAV.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { newWindow?.Close(); });
             };
             return result;

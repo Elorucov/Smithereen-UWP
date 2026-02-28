@@ -1,22 +1,12 @@
 ﻿using SmithereenUWP.Core;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -53,7 +43,8 @@ namespace SmithereenUWP.Pages.Dev
             Unloaded += DevMenu_Unloaded;
 
             List<DebugMenuItem> items = new List<DebugMenuItem> {
-                new DebugMenuItem("Dev settings", typeof(DevSettings))
+                new DebugMenuItem("Dev settings", typeof(DevSettings)),
+                new DebugMenuItem("API Console", typeof(APIConsole))
             };
             Menu.ItemsSource = items;
         }
@@ -69,14 +60,16 @@ namespace SmithereenUWP.Pages.Dev
         private void DevMenu_Loaded(object sender, RoutedEventArgs e)
         {
             SystemNavigationManager navmgr = SystemNavigationManager.GetForCurrentView();
-            navmgr.BackRequested += (a, b) => {
+            navmgr.BackRequested += (a, b) =>
+            {
                 if (Frame.CanGoBack)
                 {
                     b.Handled = true;
                     Frame.GoBack(new DrillInNavigationTransitionInfo());
                 }
             };
-            Frame.Navigated += (a, b) => {
+            Frame.Navigated += (a, b) =>
+            {
                 navmgr.AppViewBackButtonVisibility = Frame.BackStackDepth <= 0 ? AppViewBackButtonVisibility.Collapsed : AppViewBackButtonVisibility.Visible;
             };
         }

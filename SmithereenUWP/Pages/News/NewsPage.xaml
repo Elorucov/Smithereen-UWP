@@ -11,7 +11,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{ThemeResource PageBackgroundBrush}"
     Loaded="NewsPageBase_Loaded">
     <local:NewsPageBase.HeaderAfterContent>
         <Button Style="{StaticResource ControlButtonStyle}" Content=""/>
@@ -22,19 +22,19 @@
 
     <local:NewsPageBase.Resources>
         <DataTemplate x:Key="PostTemplate" x:DataType="smr:NewsfeedItem">
-            <Border Padding="0,12" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+            <Border Margin="0,6" Padding="12" Background="{ThemeResource ContentBackgroundBrush}">
                 <att:WallPostView Post="{x:Bind Post}"/>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="PhotoTemplate" x:DataType="smr:NewsfeedItem">
-            <Border Padding="0,12" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+            <Border Margin="0,6" Padding="12" Background="{ThemeResource ContentBackgroundBrush}">
                 <TextBlock Text="Photo"/>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="FeedItemTemplate" x:DataType="smr:NewsfeedItem">
-            <Border Padding="0,12" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+            <Border Margin="0,6" Padding="12" Background="{ThemeResource ContentBackgroundBrush}">
                 <TextBlock Text="Other"/>
             </Border>
         </DataTemplate>
@@ -42,15 +42,15 @@
         <dts:NewsfeedItemDataTemplateSelector x:Key="FeedDTS" Post="{StaticResource PostTemplate}" Photo="{StaticResource PhotoTemplate}" Other="{StaticResource FeedItemTemplate}"/>
     </local:NewsPageBase.Resources>
 
-    <Grid x:Name="Root" MaxWidth="720">
-        <ListView x:Name="PostsList" VerticalAlignment="Top" SelectionMode="None" ItemsSource="{Binding Items}" ItemTemplateSelector="{StaticResource FeedDTS}">
+    <Grid x:Name="Root" MaxWidth="768">
+        <ListView x:Name="PostsList" VerticalAlignment="Top" SelectionMode="None" ItemContainerStyle="{StaticResource ContentListViewItemStyle}" ItemsSource="{Binding Items}" ItemTemplateSelector="{StaticResource FeedDTS}">
             <ListView.Header>
                 <StackPanel>
                     <Border x:Name="PostsListTopPadding"/>
 
-                    <StackPanel VerticalAlignment="Top" Margin="12,0" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}">
-                        <TextBox PlaceholderText="{x:Bind Converter={StaticResource L}, ConverterParameter=write_on_own_wall}" Margin="0,12" MaxLength="1024"/>
-                        <Grid Margin="0,0,0,12">
+                    <StackPanel VerticalAlignment="Top" Margin="0,6" Padding="6" Background="{ThemeResource ContentBackgroundBrush}">
+                        <TextBox PlaceholderText="{x:Bind Converter={StaticResource L}, ConverterParameter=write_on_own_wall}" Margin="6" MaxLength="1024"/>
+                        <Grid Margin="6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="Auto"/>

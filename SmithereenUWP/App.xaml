@@ -9,9 +9,12 @@
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="PageBackgroundBrush" Color="#FF000000"/>
+                    <SolidColorBrush x:Key="ContentBackgroundBrush" Color="{ThemeResource SystemChromeMediumColor}"/>
                     <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemChromeMediumColor}"/>
                     <SolidColorBrush x:Key="LightAccentBlockBackgroundBrush" Color="{StaticResource SystemAccentColorDark3}"/>
                     <SolidColorBrush x:Key="LightAccentBlockForegroundBrush" Color="{StaticResource SystemAccentColorLight3}"/>
+                    <SolidColorBrush x:Key="CustomLinkBrush" Color="{StaticResource SystemAccentColorLight2}"/>
                     <!-- Resources for AccentButtonStyle -->
                     <StaticResource x:Key="AccentButtonBackground" ResourceKey="SystemControlForegroundAccentBrush" />
                     <StaticResource x:Key="AccentButtonBackgroundPointerOver" ResourceKey="SystemControlForegroundAccentBrush" />
@@ -27,9 +30,12 @@
                     <StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
+                    <StaticResource x:Key="PageBackgroundBrush" ResourceKey="SystemAltHighColor"/>
+                    <StaticResource x:Key="ContentBackgroundBrush" ResourceKey="SystemAltHighColor"/>
                     <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemChromeMediumColor}"/>
                     <SolidColorBrush x:Key="LightAccentBlockBackgroundBrush" Color="{StaticResource SystemAccentColorDark3}"/>
                     <SolidColorBrush x:Key="LightAccentBlockForegroundBrush" Color="{StaticResource SystemAccentColorLight3}"/>
+                    <SolidColorBrush x:Key="CustomLinkBrush" Color="{StaticResource SystemAccentColorLight2}"/>
                     <!-- Resources for AccentButtonStyle -->
                     <StaticResource x:Key="AccentButtonBackground" ResourceKey="SystemControlForegroundAccentBrush" />
                     <StaticResource x:Key="AccentButtonBackgroundPointerOver" ResourceKey="SystemControlForegroundAccentBrush" />
@@ -45,9 +51,12 @@
                     <StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="PageBackgroundBrush" Color="{ThemeResource SystemChromeMediumLowColor}"/>
+                    <SolidColorBrush x:Key="ContentBackgroundBrush" Color="#FFFFFFFF"/>
                     <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemAccentColorDark1}"/>
                     <SolidColorBrush x:Key="LightAccentBlockBackgroundBrush" Color="{StaticResource SystemAccentColorLight3}"/>
                     <SolidColorBrush x:Key="LightAccentBlockForegroundBrush" Color="{StaticResource SystemAccentColorDark2}"/>
+                    <SolidColorBrush x:Key="CustomLinkBrush" Color="{StaticResource SystemAccentColorDark2}"/>
                     <!-- Resources for AccentButtonStyle -->
                     <StaticResource x:Key="AccentButtonBackground" ResourceKey="SystemControlForegroundAccentBrush" />
                     <StaticResource x:Key="AccentButtonBackgroundPointerOver" ResourceKey="SystemControlForegroundAccentBrush" />
@@ -151,6 +160,83 @@
                 </Setter>
             </Style>
 
+            <Style TargetType="HyperlinkButton">
+                <Setter Property="Background" Value="{ThemeResource HyperlinkButtonBackground}" />
+                <Setter Property="Foreground" Value="{ThemeResource CustomLinkBrush}"/>
+                <Setter Property="BorderBrush" Value="{ThemeResource HyperlinkButtonBorderBrush}" />
+                <Setter Property="BorderThickness" Value="{ThemeResource HyperlinkButtonBorderThemeThickness}" />
+                <Setter Property="Padding" Value="0,6" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                <Setter Property="UseSystemFocusVisuals" Value="True" />
+                <Setter Property="FocusVisualMargin" Value="-3" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="HyperlinkButton">
+                            <ContentPresenter x:Name="ContentPresenterBroken"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Content="{TemplateBinding Content}"
+                        ContentTransitions="{TemplateBinding ContentTransitions}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        Padding="{TemplateBinding Padding}"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                        AutomationProperties.AccessibilityView="Raw">
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBroken" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource HyperlinkButtonForegroundPointerOver}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBroken" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource HyperlinkButtonBackgroundPointerOver}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBroken" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource HyperlinkButtonBorderBrushPointerOver}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBroken" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource HyperlinkButtonForegroundPressed}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBroken" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource HyperlinkButtonBackgroundPressed}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBroken" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource HyperlinkButtonBorderBrushPressed}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBroken" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource HyperlinkButtonForegroundDisabled}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBroken" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource HyperlinkButtonBackgroundDisabled}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBroken" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource HyperlinkButtonBorderBrushDisabled}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </ContentPresenter>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
             <DataTemplate x:Key="TitlebarContent">
                 <Grid x:Name="CustomTitleBarRoot" Background="Transparent">
                     <Image x:Name="WindowIcon" Margin="8" Width="16" Height="16" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Center" Source="/Assets/Square44x44Logo.png"/>
@@ -528,9 +614,22 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="ListViewItem">
+            <Style x:Key="BaseListViewItemStyle" TargetType="ListViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            </Style>
+
+            <Style TargetType="ListViewItem" BasedOn="{StaticResource BaseListViewItemStyle}"/>
+
+            <Style x:Key="ContentListViewItemStyle" TargetType="ListViewItem" BasedOn="{StaticResource BaseListViewItemStyle}">
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="MinHeight" Value="0"/>
+            </Style>
+
+            <Style x:Key="SeparatorStyle" TargetType="Rectangle">
+                <Setter Property="Fill" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="Height" Value="1"/>
             </Style>
 
             <Style x:Key="WallPostHyperlinkStyle" TargetType="HyperlinkButton">

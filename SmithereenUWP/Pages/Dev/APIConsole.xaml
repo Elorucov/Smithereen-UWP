@@ -1,0 +1,119 @@
+﻿<Page
+    x:Class="SmithereenUWP.Pages.Dev.APIConsole"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SmithereenUWP.Pages.Dev"
+    xmlns:ctrls="using:SmithereenUWP.Controls"
+    xmlns:vm="using:SmithereenUWP.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="OnLoaded">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TextBox">
+                <Setter Property="FontFamily" Value="Lucida Console"/>
+                <Setter Property="Padding" Value="9,7"/>
+                <Setter Property="IsSpellCheckEnabled" Value="False"/>
+            </Style>
+
+            <Style TargetType="PivotItem">
+                <Setter Property="Margin" Value="0,4,0,0"/>
+            </Style>
+
+            <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="#FFF"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="#000"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Margin="6" SizeChanged="OnSizeChanged">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Pivot x:Name="RequestPanel">
+            <PivotItem Header="Generic API">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBox x:Name="MethodName" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False" Margin="6" PlaceholderText="example: users.get"/>
+                    <Button x:Name="SendButton" Grid.Column="1" Margin="6" Style="{StaticResource AccentButtonStyle}" Content="Send" Click="SendRequest"/>
+
+                    <ListView x:Name="ParametersList" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top" SelectionMode="None">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem" BasedOn="{StaticResource BaseListViewItemStyle}">
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Padding" Value="8"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="vm:KeyValueViewModel">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="1.7*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox IsSpellCheckEnabled="False" IsTextPredictionEnabled="False" Margin="0,0,3,0" PlaceholderText="parameter" Text="{x:Bind Key, Mode=TwoWay}"/>
+                                    <TextBox IsSpellCheckEnabled="False" IsTextPredictionEnabled="False" Margin="3,0,0,0" PlaceholderText="value" Text="{x:Bind Value, Mode=TwoWay}" Grid.Column="1"/>
+                                    <HyperlinkButton Grid.Column="2" Padding="0" Width="32" Height="32" Click="RemoveParameter">
+                                        <ctrls:FixedFontIcon Glyph=""/>
+                                    </HyperlinkButton>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.Footer>
+                            <StackPanel Margin="6" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Margin="3,0" Content="Clear" Click="ClearParameters"/>
+                                <Button Margin="3,0,0,0" Content="Add" Click="AddParameter"/>
+                            </StackPanel>
+                        </ListView.Footer>
+                    </ListView>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="Execute">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="Script" Margin="6" TextWrapping="Wrap" PlaceholderText="Your code here..." AcceptsReturn="True"/>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="Wrap" Margin="6">
+                            <Run>Read about execute script</Run> <Hyperlink NavigateUri="https://smithereen.software/docs/api/methods/execute">here</Hyperlink>.
+                        </TextBlock>
+                        <Button x:Name="ExecButton" Grid.Column="1" Style="{StaticResource AccentButtonStyle}" Margin="6" Content="Execute" Click="ExecuteScript"/>
+                    </Grid>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+
+        <Border x:Name="ResponsePanel" Margin="6">
+            <TextBox x:Name="ResponseBox" Background="Transparent" FontFamily="Lucida Console" IsReadOnly="True" TextWrapping="Wrap" PlaceholderText="Response will appear here..."/>
+        </Border>
+    </Grid>
+</Page>

@@ -52,7 +52,7 @@
 
         <Frame x:Name="PageContent" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="4" Navigated="PageContent_Navigated"/>
 
-        <Border x:Name="PageHeaderBackground" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" Grid.RowSpan="2"/>
+        <Border x:Name="PageHeaderBackground" Background="{ThemeResource PageBackgroundBrush}" Grid.RowSpan="2"/>
         <Grid x:Name="PageHeader" Grid.Row="1" Height="48">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -68,9 +68,9 @@
 
         <Grid x:Name="NarrowMenuLayer" Visibility="Collapsed" Grid.ColumnSpan="4" Grid.RowSpan="5" Background="Transparent" Tapped="CloseNarrowMenu"/>
         <Grid x:Name="NarrowMenuContainer" Visibility="Collapsed" Grid.ColumnSpan="2" Grid.RowSpan="5" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"/>
-        <ContentControl x:Name="NarrowMenu" Visibility="Collapsed" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Width="240" HorizontalContentAlignment="Stretch" ContentTemplate="{StaticResource MenuTemplate}"/>
+        <ContentControl x:Name="NarrowMenu" Visibility="Collapsed" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Width="256" HorizontalContentAlignment="Stretch" ContentTemplate="{StaticResource MenuTemplate}"/>
 
         <Grid x:Name="WideMenuContainer" Grid.ColumnSpan="2" Grid.RowSpan="5" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"/>
-        <ContentControl x:Name="WideMenu" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Width="320" HorizontalContentAlignment="Stretch" ContentTemplate="{StaticResource MenuTemplate}"/>
+        <ContentControl x:Name="WideMenu" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Width="256" HorizontalContentAlignment="Stretch" ContentTemplate="{StaticResource MenuTemplate}"/>
     </Grid>
 </Page>
