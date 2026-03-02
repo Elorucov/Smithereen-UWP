@@ -240,4 +240,37 @@
   <data name="comments" xml:space="preserve">
     <value>Комментарии</value>
   </data>
+  <data name="online" xml:space="preserve">
+    <value>В сети</value>
+  </data>
+  <data name="last_seen" xml:space="preserve">
+    <value>{gender, select, female {Заходила} other {Заходил}} {time}</value>
+  </data>
+  <data name="years_short" xml:space="preserve">
+    <value>{0} г.</value>
+  </data>
+  <data name="months_short" xml:space="preserve">
+    <value>{0} м.</value>
+  </data>
+  <data name="days_short" xml:space="preserve">
+    <value>{0} д.</value>
+  </data>
+  <data name="hours_short" xml:space="preserve">
+    <value>{0} ч.</value>
+  </data>
+  <data name="minutes_short" xml:space="preserve">
+    <value>{0} мин.</value>
+  </data>
+  <data name="today" xml:space="preserve">
+    <value>Сегодня</value>
+  </data>
+  <data name="yesterday" xml:space="preserve">
+    <value>Вчера</value>
+  </data>
+  <data name="tomorrow" xml:space="preserve">
+    <value>Завтра</value>
+  </data>
+  <data name="time_at" xml:space="preserve">
+    <value>в</value>
+  </data>
 </root>

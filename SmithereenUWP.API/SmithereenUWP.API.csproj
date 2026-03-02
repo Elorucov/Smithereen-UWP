@@ -134,6 +134,7 @@
     <Compile Include="Objects\Main\ISizedAttachment.cs" />
     <Compile Include="Objects\Main\IWithAvatar.cs" />
     <Compile Include="Objects\Main\Photo.cs" />
+    <Compile Include="Objects\Main\PhotoAlbum.cs" />
     <Compile Include="Objects\Main\Poll.cs" />
     <Compile Include="Objects\Main\Video.cs" />
     <Compile Include="Objects\Main\WallPost.cs" />

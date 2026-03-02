@@ -1,19 +1,17 @@
-﻿using SmithereenUWP.Core;
-using System;
+﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
 namespace SmithereenUWP.Converters
 {
-    public sealed class LocalizationConverter : IValueConverter
+    public sealed class NullToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (parameter is string key)
-            {
-                return Locale.Get(key);
-            }
-            return DependencyProperty.UnsetValue;
+            if (value == null) return Visibility.Collapsed;
+            if (value is string s && string.IsNullOrEmpty(s)) return Visibility.Collapsed;
+            if (value is decimal d && d == 0) return Visibility.Collapsed;
+            return Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

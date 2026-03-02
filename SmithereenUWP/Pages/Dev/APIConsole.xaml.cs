@@ -8,11 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Media;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -124,7 +121,8 @@ namespace SmithereenUWP.Pages.Dev
 
         private void ExecuteScript(object sender, RoutedEventArgs e)
         {
-            new Action(async() => {
+            new Action(async () =>
+            {
                 ScreenSpinner<string> ssp = new ScreenSpinner<string>();
                 try
                 {

@@ -17,5 +17,11 @@ namespace SmithereenUWP.Core
         {
             return loader.GetString(key);
         }
+
+        public static string GetFormatted(string key, params object[] args)
+        {
+            string value = loader.GetString(key);
+            return string.IsNullOrEmpty(value) ? $"%{key}%" : String.Format(value, args);
+        }
     }
 }

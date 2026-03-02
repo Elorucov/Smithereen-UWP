@@ -85,5 +85,8 @@ namespace SmithereenUWP.API.Objects.Main
 
         [JsonProperty("photo_200")]
         public string Photo200 { get; private set; }
+
+        [JsonProperty("photo_400")]
+        public string Photo400 { get; private set; }
     }
 }

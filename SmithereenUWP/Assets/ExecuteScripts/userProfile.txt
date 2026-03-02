@@ -1,0 +1,47 @@
+﻿var u = API.users.get({user_ids: Args.id, fields: "domain,screen_name,status,url,nickname,maiden_name,sex,bdate,home_town,relation,reelation_partner,custom,city,connections,site,activities,interests,music,movies,tv,books,games,quotes,about,personal,online,online_mobile,online_app_id,last_seen,blocked,blocked_by_me,can_send_friend_request,can_post,can_see_all_posts,can_write_private_message,is_friend,friend_status,is_favorite,lists,is_hidden_from_feed,wall_default,photo_200,photo_400,photo_id,has_photo,counters,online,online_mobile,online_app"})[0];
+
+var mids = [];
+
+var mutual_friends = [];
+if (Args.need_mutual_friends == 1) {
+  mutual_friends = API.friends.getMutual({ count: 3, target_user_id: Args.id }).items;
+  for (var i = 0; i < mutual_friends.length; i = i + 1) {
+    mids.push(mutual_friends[i]);
+  }
+}
+
+var friends = API.friends.get({ count: 6, order: "random", user_id: Args.id }).items;
+for (var i = 0; i < friends.length; i = i + 1) {
+  mids.push(friends[i]);
+}
+
+var online_friends = API.friends.getOnline({ count: 3, order: "random", user_id: Args.id }).items;
+for (var i = 0; i < online_friends.length; i = i + 1) {
+  mids.push(online_friends[i]);
+}
+
+var photo_albums = API.photos.getAlbums({ count: 3, owner_id: Args.id, need_covers: true }).items;
+
+var subs = API.users.getSubscriptions({ count: 6, user_id: Args.id }).items;
+for (var i = 0; i < subs.length; i = i + 1) {
+  mids.push(subs[i]);
+}
+
+var groups = API.groups.get({ count: 6, user_id: Args.id, fields: "photo_100,has_photo" }).items;
+
+if (u.relation_partner) {
+  mids.push(u.relation_partner.id);
+}
+
+var mentioned_users = API.users.get({ user_ids: mids, fields: "photo_100,sex,has_photo" });
+
+return {
+    user: u,
+    mutual_friends_ids: mutual_friends,
+    friends_ids: friends,
+    online_friends_ids: online_friends,
+    photo_albums: photo_albums,
+    subscriptions_ids: subs,
+    groups: groups,
+    mentioned_users: mentioned_users
+};

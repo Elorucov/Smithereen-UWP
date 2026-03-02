@@ -36,7 +36,7 @@ namespace SmithereenUWP.ViewModels
 
         public MainMenuItem SelectedMenuItem { get { return _selectedMenuItem; } set { _selectedMenuItem = value; OnPropertyChanged(); } }
 
-        public static SessionViewModel Current => CoreApplication.Properties.ContainsKey("svm") 
+        public static SessionViewModel Current => CoreApplication.Properties.ContainsKey("svm")
                                         ? CoreApplication.Properties["svm"] as SessionViewModel
                                         : null;
 

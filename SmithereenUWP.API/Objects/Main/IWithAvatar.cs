@@ -5,5 +5,6 @@
         string Photo50 { get; }
         string Photo100 { get; }
         string Photo200 { get; }
+        string Photo400 { get; }
     }
 }

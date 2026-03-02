@@ -1,17 +1,16 @@
-﻿using SmithereenUWP.Core;
-using System;
+﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
 namespace SmithereenUWP.Converters
 {
-    public sealed class LocalizationConverter : IValueConverter
+    public sealed class StringToUriConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (parameter is string key)
+            if (parameter is string str && Uri.IsWellFormedUriString(str, UriKind.Absolute))
             {
-                return Locale.Get(key);
+                return new Uri(str);
             }
             return DependencyProperty.UnsetValue;
         }

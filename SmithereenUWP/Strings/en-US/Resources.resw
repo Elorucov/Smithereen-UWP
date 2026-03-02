@@ -240,4 +240,37 @@
   <data name="comments" xml:space="preserve">
     <value>Comments</value>
   </data>
+  <data name="online" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="last_seen" xml:space="preserve">
+    <value>Last seen {time}</value>
+  </data>
+  <data name="years_short" xml:space="preserve">
+    <value>{0} y.</value>
+  </data>
+  <data name="months_short" xml:space="preserve">
+    <value>{0} m.</value>
+  </data>
+  <data name="days_short" xml:space="preserve">
+    <value>{0} d.</value>
+  </data>
+  <data name="hours_short" xml:space="preserve">
+    <value>{0} h.</value>
+  </data>
+  <data name="minutes_short" xml:space="preserve">
+    <value>{0} min.</value>
+  </data>
+  <data name="today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="yesterday" xml:space="preserve">
+    <value>Yesterday</value>
+  </data>
+  <data name="tomorrow" xml:space="preserve">
+    <value>Tomorrow</value>
+  </data>
+  <data name="time_at" xml:space="preserve">
+    <value>at</value>
+  </data>
 </root>
