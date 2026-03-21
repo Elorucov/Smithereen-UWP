@@ -5,13 +5,132 @@
     xmlns:local="using:SmithereenUWP.Pages.Profile"
     xmlns:ctrls="using:SmithereenUWP.Controls"
     xmlns:vm="using:SmithereenUWP.ViewModels"
+    xmlns:dm="using:SmithereenUWP.DataModels"
     xmlns:st="using:SmithereenUWP.StateTriggers"
+    xmlns:ext="using:SmithereenUWP.Extensions"
+    xmlns:api="using:SmithereenUWP.API.Objects.Main"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{x:Bind ViewModel.User.ScreenName, Mode=OneWay}"
     Background="{ThemeResource PageBackgroundBrush}" Loaded="LoadProfile">
 
+    <local:ProfilePageBase.Resources>
+        <DataTemplate x:Key="InfoCellWide" x:DataType="dm:Entity">
+            <Grid Margin="0,3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="148"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Text="{x:Bind Label}"/>
+                <RichTextBlock Grid.Column="1" TextWrapping="Wrap" ext:RichTextBlockExt.Html="{x:Bind Description}"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="InfoCellNarrow" x:DataType="dm:Entity">
+            <StackPanel Margin="0,6">
+                <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Text="{x:Bind Label}"/>
+                <RichTextBlock Grid.Column="1" TextWrapping="Wrap" ext:RichTextBlockExt.Html="{x:Bind Description}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <ControlTemplate x:Name="InfoTitleWide" TargetType="ContentControl">
+            <Grid Margin="6,3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <ContentPresenter FontWeight="SemiBold" Foreground="{ThemeResource SystemControlForegroundAccentBrush}" Content="{Binding Content}"/>
+                <Rectangle Grid.Column="2" Style="{StaticResource SeparatorStyle}" Margin="0,2,0,0"/>
+            </Grid>
+        </ControlTemplate>
+
+        <DataTemplate x:Key="InfoCellWithIconNarrow" x:DataType="dm:EntityWithIcon">
+            <StackPanel Margin="12,8" Orientation="Horizontal">
+                <ctrls:FixedFontIcon Margin="0,0,12,0" Glyph="{x:Bind Glyph}"/>
+                <RichTextBlock ext:RichTextBlockExt.Html="{x:Bind Description}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <ControlTemplate x:Key="WideEntitiesGroupHeaderTemplate" TargetType="ContentControl">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock FontWeight="SemiBold" Text="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                <TextBlock Grid.Column="1" Margin="8,0,0,0" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Text="{Binding Tag, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+            </Grid>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="NarrowEntitiesGroupHeaderTemplate" TargetType="ContentControl">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                <TextBlock Grid.Column="1" Margin="8,0,0,0" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Text="{Binding Tag, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+            </Grid>
+        </ControlTemplate>
+
+        <DataTemplate x:Key="UserGridItemTemplate" x:DataType="api:User">
+            <StackPanel Width="64" Margin="6,0,6,12">
+                <Image Width="64" Height="64" ext:ImageExt.AvatarSource="{x:Bind}"/>
+                <TextBlock TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" TextAlignment="Center" Margin="0,3,0,0" MaxLines="2" FontSize="12" Text="{x:Bind Converter={StaticResource UNC}}"/>
+            </StackPanel>   
+        </DataTemplate>
+
+        <Style x:Key="UsersGridItemsControlStyle" TargetType="ItemsControl">
+            <Setter Property="ItemTemplate" Value="{StaticResource UserGridItemTemplate}"/>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" Margin="6,0" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DataTemplate x:Key="UserListItemTemplate" x:DataType="api:User">
+            <Grid Margin="12,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Image Width="36" Height="36" ext:ImageExt.AvatarSource="{x:Bind}" Margin="0,0,6,0"/>
+                <TextBlock Grid.Column="1" TextTrimming="CharacterEllipsis" Margin="0,-2,0,0" VerticalAlignment="Center" Text="{x:Bind Converter={StaticResource UNC}}"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="GroupListItemTemplate" x:DataType="api:Group">
+            <Grid Margin="12,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Image Width="36" Height="36" ext:ImageExt.AvatarSource="{x:Bind}" Margin="0,0,6,0"/>
+                <TextBlock Grid.Column="1" TextTrimming="CharacterEllipsis" Margin="0,-2,0,0" VerticalAlignment="Center" Text="{x:Bind Name}"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TiledAvatarTemplate" x:DataType="api:IWithAvatar">
+            <Image Width="42" Height="42" Margin="1" ext:ImageExt.AvatarSource="{x:Bind}"/>
+        </DataTemplate>
+
+        <Style x:Key="UsersGroupsTiledGridItemsTemplate" TargetType="ItemsControl">
+            <Setter Property="ItemTemplate" Value="{StaticResource TiledAvatarTemplate}"/>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" Margin="-1" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </local:ProfilePageBase.Resources>
+    
     <Grid x:DefaultBindMode="OneWay">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -42,15 +161,15 @@
 
         <ScrollViewer Visibility="{x:Bind ViewModel.User, Converter={StaticResource NTVC}}">
             <Border x:Name="ContentRootWrap">
-                <Grid x:Name="ContentRoot" MaxWidth="1024">
+                <Grid x:Name="ContentRoot" MaxWidth="960">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel x:Name="WideLeftArea" VerticalAlignment="Top" Width="256" Margin="12,0,6,0">
+                    <StackPanel x:Name="WideLeftArea" VerticalAlignment="Top" Width="240" Margin="12,0,6,0">
                         <StackPanel x:Name="AvatarAndActionsPanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Padding="6">
-                            <Image Margin="6" Visibility="{x:Bind ViewModel.User.HasPhoto, Converter={StaticResource NTVC}}" Height="232" Width="232" DataContextChanged="DataContextChangedForProfilePic" />
+                            <Image Margin="6" Visibility="{x:Bind ViewModel.User.HasPhoto, Converter={StaticResource NTVC}}" Height="216" Width="216" DataContextChanged="DataContextChangedForProfilePic" />
                             <Button Margin="6" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Content="Send a message"/>
                             <Button Margin="6" HorizontalAlignment="Stretch" Content="Gregory is your friend"/>
                             <HyperlinkButton Margin="6,0">Photos of Gregory (3)</HyperlinkButton>
@@ -60,29 +179,61 @@
                             <HyperlinkButton Margin="6,0">Block</HyperlinkButton>
                             <HyperlinkButton Margin="6,0">Report</HyperlinkButton>
                         </StackPanel>
-                        <StackPanel x:Name="MutualFriendsPanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12">
-                            <HyperlinkButton Margin="0" Padding="12">Mutual friends (16)</HyperlinkButton>
-                            <TextBlock Margin="12,0,12,12" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, the quick brown fox jumps over the lazy dog!"/>
+                        <StackPanel x:Name="MutualFriendsPanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Visibility="{x:Bind ViewModel.MutualFriends, Converter={StaticResource NTVC}}">
+                            <HyperlinkButton Margin="0" Padding="12">
+                                <ContentControl Template="{StaticResource WideEntitiesGroupHeaderTemplate}" Tag="{x:Bind ViewModel.User.Counters.MutualFriends}">Mutual friends</ContentControl>
+                            </HyperlinkButton>
+                            <ItemsControl Style="{StaticResource UsersGridItemsControlStyle}" ItemsSource="{x:Bind ViewModel.MutualFriends}"/>
                         </StackPanel>
-                        <StackPanel x:Name="FriendsPanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12">
-                            <HyperlinkButton Margin="0" Padding="12">Friends (251)</HyperlinkButton>
-                            <TextBlock Margin="12,0,12,12" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, the quick brown fox jumps over the lazy dog!"/>
+                        <StackPanel x:Name="FriendsPanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Visibility="{x:Bind ViewModel.Friends, Converter={StaticResource NTVC}}">
+                            <HyperlinkButton Margin="0" Padding="12">
+                                <ContentControl Template="{StaticResource WideEntitiesGroupHeaderTemplate}" Tag="{x:Bind ViewModel.User.Counters.Friends}">Friends</ContentControl>
+                            </HyperlinkButton>
+                            <ItemsControl Style="{StaticResource UsersGridItemsControlStyle}" ItemsSource="{x:Bind ViewModel.Friends}"/>
                         </StackPanel>
-                        <StackPanel x:Name="FriendsOnlinePanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12">
-                            <HyperlinkButton Margin="0" Padding="12">Friends online (1)</HyperlinkButton>
-                            <TextBlock Margin="12,0,12,12" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, the quick brown fox jumps over the lazy dog!"/>
+                        <StackPanel x:Name="FriendsOnlinePanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Visibility="{x:Bind ViewModel.OnlineFriends, Converter={StaticResource NTVC}}">
+                            <HyperlinkButton Margin="0" Padding="12">
+                                <ContentControl Template="{StaticResource WideEntitiesGroupHeaderTemplate}" Tag="{x:Bind ViewModel.User.Counters.OnlineFriends}">Online friends</ContentControl>
+                            </HyperlinkButton>
+                            <ItemsControl Style="{StaticResource UsersGridItemsControlStyle}" ItemsSource="{x:Bind ViewModel.OnlineFriends}"/>
                         </StackPanel>
-                        <StackPanel x:Name="PhotoAlbumsPanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12">
-                            <HyperlinkButton Margin="0" Padding="12">Photo albums (3)</HyperlinkButton>
-                            <TextBlock Margin="12,0,12,12" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, the quick brown fox jumps over the lazy dog!"/>
+                        <StackPanel x:Name="PhotoAlbumsPanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Visibility="{x:Bind ViewModel.PhotoAlbums, Converter={StaticResource NTVC}}">
+                            <HyperlinkButton Margin="0" Padding="12">
+                                <ContentControl Template="{StaticResource WideEntitiesGroupHeaderTemplate}" Tag="{x:Bind ViewModel.User.Counters.Albums}">Photo albums</ContentControl>
+                            </HyperlinkButton>
+                            <ItemsControl Margin="6,0,6,6" ItemsSource="{x:Bind ViewModel.PhotoAlbums}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="api:PhotoAlbum">
+                                        <Grid Margin="6" Width="216" Height="144" ToolTipService.ToolTip="{x:Bind Description}">
+                                            <Image Width="216" Height="144" Stretch="UniformToFill" ext:ImageExt.PhotoSource="{x:Bind Cover}"/>
+                                            <StackPanel VerticalAlignment="Bottom" Padding="6" Background="#80000000" RequestedTheme="Dark">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock FontWeight="SemiBold" Text="{x:Bind Title}"/>
+                                                    <ctrls:FixedFontIcon Grid.Column="1" Margin="6,0" Glyph=""/>
+                                                    <TextBlock FontWeight="SemiBold" Grid.Column="2" Text="{x:Bind Size}"/>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </StackPanel>
-                        <StackPanel x:Name="FollowingPanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12">
-                            <HyperlinkButton Margin="0" Padding="12">Following (40)</HyperlinkButton>
-                            <TextBlock Margin="12,0,12,12" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, the quick brown fox jumps over the lazy dog!"/>
+                        <StackPanel x:Name="FollowingPanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Visibility="{x:Bind ViewModel.Subscriptions, Converter={StaticResource NTVC}}">
+                            <HyperlinkButton Margin="0" Padding="12">
+                                <ContentControl Template="{StaticResource WideEntitiesGroupHeaderTemplate}" Tag="{x:Bind ViewModel.User.Counters.Subscriptions}">Following</ContentControl>
+                            </HyperlinkButton>
+                            <ItemsControl Margin="0,0,0,6" ItemTemplate="{StaticResource UserListItemTemplate}" ItemsSource="{x:Bind ViewModel.Subscriptions}"/>
                         </StackPanel>
-                        <StackPanel x:Name="GroupsPanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12">
-                            <HyperlinkButton Margin="0" Padding="12">Groups (14)</HyperlinkButton>
-                            <TextBlock Margin="12,0,12,12" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, the quick brown fox jumps over the lazy dog!"/>
+                        <StackPanel x:Name="GroupsPanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Visibility="{x:Bind ViewModel.Groups, Converter={StaticResource NTVC}}">
+                            <HyperlinkButton Margin="0" Padding="12">
+                                <ContentControl Template="{StaticResource WideEntitiesGroupHeaderTemplate}" Tag="{x:Bind ViewModel.User.Counters.Groups}">Groups</ContentControl>
+                            </HyperlinkButton>
+                            <ItemsControl Margin="0,0,0,6" ItemTemplate="{StaticResource GroupListItemTemplate}" ItemsSource="{x:Bind ViewModel.Groups}"/>
                         </StackPanel>
                     </StackPanel>
 
@@ -104,71 +255,111 @@
 
                             <Rectangle Margin="6" Style="{StaticResource SeparatorStyle}"/>
 
-                            <StackPanel x:Name="WideAlwaysShownInfos" Margin="6,3">
-                                <Grid Margin="0,3">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="148"/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Text="Birthday"/>
-                                    <TextBlock Grid.Column="1" Text="22 january 1993"/>
-                                </Grid>
-                                <Grid Margin="0,3">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="148"/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Text="Relationship status"/>
-                                    <TextBlock Grid.Column="1" Text="it's complicated"/>
-                                </Grid>
+                            <ItemsControl x:Name="WideAlwaysShownInfos" Margin="6,3" ItemsSource="{x:Bind ViewModel.ImportantInfos}" ItemTemplate="{StaticResource InfoCellWide}"/>
+
+                            <StackPanel x:Name="WideShowFullInfoArea">
+                                <Rectangle Margin="6" Style="{StaticResource SeparatorStyle}"/>
+                                <HyperlinkButton Margin="6,0" Content="Show full information" Click="ShowExtraInfosWide"/>
                             </StackPanel>
+                            
+                            <StackPanel x:Name="WideExtraInfos" Visibility="Collapsed">
+                                <ContentControl Template="{StaticResource InfoTitleWide}" Content="Contact info" Visibility="{x:Bind ViewModel.ContactInfos, Converter={StaticResource NTVC}}"/>
+                                <ItemsControl x:Name="WideContactInfos" Margin="6,3" Visibility="{x:Bind ViewModel.ContactInfos, Converter={StaticResource NTVC}}" ItemsSource="{x:Bind ViewModel.ContactInfos}" ItemTemplate="{StaticResource InfoCellWide}"/>
 
-                            <Rectangle Margin="6" Style="{StaticResource SeparatorStyle}"/>
+                                <ContentControl Template="{StaticResource InfoTitleWide}" Content="Views" Visibility="{x:Bind ViewModel.UserViews, Converter={StaticResource NTVC}}"/>
+                                <ItemsControl x:Name="WideViewsInfos" Margin="6,3" Visibility="{x:Bind ViewModel.UserViews, Converter={StaticResource NTVC}}" ItemsSource="{x:Bind ViewModel.UserViews}" ItemTemplate="{StaticResource InfoCellWide}"/>
 
-                            <HyperlinkButton Margin="6,0" Content="Show full information"/>
+                                <ContentControl Template="{StaticResource InfoTitleWide}" Content="Personal info" Visibility="{x:Bind ViewModel.PersonalInfo, Converter={StaticResource NTVC}}"/>
+                                <ItemsControl x:Name="WidePersonalInfos" Margin="6,3" Visibility="{x:Bind ViewModel.PersonalInfo, Converter={StaticResource NTVC}}" ItemsSource="{x:Bind ViewModel.PersonalInfo}" ItemTemplate="{StaticResource InfoCellWide}"/>
+                            </StackPanel>
                         </StackPanel>
 
-                        <StackPanel x:Name="NarrowProfileInfo" Margin="0,0,0,12" Background="{ThemeResource ContentBackgroundBrush}">
-                            <Grid x:Name="NarrowProfileAvaAndName" Margin="12,12,12,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Image Margin="0,0,12,0" Width="96" Height="96" DataContextChanged="DataContextChangedForProfilePic"/>
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock TextWrapping="Wrap" Margin="0,-6,0,0" Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind ViewModel.User, Converter={StaticResource UNC}}"/>
-                                    <TextBlock Margin="0,6,0,0" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Text="{x:Bind ViewModel.OnlineInfo}"/>
-                                </StackPanel>
-                            </Grid>
+                        <StackPanel x:Name="NarrowProfileInfo">
+                            <StackPanel x:Name="NarrowProfileTopInfo" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12">
+                                <Grid x:Name="NarrowProfileAvaAndName" Margin="12,12,12,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Margin="0,0,12,0" Width="96" Height="96" DataContextChanged="DataContextChangedForProfilePic"/>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock TextWrapping="Wrap" Margin="0,-6,0,0" Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind ViewModel.User, Converter={StaticResource UNC}}"/>
+                                        <TextBlock Margin="0,6,0,0" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Text="{x:Bind ViewModel.OnlineInfo}"/>
+                                    </StackPanel>
+                                </Grid>
 
-                            <Grid x:Name="NarrowMainActionsArea" Margin="9,9,9,-2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Button Margin="3" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Content="Message"/>
-                                <Button Margin="3" HorizontalAlignment="Stretch" Grid.Column="1" Content="Your friend"/>
-                            </Grid>
+                                <Grid x:Name="NarrowMainActionsArea" Margin="9,9,9,-2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Margin="3" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Content="Message"/>
+                                    <Button Margin="3" HorizontalAlignment="Stretch" Grid.Column="1" Content="Your friend"/>
+                                </Grid>
 
-                            <StackPanel x:Name="NarrowAlwaysShownInfos" Margin="0,4">
-                                <StackPanel Margin="12,8" Orientation="Horizontal">
-                                    <ctrls:FixedFontIcon Margin="0,0,12,0" Glyph=""/>
-                                    <TextBlock Text="{x:Bind ViewModel.User.Status}"/>
-                                </StackPanel>
-                                <StackPanel Margin="12,8" Orientation="Horizontal">
-                                    <ctrls:FixedFontIcon Margin="0,0,12,0" Glyph=""/>
-                                    <TextBlock Text="251 friends · 16 mutual"/>
-                                </StackPanel>
-                                <StackPanel Margin="12,8" Orientation="Horizontal">
-                                    <ctrls:FixedFontIcon Margin="0,0,12,0" Glyph=""/>
-                                    <TextBlock Text="861 followers"/>
-                                </StackPanel>
-                                <HyperlinkButton Padding="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
-                                    <StackPanel Margin="12,8" Orientation="Horizontal">
+                                <ItemsControl x:Name="NarrowAlwaysShownInfos" Margin="0,4" ItemsSource="{x:Bind ViewModel.InfosAlwaysShownInNarrowMode}" ItemTemplate="{StaticResource InfoCellWithIconNarrow}"/>
+                                <HyperlinkButton Padding="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Click="ShowExtraInfosNarrow">
+                                    <StackPanel Margin="12,0,12,8" Orientation="Horizontal">
                                         <ctrls:FixedFontIcon Margin="0,0,12,0" Glyph=""/>
                                         <TextBlock Text="Show full information"/>
                                     </StackPanel>
                                 </HyperlinkButton>
+                            </StackPanel>
+
+                            <StackPanel x:Name="NarrowWideExtraInfos" Visibility="Collapsed">
+                                <StackPanel Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Padding="6">
+                                    <ItemsControl Margin="6,0" ItemsSource="{x:Bind ViewModel.ImportantInfos}" ItemTemplate="{StaticResource InfoCellNarrow}"/>
+                                </StackPanel>
+
+                                <StackPanel Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Padding="6" Visibility="{x:Bind ViewModel.ContactInfos, Converter={StaticResource NTVC}}">
+                                    <TextBlock Margin="6" FontWeight="SemiBold" Foreground="{ThemeResource SystemControlForegroundAccentBrush}" Text="Contact info"/>
+                                    <ItemsControl Margin="6,0" ItemsSource="{x:Bind ViewModel.ContactInfos}" ItemTemplate="{StaticResource InfoCellNarrow}"/>
+                                </StackPanel>
+
+                                <StackPanel Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Padding="6" Visibility="{x:Bind ViewModel.UserViews, Converter={StaticResource NTVC}}">
+                                    <TextBlock Margin="6" FontWeight="SemiBold" Foreground="{ThemeResource SystemControlForegroundAccentBrush}" Text="Views"/>
+                                    <ItemsControl Margin="6,0" ItemsSource="{x:Bind ViewModel.UserViews}" ItemTemplate="{StaticResource InfoCellNarrow}"/>
+                                </StackPanel>
+
+                                <StackPanel Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Padding="6" Visibility="{x:Bind ViewModel.PersonalInfo, Converter={StaticResource NTVC}}">
+                                    <TextBlock Margin="6" FontWeight="SemiBold" Foreground="{ThemeResource SystemControlForegroundAccentBrush}" Text="Personal info"/>
+                                    <ItemsControl Margin="6,0" ItemsSource="{x:Bind ViewModel.PersonalInfo}" ItemTemplate="{StaticResource InfoCellNarrow}"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Visibility="{x:Bind ViewModel.PersonalInfo, Converter={StaticResource NTVC}}">
+                                <ScrollViewer VerticalScrollMode="Disabled" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
+                                    <StackPanel Margin="6" Orientation="Horizontal">
+                                        <StackPanel.Resources>
+                                            <Style TargetType="HyperlinkButton">
+                                                <Setter Property="Width" Value="142"/>
+                                                <Setter Property="Padding" Value="0"/>
+                                                <Setter Property="Foreground" Value="{ThemeResource ApplicationForegroundThemeBrush}"/>
+                                            </Style>
+                                        </StackPanel.Resources>
+                                        
+                                        <HyperlinkButton>
+                                            <StackPanel Margin="6">
+                                                <ContentControl Template="{StaticResource NarrowEntitiesGroupHeaderTemplate}" Tag="{x:Bind ViewModel.User.Counters.Albums}">Photo albums</ContentControl>
+                                                <Image Width="130" Height="86" Stretch="UniformToFill" Margin="0,2,0,0" ext:ImageExt.PhotoSource="{x:Bind ViewModel.PhotoAlbums[0].Cover}"/>
+                                            </StackPanel>
+                                        </HyperlinkButton>
+
+                                        <HyperlinkButton>
+                                            <StackPanel Margin="6">
+                                                <ContentControl Template="{StaticResource NarrowEntitiesGroupHeaderTemplate}" Tag="{x:Bind ViewModel.User.Counters.Subscriptions}">Following</ContentControl>
+                                                <ItemsControl Margin="0,2,0,0" Style="{StaticResource UsersGroupsTiledGridItemsTemplate}" ItemsSource="{x:Bind ViewModel.Subscriptions}"/>
+                                            </StackPanel>
+                                        </HyperlinkButton>
+
+                                        <HyperlinkButton>
+                                            <StackPanel Margin="6">
+                                                <ContentControl Template="{StaticResource NarrowEntitiesGroupHeaderTemplate}" Tag="{x:Bind ViewModel.User.Counters.Groups}">Groups</ContentControl>
+                                                <ItemsControl Margin="0,2,0,0" Style="{StaticResource UsersGroupsTiledGridItemsTemplate}" ItemsSource="{x:Bind ViewModel.Groups}"/>
+                                            </StackPanel>
+                                        </HyperlinkButton>
+                                    </StackPanel>
+                                </ScrollViewer>
                             </StackPanel>
                         </StackPanel>
 

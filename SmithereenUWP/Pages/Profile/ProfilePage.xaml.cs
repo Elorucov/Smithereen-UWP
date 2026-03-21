@@ -50,5 +50,17 @@ namespace SmithereenUWP.Pages.Profile
 
             img.Source = new BitmapImage(new Uri(photoUri));
         }
+
+        private void ShowExtraInfosWide(object sender, RoutedEventArgs e)
+        {
+            WideShowFullInfoArea.Visibility = Visibility.Collapsed;
+            WideExtraInfos.Visibility = Visibility.Visible;
+        }
+
+        private void ShowExtraInfosNarrow(object sender, RoutedEventArgs e)
+        {
+            (sender as FrameworkElement).Visibility = Visibility.Collapsed;
+            NarrowWideExtraInfos.Visibility = Visibility.Visible;
+        }
     }
 }

@@ -88,5 +88,8 @@ namespace SmithereenUWP.API.Objects.Main
 
         [JsonProperty("photo_400")]
         public string Photo400 { get; private set; }
+
+        [JsonProperty("has_photo")]
+        public bool HasPhoto { get; private set; }
     }
 }

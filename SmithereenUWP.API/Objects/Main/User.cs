@@ -223,7 +223,7 @@ namespace SmithereenUWP.API.Objects.Main
     public sealed class UserPersonal
     {
         [JsonProperty("political")]
-        public UserPoliticalView Political { get; private set; }
+        public UserPoliticalView? Political { get; private set; }
 
         [JsonProperty("religion")]
         public string Religion { get; private set; }
@@ -232,16 +232,16 @@ namespace SmithereenUWP.API.Objects.Main
         public string InspiredBy { get; private set; }
 
         [JsonProperty("people_main")]
-        public UserPeopleMain PeopleMain { get; private set; }
+        public UserPeopleMain? PeopleMain { get; private set; }
 
         [JsonProperty("life_main")]
-        public UserLifeMain LifeMain { get; private set; }
+        public UserLifeMain? LifeMain { get; private set; }
 
         [JsonProperty("smoking")]
-        public UserView Smoking { get; private set; }
+        public UserView? Smoking { get; private set; }
 
         [JsonProperty("alcohol")]
-        public UserView Alcohol { get; private set; }
+        public UserView? Alcohol { get; private set; }
     }
 
     public sealed class UserLastSeen
@@ -331,7 +331,7 @@ namespace SmithereenUWP.API.Objects.Main
         public string HomeTown { get; private set; }
 
         [JsonProperty("relation")]
-        public UserRelation Relation { get; private set; }
+        public UserRelation? Relation { get; private set; }
 
         [JsonProperty("relation_partner")]
         public User RelationPartner { get; private set; }   // Returns only id, first_name and last_name!

@@ -26,10 +26,24 @@ namespace SmithereenUWP.Helpers
             sb.Append(xhtml);
             sb.Replace("\r", " ");
             sb.Replace("\n", "");
+
+            rtb.Blocks.Clear();
+
+            // Smithereen's HTML-formatted text always wrapped in <p></p> tag,
+            // so we do not parse it if text is not wrapped in tag.
+            if (!xhtml.StartsWith("<p>") || !xhtml.EndsWith("</p>"))
+            {
+                Run run = new Run { Text = xhtml };
+                Paragraph paragraph = new Paragraph();
+                paragraph.Inlines.Add(run);
+
+                rtb.Blocks.Add(paragraph);
+                return;
+            }
+
             var blocks = GenerateBlocksForHtml(sb.ToString());
 
             _currentObject = null;
-            rtb.Blocks.Clear();
 
             foreach (var block in blocks)
             {
@@ -65,10 +79,12 @@ namespace SmithereenUWP.Helpers
 
         private static string CleanText(string input)
         {
-            var clean = Windows.Data.Html.HtmlUtilities.ConvertToText(input);
-            if (clean == "\0")
-                clean = "\n";
-            return clean;
+            // BUG: HtmlUtilities.ConvertToText removes a space char in first place!
+            //var clean = Windows.Data.Html.HtmlUtilities.ConvertToText(input);
+            //if (clean == "\0")
+            //    clean = "\n";
+            //return clean;
+            return input;
         }
 
         private static void AddChildren(Paragraph p, HtmlNode node)

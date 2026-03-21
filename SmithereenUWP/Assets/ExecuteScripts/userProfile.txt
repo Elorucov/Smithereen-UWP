@@ -27,13 +27,13 @@ for (var i = 0; i < subs.length; i = i + 1) {
   mids.push(subs[i]);
 }
 
-var groups = API.groups.get({ count: 6, user_id: Args.id, fields: "photo_100,has_photo" }).items;
+var groups = API.groups.get({ count: 6, user_id: Args.id, fields: "photo_100,photo_200,has_photo" }).items;
 
 if (u.relation_partner) {
   mids.push(u.relation_partner.id);
 }
 
-var mentioned_users = API.users.get({ user_ids: mids, fields: "photo_100,sex,has_photo" });
+var mentioned_users = API.users.get({ user_ids: mids, fields: "photo_100,photo_200,sex,has_photo" });
 
 return {
     user: u,

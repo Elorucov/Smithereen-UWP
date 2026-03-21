@@ -26,7 +26,7 @@ namespace SmithereenUWP.Extensions
             {
                 status = MessageFormatter.Format(Locale.Get("last_seen"), new
                 {
-                    time = DateTimeOffset.FromUnixTimeSeconds(user.LastSeen.Time).DateTime.ToRelativeOrAbsoluteTime(),
+                    time = DateTimeOffset.FromUnixTimeSeconds(user.LastSeen.Time).LocalDateTime.ToRelativeOrAbsoluteTime(),
                     gender = user.Sex == UserSex.Female ? "female" : "male"
                 });
             }

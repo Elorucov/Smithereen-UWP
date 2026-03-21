@@ -160,6 +160,8 @@
     <Compile Include="DataTemplateSelectors\NewsfeedItemDataTemplateSelector.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\ImageExt.cs" />
+    <Compile Include="Extensions\MathEx.cs" />
     <Compile Include="Extensions\RichTextBlockExt.cs" />
     <Compile Include="Extensions\SmithereenAPIExtensions.cs" />
     <Compile Include="Extensions\SmithereenExtensions.cs" />
