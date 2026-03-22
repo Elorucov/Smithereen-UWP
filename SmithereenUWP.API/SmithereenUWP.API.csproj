@@ -126,6 +126,7 @@
     <Compile Include="Methods\MethodSectionBase.cs" />
     <Compile Include="Methods\NewsfeedMethods.cs" />
     <Compile Include="Methods\ServerMethods.cs" />
+    <Compile Include="Methods\UtilsMethods.cs" />
     <Compile Include="Objects\Main\Attachment.cs" />
     <Compile Include="Objects\Main\Audio.cs" />
     <Compile Include="Objects\Main\BoardTopic.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Objects\Main\ServerInfo.cs" />
     <Compile Include="Objects\Main\User.cs" />
     <Compile Include="Objects\Response\NewsfeedGetResponse.cs" />
+    <Compile Include="Objects\Response\UtilsLoadRemoteObjectResponse.cs" />
     <Compile Include="SmithereenAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmithereenAPIException.cs" />

@@ -31,6 +31,7 @@ namespace SmithereenUWP.API
 
         public NewsfeedMethods Newsfeed { get; private set; }
         public ServerMethods Server { get; private set; }
+        public UtilsMethods Utils { get; private set; }
 
         #endregion
 
@@ -46,6 +47,7 @@ namespace SmithereenUWP.API
 
             Newsfeed = new NewsfeedMethods(this);
             Server = new ServerMethods(this);
+            Utils = new UtilsMethods(this);
         }
 
         public async Task<string> SendRequestAsync(string method, Dictionary<string, string> parameters = null)

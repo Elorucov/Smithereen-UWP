@@ -12,8 +12,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="{x:Bind ViewModel.User.ScreenName, Mode=OneWay}"
-    Background="{ThemeResource PageBackgroundBrush}" Loaded="LoadProfile">
+    Title="{x:Bind ViewModel.User, Converter={StaticResource UNC}, Mode=OneWay}" Loaded="LoadProfile">
 
     <local:ProfilePageBase.Resources>
         <DataTemplate x:Key="InfoCellWide" x:DataType="dm:Entity">
@@ -167,14 +166,18 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel x:Name="WideLeftArea" VerticalAlignment="Top" Width="240" Margin="12,0,6,0">
+                    <StackPanel x:Name="WideLeftArea" VerticalAlignment="Top" Width="240" Margin="12,12,6,0">
                         <StackPanel x:Name="AvatarAndActionsPanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Padding="6">
                             <Image Margin="6" Visibility="{x:Bind ViewModel.User.HasPhoto, Converter={StaticResource NTVC}}" Height="216" Width="216" DataContextChanged="DataContextChangedForProfilePic" />
-                            <Button Margin="6" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Content="Send a message"/>
-                            <Button Margin="6" HorizontalAlignment="Stretch" Content="Gregory is your friend"/>
+                            <Button Margin="6" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.PrimaryButtonCommand, Converter={StaticResource NTVC}}" Style="{x:Bind ViewModel.PrimaryButtonCommand, Converter={StaticResource BSC}}" Content="{x:Bind ViewModel.PrimaryButtonCommand.Name}"/>
+                            <Button Margin="6" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.SecondaryButtonCommand, Converter={StaticResource NTVC}}" Style="{x:Bind ViewModel.SecondaryButtonCommand, Converter={StaticResource BSC}}" Content="{x:Bind ViewModel.SecondaryButtonCommand.Name}"/>
+                            <TextBlock Margin="6" TextAlignment="Center" TextWrapping="Wrap" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" FontSize="12" Visibility="{x:Bind ViewModel.FriendshipStatusText, Converter={StaticResource NTVC}}" Text="{x:Bind ViewModel.FriendshipStatusText}"/>
+
                             <HyperlinkButton Margin="6,0">Photos of Gregory (3)</HyperlinkButton>
                             <HyperlinkButton Margin="6,0">Followers (829)</HyperlinkButton>
+                            
                             <Rectangle Margin="6" Style="{StaticResource SeparatorStyle}"/>
+                            
                             <HyperlinkButton Margin="6,0">Add bookmark</HyperlinkButton>
                             <HyperlinkButton Margin="6,0">Block</HyperlinkButton>
                             <HyperlinkButton Margin="6,0">Report</HyperlinkButton>
@@ -238,7 +241,7 @@
                     </StackPanel>
 
                     <StackPanel x:Name="NarrowAndWideRightArea" Grid.Column="1" VerticalAlignment="Top" Margin="6,0,12,0">
-                        <StackPanel x:Name="WideProfileInfo" Margin="0,0,0,12" Padding="6" Background="{ThemeResource ContentBackgroundBrush}">
+                        <StackPanel x:Name="WideProfileInfo" Margin="0,12" Padding="6" Background="{ThemeResource ContentBackgroundBrush}">
                             <Grid x:Name="WideProfileNameAndStatus" Margin="6">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -250,7 +253,7 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,-2,0,0" FontWeight="SemiBold" TextWrapping="Wrap" Text="{x:Bind ViewModel.User, Converter={StaticResource UNC}}"/>
                                 <TextBlock Grid.Column="1" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" TextAlignment="Right" Text="{x:Bind ViewModel.OnlineInfo}"/>
-                                <TextBlock Grid.ColumnSpan="2" Grid.Row="1" TextWrapping="Wrap" Text="{x:Bind ViewModel.User.Status}"/>
+                                <TextBlock Grid.ColumnSpan="2" Grid.Row="1" TextWrapping="Wrap" Visibility="{x:Bind ViewModel.User.Status, Converter={StaticResource NTVC}}" Text="{x:Bind ViewModel.User.Status}"/>
                             </Grid>
 
                             <Rectangle Margin="6" Style="{StaticResource SeparatorStyle}"/>
@@ -288,13 +291,15 @@
                                     </StackPanel>
                                 </Grid>
 
+                                <TextBlock Margin="12,12,12,0" TextAlignment="Center" TextWrapping="Wrap" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Visibility="{x:Bind ViewModel.FriendshipStatusText, Converter={StaticResource NTVC}}" Text="{x:Bind ViewModel.FriendshipStatusText}"/>
+                                
                                 <Grid x:Name="NarrowMainActionsArea" Margin="9,9,9,-2">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Margin="3" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Content="Message"/>
-                                    <Button Margin="3" HorizontalAlignment="Stretch" Grid.Column="1" Content="Your friend"/>
+                                    <Button Margin="3" HorizontalAlignment="Stretch" Style="{x:Bind ViewModel.PrimaryButtonCommand, Converter={StaticResource BSC}}" Visibility="{x:Bind ViewModel.PrimaryButtonCommand, Converter={StaticResource NTVC}}" Content="{x:Bind ViewModel.PrimaryButtonCommand.Name}"/>
+                                    <Button Margin="3" HorizontalAlignment="Stretch" Grid.Column="1" Style="{x:Bind ViewModel.SecondaryButtonCommand, Converter={StaticResource BSC}}" Visibility="{x:Bind ViewModel.SecondaryButtonCommand, Converter={StaticResource NTVC}}" Content="{x:Bind ViewModel.SecondaryButtonCommand.Name}"/>
                                 </Grid>
 
                                 <ItemsControl x:Name="NarrowAlwaysShownInfos" Margin="0,4" ItemsSource="{x:Bind ViewModel.InfosAlwaysShownInNarrowMode}" ItemTemplate="{StaticResource InfoCellWithIconNarrow}"/>
@@ -327,35 +332,52 @@
                                 </StackPanel>
                             </StackPanel>
 
-                            <StackPanel Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Visibility="{x:Bind ViewModel.PersonalInfo, Converter={StaticResource NTVC}}">
+                            <StackPanel Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Visibility="{x:Bind ViewModel.NeedToShowNarrowCarousel, Converter={StaticResource NTVC}}">
                                 <ScrollViewer VerticalScrollMode="Disabled" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
                                     <StackPanel Margin="6" Orientation="Horizontal">
                                         <StackPanel.Resources>
                                             <Style TargetType="HyperlinkButton">
                                                 <Setter Property="Width" Value="142"/>
+                                                <Setter Property="Height" Value="124"/>
+                                                <Setter Property="VerticalContentAlignment" Value="Top"/>
                                                 <Setter Property="Padding" Value="0"/>
                                                 <Setter Property="Foreground" Value="{ThemeResource ApplicationForegroundThemeBrush}"/>
                                             </Style>
                                         </StackPanel.Resources>
-                                        
-                                        <HyperlinkButton>
+
+                                        <HyperlinkButton Visibility="{x:Bind ViewModel.PhotoAlbums, Converter={StaticResource NTVC}}">
                                             <StackPanel Margin="6">
                                                 <ContentControl Template="{StaticResource NarrowEntitiesGroupHeaderTemplate}" Tag="{x:Bind ViewModel.User.Counters.Albums}">Photo albums</ContentControl>
-                                                <Image Width="130" Height="86" Stretch="UniformToFill" Margin="0,2,0,0" ext:ImageExt.PhotoSource="{x:Bind ViewModel.PhotoAlbums[0].Cover}"/>
+                                                <Image Width="130" Height="86" Stretch="UniformToFill" Margin="0,7,0,0" DataContextChanged="DataContextForNarrowPhotoAlbumChanged" />
                                             </StackPanel>
                                         </HyperlinkButton>
 
-                                        <HyperlinkButton>
+                                        <HyperlinkButton Visibility="{x:Bind ViewModel.User.Counters.Subscriptions, Converter={StaticResource NTVC}}">
                                             <StackPanel Margin="6">
                                                 <ContentControl Template="{StaticResource NarrowEntitiesGroupHeaderTemplate}" Tag="{x:Bind ViewModel.User.Counters.Subscriptions}">Following</ContentControl>
-                                                <ItemsControl Margin="0,2,0,0" Style="{StaticResource UsersGroupsTiledGridItemsTemplate}" ItemsSource="{x:Bind ViewModel.Subscriptions}"/>
+                                                <ItemsControl Margin="0,7,0,0" Visibility="{x:Bind ViewModel.Subscriptions, Converter={StaticResource NTVC}}" Style="{StaticResource UsersGroupsTiledGridItemsTemplate}" ItemsSource="{x:Bind ViewModel.Subscriptions}"/>
+                                                
+                                                <!-- For foreign users -->
+                                                <ItemsControl Margin="0,7,0,0" Visibility="{x:Bind ViewModel.Subscriptions, Converter={StaticResource NTVC2}}" Style="{StaticResource UsersGroupsTiledGridItemsTemplate}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Border Width="42" Height="42" Margin="1" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"/>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                    <x:String></x:String>
+                                                    <x:String></x:String>
+                                                    <x:String></x:String>
+                                                    <x:String></x:String>
+                                                    <x:String></x:String>
+                                                    <x:String></x:String>
+                                                </ItemsControl>
                                             </StackPanel>
                                         </HyperlinkButton>
 
-                                        <HyperlinkButton>
+                                        <HyperlinkButton Visibility="{x:Bind ViewModel.Groups, Converter={StaticResource NTVC}}">
                                             <StackPanel Margin="6">
                                                 <ContentControl Template="{StaticResource NarrowEntitiesGroupHeaderTemplate}" Tag="{x:Bind ViewModel.User.Counters.Groups}">Groups</ContentControl>
-                                                <ItemsControl Margin="0,2,0,0" Style="{StaticResource UsersGroupsTiledGridItemsTemplate}" ItemsSource="{x:Bind ViewModel.Groups}"/>
+                                                <ItemsControl Margin="0,7,0,0" Style="{StaticResource UsersGroupsTiledGridItemsTemplate}" ItemsSource="{x:Bind ViewModel.Groups}"/>
                                             </StackPanel>
                                         </HyperlinkButton>
                                     </StackPanel>
@@ -373,6 +395,6 @@
 
         <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Width="64" Height="64" Visibility="{x:Bind ViewModel.User, Converter={StaticResource NTVC2}}" IsActive="{x:Bind ViewModel.IsLoading}"/>
 
-        <ContentPresenter MaxWidth="540" VerticalAlignment="Center" ContentTemplate="{StaticResource PlaceholderTemplate}" DataContext="{x:Bind ViewModel.Placeholder}" Visibility="{x:Bind ViewModel.Placeholder, Converter={StaticResource NTVC}}"/>
+        <ContentControl MaxWidth="540" VerticalAlignment="Center" HorizontalContentAlignment="Center" ContentTemplate="{StaticResource PlaceholderTemplate}" DataContext="{x:Bind ViewModel.Placeholder}" Visibility="{x:Bind ViewModel.Placeholder, Converter={StaticResource NTVC}}"/>
     </Grid>
 </local:ProfilePageBase>

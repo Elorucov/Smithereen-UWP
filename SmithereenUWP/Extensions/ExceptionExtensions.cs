@@ -61,7 +61,15 @@ namespace SmithereenUWP.Extensions
             }
             else
             {
-                result = new Tuple<string, string>(Locale.Get("error"), $"{ex.Message.Trim()} ({ex.ToHEX()})");
+                switch (ex.HResult)
+                {
+                    case -2147012877: // WININET_E_INCORRECT_HANDLE_STATE, e. g. no network connection
+                        result = new Tuple<string, string>(Locale.Get("error_network"), Locale.Get("error_network_no_connection"));
+                        break;
+                    default:
+                        result = new Tuple<string, string>(Locale.Get("error"), $"{ex.Message.Trim()} ({ex.ToHEX()})");
+                        break;
+                }
             }
             return result;
         }

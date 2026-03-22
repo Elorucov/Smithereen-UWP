@@ -6,8 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="Under development"
-    Background="{ThemeResource PageBackgroundBrush}">
+    Title="Under development">
 
     <StackPanel Margin="9" VerticalAlignment="Center">
         <Image Margin="3" Width="192" Height="192" HorizontalAlignment="Center" Source="https://elor.top/res/images/pensive.png"/>

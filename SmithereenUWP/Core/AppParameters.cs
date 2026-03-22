@@ -11,6 +11,7 @@ namespace SmithereenUWP.Core
         const string USER_ID = "uid";
         const string ACCESS_TOKEN = "at";
         const string SERVER = "server";
+        const string DEBUG_BUTTON = "dbtn";
         const string DEBUG_WALL = "dwall";
 
         #endregion
@@ -53,6 +54,12 @@ namespace SmithereenUWP.Core
         }
 
         // Debug
+
+        public static bool DebugButtonVisible
+        {
+            get => GetBoolean(DEBUG_BUTTON);
+            set => adc.Values[DEBUG_BUTTON] = value;
+        }
 
         public static bool WallDebug
         {

@@ -16,7 +16,8 @@
     
     <ScrollViewer>
         <StackPanel Margin="12" MaxWidth="576">
-            <CheckBox x:Name="p01" Content="Wall debug (show post ID and render time)" />
+            <CheckBox x:Name="p01" Content="Show debug button (restart required)" />
+            <CheckBox x:Name="p02" Content="Wall debug (show post ID and render time)" />
         </StackPanel>
     </ScrollViewer>
 </Page>

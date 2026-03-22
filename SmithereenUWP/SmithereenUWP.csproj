@@ -139,6 +139,7 @@
     </Compile>
     <Compile Include="Controls\MediaGridPanel.cs" />
     <Compile Include="Controls\Popups\ScreenSpinner.cs" />
+    <Compile Include="Converters\ButtonStyleConverter.cs" />
     <Compile Include="Converters\LocalizationConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\NullToVisibilityReversedConverter.cs" />
@@ -148,9 +149,9 @@
     <Compile Include="Core\AppParameters.cs" />
     <Compile Include="Core\CacheManager.cs" />
     <Compile Include="Core\Constants.cs" />
-    <Compile Include="Core\ExceptionHelper.cs" />
     <Compile Include="Core\Functions.cs" />
     <Compile Include="Core\Locale.cs" />
+    <Compile Include="Core\FediverseRouter.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Core\SystemUI.cs" />
     <Compile Include="DataModels\Entity.cs" />
@@ -177,6 +178,9 @@
     </Compile>
     <Compile Include="Pages\Dev\DevSettings.xaml.cs">
       <DependentUpon>DevSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Dialogs\Debug\ObjectResolverDialog.xaml.cs">
+      <DependentUpon>ObjectResolverDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -258,6 +262,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Dev\DevSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Dialogs\Debug\ObjectResolverDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

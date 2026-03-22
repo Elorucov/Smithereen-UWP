@@ -3,7 +3,7 @@
 var mids = [];
 
 var mutual_friends = [];
-if (Args.need_mutual_friends == 1) {
+if (Args.need_mutual_friends == "1") {
   mutual_friends = API.friends.getMutual({ count: 3, target_user_id: Args.id }).items;
   for (var i = 0; i < mutual_friends.length; i = i + 1) {
     mids.push(mutual_friends[i]);

@@ -22,6 +22,9 @@ namespace SmithereenUWP.ViewModels
         private List<PhotoAlbum> _photoAlbums;
         private List<User> _subscriptions;
         private List<Group> _groups;
+        private string _friendshipStatusText;
+        private RelayCommand _primaryButtonCommand;
+        private RelayCommand _secondaryButtonCommand;
 
         private string _onlineInfo;
 
@@ -32,6 +35,9 @@ namespace SmithereenUWP.ViewModels
         public List<PhotoAlbum> PhotoAlbums { get { return _photoAlbums; } private set { _photoAlbums = value; OnPropertyChanged(); } }
         public List<User> Subscriptions { get { return _subscriptions; } private set { _subscriptions = value; OnPropertyChanged(); } }
         public List<Group> Groups { get { return _groups; } private set { _groups = value; OnPropertyChanged(); } }
+        public string FriendshipStatusText { get { return _friendshipStatusText; } private set { _friendshipStatusText = value; OnPropertyChanged(); } }
+        public RelayCommand PrimaryButtonCommand { get { return _primaryButtonCommand; } private set { _primaryButtonCommand = value; OnPropertyChanged(); } }
+        public RelayCommand SecondaryButtonCommand { get { return _secondaryButtonCommand; } private set { _secondaryButtonCommand = value; OnPropertyChanged(); } }
 
 
 
@@ -40,6 +46,7 @@ namespace SmithereenUWP.ViewModels
         // "Cannot convert 'System.COMObject' into 'System.String'" when binding.
         public string OnlineInfo { get { return _onlineInfo; } private set { _onlineInfo = value; OnPropertyChanged(); } }
         public bool ItsMe => AppParameters.CurrentUserId == User.Id;
+        public bool NeedToShowNarrowCarousel => User?.Counters?.Subscriptions > 0 || Groups?.Count > 0 || PhotoAlbums?.Count > 0;
 
         // Info entities
         public List<EntityWithIcon> InfosAlwaysShownInNarrowMode { get; } = new List<EntityWithIcon>(); // status, friends/followers counters on narrow mode
@@ -53,7 +60,8 @@ namespace SmithereenUWP.ViewModels
 
         public ProfileViewModel(int id)
         {
-            if (id <= 0) _id = AppParameters.CurrentUserId;
+            _id = id;
+            if (_id <= 0) _id = AppParameters.CurrentUserId;
         }
 
         public async Task RefreshDataAsync()
@@ -77,7 +85,9 @@ namespace SmithereenUWP.ViewModels
                 OnlineInfo = User.GetOnlineStatus().ToLower();
 
                 UpdateInfos();
+                UpdateCommands();
                 OnPropertyChanged(nameof(ItsMe));
+                OnPropertyChanged(nameof(NeedToShowNarrowCarousel));
             }
             catch (Exception ex)
             {
@@ -88,6 +98,7 @@ namespace SmithereenUWP.ViewModels
                 IsLoading = false;
             }
         }
+
 
         private void UpdateInfos()
         {
@@ -128,6 +139,15 @@ namespace SmithereenUWP.ViewModels
 
             if (User.Relation.HasValue)
                 ImportantInfos.Add(new Entity(0, "Relation", User.Relation.ToString()));
+
+            if (User.Custom != null)
+            {
+                foreach (var item in User.Custom)
+                {
+                    string value = item.Value.StartsWith("<p>") && item.Value.EndsWith("</p>") ? item.Value : $"<p>{item.Value}</p>";
+                    ImportantInfos.Add(new Entity(0, item.Name, value));
+                }
+            }
 
             // Contacts
 
@@ -189,6 +209,71 @@ namespace SmithereenUWP.ViewModels
             OnPropertyChanged(nameof(ContactInfos));
             OnPropertyChanged(nameof(UserViews));
             OnPropertyChanged(nameof(PersonalInfo));
+        }
+        
+        private void UpdateCommands()
+        {
+            if (ItsMe) return;
+
+            if (User.CanWritePrivateMessage)
+                PrimaryButtonCommand = new RelayCommand(GoToConvo, "Message", true);
+
+
+            if (!User.IsFriend && User.FriendStatus.HasValue && (User.FriendStatus != UserFriendStatus.Following && User.FriendStatus != UserFriendStatus.FollowRequested))
+            {
+                if (User.CanSendFriendRequest)
+                {
+                    if (User.FriendStatus == UserFriendStatus.FollowedBy)
+                    {
+                        SecondaryButtonCommand = new RelayCommand(OpenFriendReqRespondOptions, "Respond to request");
+                    } else
+                    {
+                        SecondaryButtonCommand = new RelayCommand(SendFriendRequestOrFollow, "Add friend", true);
+                    }
+                } else
+                {
+                    SecondaryButtonCommand = new RelayCommand(SendFriendRequestOrFollow, "Follow", true);
+                }
+            } else
+            {
+                string label = string.Empty;
+                if (User.IsFriend)
+                {
+                    label = "Your friend";
+                } else if (User.FriendStatus == UserFriendStatus.Following)
+                {
+                    label = "Request sent";
+                } else
+                {
+                    label = "Following";
+                }
+                SecondaryButtonCommand = new RelayCommand(OpenFriendOptions, label);
+            }
+
+            if (User.FriendStatus == UserFriendStatus.FollowRequested || (User.FriendStatus == UserFriendStatus.FollowedBy && User.IsFriend))
+            {
+                FriendshipStatusText = $"You're waiting for {User.FirstName} to accept your follow request";
+            }
+        }
+
+        private void GoToConvo(object o)
+        {
+            
+        }
+
+        private void SendFriendRequestOrFollow(object o)
+        {
+
+        }
+
+        private void OpenFriendReqRespondOptions(object o)
+        {
+
+        }
+
+        private void OpenFriendOptions(object o)
+        {
+
         }
     }
 }

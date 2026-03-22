@@ -18,8 +18,11 @@ namespace SmithereenUWP.Pages.Dev
 
         private void LoadSettings()
         {
-            p01.IsChecked = AppParameters.WallDebug;
-            p01.Click += (a, b) => AppParameters.WallDebug = (bool)(a as CheckBox).IsChecked;
+            p01.IsChecked = AppParameters.DebugButtonVisible;
+            p01.Click += (a, b) => AppParameters.DebugButtonVisible = (bool)(a as CheckBox).IsChecked;
+
+            p02.IsChecked = AppParameters.WallDebug;
+            p02.Click += (a, b) => AppParameters.WallDebug = (bool)(a as CheckBox).IsChecked;
         }
     }
 }

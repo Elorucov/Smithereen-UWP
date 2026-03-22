@@ -10,8 +10,9 @@ namespace SmithereenUWP.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null) return Visibility.Collapsed;
+            if (value is bool b && !b) return Visibility.Collapsed;
             if (value is string s && string.IsNullOrEmpty(s)) return Visibility.Collapsed;
-            if (value is decimal d && d == 0) return Visibility.Collapsed;
+            if (value is int i && i == 0) return Visibility.Collapsed;
             if (value is ICollection collection && collection.Count == 0) return Visibility.Collapsed;
             return Visibility.Visible;
         }

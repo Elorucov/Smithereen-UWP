@@ -1,8 +1,11 @@
-﻿using SmithereenUWP.Core;
+﻿using SmithereenUWP.API.Objects.Response;
+using SmithereenUWP.Core;
 using SmithereenUWP.DataModels;
+using SmithereenUWP.Pages.Dialogs.Debug;
 using SmithereenUWP.ViewModels;
 using System;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -10,13 +13,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace SmithereenUWP.Pages
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         const double WIDE_MIN_WIDTH = 720;
@@ -31,14 +29,20 @@ namespace SmithereenUWP.Pages
         public MainPage()
         {
             this.InitializeComponent();
+
             Unloaded += MainPage_Unloaded;
             SizeChanged += MainPage_SizeChanged;
             AppView.VisibleBoundsChanged += MainPage_VisibleBoundsChanged;
             CoreAppView.TitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
+            FediverseRouter.GetForCurrentView().NavigationRequested += MainPage_NavigationRequested;
+
+            if (AppParameters.DebugButtonVisible) FindName(nameof(DebugButton));
         }
 
         private void MainPage_Unloaded(object sender, RoutedEventArgs e)
         {
+            CoreApplication.GetCurrentView().Properties["mp"] = null;
+
             Unloaded -= MainPage_Unloaded;
             SizeChanged -= MainPage_SizeChanged;
             AppView.VisibleBoundsChanged -= MainPage_VisibleBoundsChanged;
@@ -46,6 +50,7 @@ namespace SmithereenUWP.Pages
             Loading -= Page_Loading;
             Loaded -= Page_Loaded;
             PageContent.Navigated -= PageContent_Navigated;
+            FediverseRouter.GetForCurrentView().NavigationRequested -= MainPage_NavigationRequested;
         }
 
         private void Page_Loading(FrameworkElement sender, object args)
@@ -160,7 +165,7 @@ namespace SmithereenUWP.Pages
 
             MainMenuItem choosed = e.ClickedItem as MainMenuItem;
             ViewModel.SelectedMenuItem = choosed;
-            PageContent.Navigate(choosed.PageType, null, new DrillInNavigationTransitionInfo());
+            GoToPage(choosed.PageType);
         }
 
         private void PageContent_Navigated(object sender, NavigationEventArgs e)
@@ -170,6 +175,7 @@ namespace SmithereenUWP.Pages
             if (page == null) return;
 
             _currentPage = page;
+
             CheckCurrentPageProperties();
             UpdateCurrentPageSizeProperties();
         }
@@ -177,8 +183,24 @@ namespace SmithereenUWP.Pages
         private void CheckCurrentPageProperties()
         {
             if (_currentPage == null) return;
-            PageHeaderContent.Content = _currentPage.Title;
-            HeaderAfterContent.Content = _currentPage.HeaderAfterContent;
+            // PageHeaderContent.Content = _currentPage.Title;
+            // HeaderAfterContent.Content = _currentPage.HeaderAfterContent;
+
+            var binding1 = new Windows.UI.Xaml.Data.Binding
+            {
+                Path = new PropertyPath("Title"),
+                Mode = Windows.UI.Xaml.Data.BindingMode.OneWay,
+                Source = _currentPage
+            };
+            PageHeaderContent.SetBinding(ContentPresenter.ContentProperty, binding1);
+
+            var binding2 = new Windows.UI.Xaml.Data.Binding
+            {
+                Path = new PropertyPath("HeaderAfterContent"),
+                Mode = Windows.UI.Xaml.Data.BindingMode.OneWay,
+                Source = _currentPage
+            };
+            HeaderAfterContent.SetBinding(ContentPresenter.ContentProperty, binding2);
         }
 
         private void UpdateCurrentPageSizeProperties()
@@ -187,5 +209,48 @@ namespace SmithereenUWP.Pages
             double topPadding = T.Height + PageHeader.ActualHeight;
             _currentPage.TopPadding = topPadding;
         }
+
+        private void MainPage_NavigationRequested(FediverseObjectType type, string id, object extra)
+        {
+            switch (type) {
+                case FediverseObjectType.User:
+                    GoToPage(typeof(Profile.ProfilePage), Convert.ToInt32(id));
+                    break;
+            }
+        }
+
+        private void GoToPage(Type pageType, object data = null)
+        {
+            PageContent.Navigate(pageType, data, new DrillInNavigationTransitionInfo());
+        }
+
+        #region Debug
+
+        private void RemoveDebugButton(UIElement sender, ContextRequestedEventArgs args)
+        {
+            Button button = sender as Button;
+            (button.Parent as Panel).Children.Remove(button);
+        }
+
+        private void ShowDebugMenu(object sender, RoutedEventArgs e)
+        {
+            MenuFlyoutItem mfi01 = new MenuFlyoutItem { Text = "Go to object" };
+            MenuFlyoutItem mfi02 = new MenuFlyoutItem { Text = "Set window size to 360x640" };
+            MenuFlyoutItem mfi03 = new MenuFlyoutItem { Text = "Set window size to 1024x768" };
+
+            mfi01.Click += (a, b) => new Action(async () => await new ObjectResolverDialog().ShowAsync())();
+            mfi02.Click += (a, b) => AppView.TryResizeView(new Size(360, 640));
+            mfi03.Click += (a, b) => AppView.TryResizeView(new Size(1024, 768));
+
+            MenuFlyout mf = new MenuFlyout();
+            mf.Items.Add(mfi01);
+            mf.Items.Add(mfi02);
+            mf.Items.Add(mfi03);
+
+            mf.Placement = Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.Top;
+            mf.ShowAt(sender as FrameworkElement);
+        }
+
+        #endregion
     }
 }

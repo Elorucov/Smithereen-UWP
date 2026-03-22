@@ -74,6 +74,7 @@
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 
+            <conv:ButtonStyleConverter x:Key="BSC"/>
             <conv:LocalizationConverter x:Key="L"/>
             <conv:NullToVisibilityConverter x:Key="NTVC"/>
             <conv:NullToVisibilityReversedConverter x:Key="NTVC2"/>

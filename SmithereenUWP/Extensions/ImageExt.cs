@@ -1,9 +1,5 @@
 ﻿using SmithereenUWP.API.Objects.Main;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -57,14 +53,18 @@ namespace SmithereenUWP.Extensions
                 var displayInformation = DisplayInformation.GetForCurrentView();
                 double rawSize = requestedSize * displayInformation.LogicalDpi;
 
-                if (rawSize >= 200 && avatar.Photo200 != null) {
+                if (rawSize >= 200 && avatar.Photo200 != null)
+                {
                     image.Source = new BitmapImage(new Uri(avatar.Photo200));
                     return;
-                } else if (rawSize >= 100 && avatar.Photo100 != null)
+                }
+                else if (rawSize >= 100 && avatar.Photo100 != null)
                 {
                     image.Source = new BitmapImage(new Uri(avatar.Photo100));
                     return;
-                } else if(rawSize >= 50 && avatar.Photo50 != null) {
+                }
+                else if (rawSize >= 50 && avatar.Photo50 != null)
+                {
                     image.Source = new BitmapImage(new Uri(avatar.Photo200));
                     return;
                 }
@@ -95,7 +95,8 @@ namespace SmithereenUWP.Extensions
                         if (MathEx.IsLargeOrEqualThanMax(s.Width, s.Height, pw, ph)) break;
                     }
 
-                    if (ps != null) {
+                    if (ps != null)
+                    {
                         image.Source = new BitmapImage(new Uri(ps.Url));
                         return;
                     }

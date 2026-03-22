@@ -298,7 +298,7 @@ namespace SmithereenUWP.API.Objects.Main
         public string LastName { get; private set; }
 
         [JsonProperty("deactivated")]
-        public UserDeactivationType Deactivated { get; private set; }
+        public UserDeactivationType? Deactivated { get; private set; }
 
         [JsonProperty("ap_id")]
         public string ActivityPubId { get; private set; }
@@ -415,7 +415,7 @@ namespace SmithereenUWP.API.Objects.Main
         public bool IsFriend { get; private set; }
 
         [JsonProperty("friend_status")]
-        public UserFriendStatus FriendStatus { get; private set; }
+        public UserFriendStatus? FriendStatus { get; private set; }
 
         [JsonProperty("is_favorite")]
         public bool IsFavorite { get; private set; }
