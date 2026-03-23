@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2" version="1.1" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><linearGradient id="linearGradient2" x1="25" x2="25" y1="9" y2="45" gradientUnits="userSpaceOnUse"><stop style="stop-color:#698600" offset="0"/><stop style="stop-color:#4c6e00" offset="1"/></linearGradient></defs><style>@media(prefers-color-scheme: dark){
+			.logoText{
+				fill: #fff;
+			}
+		}</style><path d="m10.5996 9c-1.98684 0-3.59961 1.61277-3.59961 3.59961v21.5996c0 1.98684 1.61277 3.60156 3.59961 3.60156h7.25781l7.19922 7.19922 7.20117-7.19922h7.14258c1.98684 0 3.59961-1.61472 3.59961-3.60156v-21.5996c0-1.98684-1.61277-3.59961-3.59961-3.59961h-28.8008zm14.4004 3.59961c1.2879 0 2.34766 1.05976 2.34766 2.34766 0 1.29924-1.0486 11.7402-2.34766 11.7402s-2.34766-10.441-2.34766-11.7402c0-1.2879 1.05976-2.34766 2.34766-2.34766zm0 17.4453a2.34774 2.34774 0 0 1 2.34766 2.34766 2.34774 2.34774 0 0 1-2.34766 2.34766 2.34774 2.34774 0 0 1-2.34766-2.34766 2.34774 2.34774 0 0 1 2.34766-2.34766z" style="clip-rule:evenodd;fill-rule:evenodd;fill:url(#linearGradient2);stroke-linejoin:round;stroke-miterlimit:2"/></svg>

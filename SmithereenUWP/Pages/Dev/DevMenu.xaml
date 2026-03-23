@@ -42,5 +42,9 @@
                 <SolidColorBrush Color="{ThemeResource SystemAccentColorDark3}"/>
             </Rectangle.Fill>
         </Rectangle>
+
+        <Viewbox Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="64" Height="64" Margin="24">
+            <ContentPresenter ContentTemplate="{StaticResource LogoIcon}"/>
+        </Viewbox>
     </Grid>
 </Page>

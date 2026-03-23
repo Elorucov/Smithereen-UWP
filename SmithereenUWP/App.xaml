@@ -8,6 +8,10 @@
 
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Icons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
                     <SolidColorBrush x:Key="PageBackgroundBrush" Color="#FF000000"/>
@@ -659,7 +663,9 @@
 
             <DataTemplate x:Key="TitlebarContent">
                 <Grid x:Name="CustomTitleBarRoot" Background="Transparent">
-                    <Image x:Name="WindowIcon" Margin="8" Width="16" Height="16" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Center" Source="/Assets/Square44x44Logo.png"/>
+                    <Viewbox x:Name="WindowIcon" Margin="8" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Uniform">
+                        <ContentPresenter ContentTemplate="{StaticResource LogoIcon}"/>
+                    </Viewbox>
                     <TextBlock x:Name="WindowName" FontSize="12" TextTrimming="CharacterEllipsis" Margin="32,8,0,0" Text="Smithereen"/>
                 </Grid>
             </DataTemplate>
