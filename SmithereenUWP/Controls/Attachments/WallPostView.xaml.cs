@@ -103,7 +103,7 @@ namespace SmithereenUWP.Controls.Attachments
 
             // Author
             var author = CacheManager.GetUserNameAndAvatar(Post.FromId);
-            PostAuthor.Text = string.Join(" ", author.Item1, author.Item2);
+            PostAuthor.Content = string.Join(" ", author.Item1, author.Item2);
             if (author.Item3 != null) PostAuthorAvatar.Source = new BitmapImage(author.Item3);
 
             // Time and some other info

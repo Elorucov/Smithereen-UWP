@@ -41,10 +41,15 @@
         <dts:NewsfeedItemDataTemplateSelector x:Key="FeedDTS" Post="{StaticResource PostTemplate}" Photo="{StaticResource PhotoTemplate}" Other="{StaticResource FeedItemTemplate}"/>
     </local:NewsPageBase.Resources>
 
-    <Grid x:Name="Root" MaxWidth="768">
+    <Grid x:Name="Root">
         <ListView x:Name="PostsList" VerticalAlignment="Top" SelectionMode="None" ItemContainerStyle="{StaticResource ContentListViewItemStyle}" ItemsSource="{Binding Items}" ItemTemplateSelector="{StaticResource FeedDTS}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel MaxWidth="768"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
             <ListView.Header>
-                <StackPanel>
+                <StackPanel MaxWidth="768">
                     <Border x:Name="PostsListTopPadding"/>
 
                     <StackPanel VerticalAlignment="Top" Margin="0,6" Padding="6" Background="{ThemeResource ContentBackgroundBrush}">

@@ -16,7 +16,7 @@
                 <ResourceDictionary x:Key="Default">
                     <SolidColorBrush x:Key="PageBackgroundBrush" Color="#FF000000"/>
                     <SolidColorBrush x:Key="ContentBackgroundBrush" Color="{ThemeResource SystemChromeMediumColor}"/>
-                    <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemChromeMediumColor}"/>
+                    <SolidColorBrush x:Key="MoreAccentBrush" Color="{StaticResource SystemAccentColorLight1}"/>
                     <SolidColorBrush x:Key="LightAccentBlockBackgroundBrush" Color="{StaticResource SystemAccentColorDark3}"/>
                     <SolidColorBrush x:Key="LightAccentBlockForegroundBrush" Color="{StaticResource SystemAccentColorLight3}"/>
                     <SolidColorBrush x:Key="CustomLinkBrush" Color="{StaticResource SystemAccentColorLight2}"/>
@@ -37,7 +37,7 @@
                 <ResourceDictionary x:Key="HighContrast">
                     <StaticResource x:Key="PageBackgroundBrush" ResourceKey="SystemAltHighColor"/>
                     <StaticResource x:Key="ContentBackgroundBrush" ResourceKey="SystemAltHighColor"/>
-                    <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemChromeMediumColor}"/>
+                    <SolidColorBrush x:Key="MoreAccentBrush" Color="{StaticResource SystemAccentColorLight1}"/>
                     <SolidColorBrush x:Key="LightAccentBlockBackgroundBrush" Color="{StaticResource SystemAccentColorDark3}"/>
                     <SolidColorBrush x:Key="LightAccentBlockForegroundBrush" Color="{StaticResource SystemAccentColorLight3}"/>
                     <SolidColorBrush x:Key="CustomLinkBrush" Color="{StaticResource SystemAccentColorLight2}"/>
@@ -58,7 +58,7 @@
                 <ResourceDictionary x:Key="Light">
                     <SolidColorBrush x:Key="PageBackgroundBrush" Color="{ThemeResource SystemChromeMediumLowColor}"/>
                     <SolidColorBrush x:Key="ContentBackgroundBrush" Color="#FFFFFFFF"/>
-                    <SolidColorBrush x:Key="AccentHeaderBackgroundBrush" Color="{StaticResource SystemAccentColorDark1}"/>
+                    <SolidColorBrush x:Key="MoreAccentBrush" Color="{StaticResource SystemAccentColorDark1}"/>
                     <SolidColorBrush x:Key="LightAccentBlockBackgroundBrush" Color="{StaticResource SystemAccentColorLight3}"/>
                     <SolidColorBrush x:Key="LightAccentBlockForegroundBrush" Color="{StaticResource SystemAccentColorDark2}"/>
                     <SolidColorBrush x:Key="CustomLinkBrush" Color="{StaticResource SystemAccentColorDark2}"/>
@@ -170,7 +170,9 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="HyperlinkButton">
+            <Style TargetType="HyperlinkButton" BasedOn="{StaticResource SmithereenHyperlinkButtonStyle}"/>
+
+            <Style x:Key="SmithereenHyperlinkButtonStyle" TargetType="HyperlinkButton">
                 <Setter Property="Background" Value="{ThemeResource HyperlinkButtonBackground}" />
                 <Setter Property="Foreground" Value="{ThemeResource CustomLinkBrush}"/>
                 <Setter Property="BorderBrush" Value="{ThemeResource HyperlinkButtonBorderBrush}" />
@@ -654,10 +656,8 @@
                 <Setter Property="TextWrapping" Value="Wrap"/>
             </Style>
 
-            <Style x:Key="ContentAuthorTextStyle" TargetType="TextBlock">
+            <Style x:Key="ContentAuthorTextStyle" TargetType="HyperlinkButton" BasedOn="{StaticResource SmithereenHyperlinkButtonStyle}">
                 <Setter Property="FontSize" Value="16"/>
-                <Setter Property="LineHeight" Value="20"/>
-                <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
 
