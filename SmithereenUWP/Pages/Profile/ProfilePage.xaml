@@ -7,6 +7,7 @@
     xmlns:vm="using:SmithereenUWP.ViewModels"
     xmlns:dm="using:SmithereenUWP.DataModels"
     xmlns:st="using:SmithereenUWP.StateTriggers"
+    xmlns:core="using:SmithereenUWP.Core"
     xmlns:ext="using:SmithereenUWP.Extensions"
     xmlns:api="using:SmithereenUWP.API.Objects.Main"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,6 +15,12 @@
     mc:Ignorable="d"
     Title="{x:Bind ViewModel.User, Converter={StaticResource UNC}, Mode=OneWay}" Loaded="LoadProfile">
 
+    <local:ProfilePageBase.HeaderAfterContent>
+        <Border x:Name="ContextMenuButtonRoot">
+            <Button Visibility="{x:Bind ViewModel.ContextCommands, Converter={StaticResource NTVC}, Mode=OneWay}" Style="{StaticResource ControlButtonStyle}" Content="" Click="ShowProfileContextMenu"/>
+        </Border>
+    </local:ProfilePageBase.HeaderAfterContent>
+    
     <local:ProfilePageBase.Resources>
         <DataTemplate x:Key="InfoCellWide" x:DataType="dm:Entity">
             <Grid Margin="0,3">
@@ -142,6 +149,7 @@
                         <Setter Target="NarrowAndWideRightArea.Margin" Value="6,0,12,0"/>
                         <Setter Target="WideProfileInfo.Visibility" Value="Visible"/>
                         <Setter Target="NarrowProfileInfo.Visibility" Value="Collapsed"/>
+                        <Setter Target="ContextMenuButtonRoot.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Narrow">
@@ -153,6 +161,7 @@
                         <Setter Target="NarrowAndWideRightArea.Margin" Value="0"/>
                         <Setter Target="WideProfileInfo.Visibility" Value="Collapsed"/>
                         <Setter Target="NarrowProfileInfo.Visibility" Value="Visible"/>
+                        <Setter Target="ContextMenuButtonRoot.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -173,14 +182,26 @@
                             <Button Margin="6" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.SecondaryButtonCommand, Converter={StaticResource NTVC}}" Style="{x:Bind ViewModel.SecondaryButtonCommand, Converter={StaticResource BSC}}" Content="{x:Bind ViewModel.SecondaryButtonCommand.Name}"/>
                             <TextBlock Margin="6" TextAlignment="Center" TextWrapping="Wrap" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" FontSize="12" Visibility="{x:Bind ViewModel.FriendshipStatusText, Converter={StaticResource NTVC}}" Text="{x:Bind ViewModel.FriendshipStatusText}"/>
 
-                            <HyperlinkButton Margin="6,0">Photos of Gregory (3)</HyperlinkButton>
-                            <HyperlinkButton Margin="6,0">Followers (829)</HyperlinkButton>
-                            
-                            <Rectangle Margin="6" Style="{StaticResource SeparatorStyle}"/>
-                            
-                            <HyperlinkButton Margin="6,0">Add bookmark</HyperlinkButton>
-                            <HyperlinkButton Margin="6,0">Block</HyperlinkButton>
-                            <HyperlinkButton Margin="6,0">Report</HyperlinkButton>
+                            <HyperlinkButton Margin="6,0" Visibility="{x:Bind ViewModel.User.Counters.Followers, Converter={StaticResource NTVC}}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Followers"/>
+                                    <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.User.Counters.Followers}"/>
+                                </Grid>
+                            </HyperlinkButton>
+
+                            <Rectangle Margin="6" Visibility="{x:Bind ViewModel.ContextCommands, Converter={StaticResource NTVC}}" Style="{StaticResource SeparatorStyle}"/>
+
+                            <ItemsControl Visibility="{x:Bind ViewModel.ContextCommands, Converter={StaticResource NTVC}}" ItemsSource="{x:Bind ViewModel.ContextCommands}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="core:RelayCommand">
+                                        <HyperlinkButton Margin="6,0" Content="{x:Bind Name}" Command="{x:Bind}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </StackPanel>
                         <StackPanel x:Name="MutualFriendsPanel" Background="{ThemeResource ContentBackgroundBrush}" Margin="0,0,0,12" Visibility="{x:Bind ViewModel.MutualFriends, Converter={StaticResource NTVC}}">
                             <HyperlinkButton Margin="0" Padding="12">

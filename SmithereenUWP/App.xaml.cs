@@ -136,7 +136,7 @@ namespace SmithereenUWP
             deferral.Complete();
         }
 
-        private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
             e.Handled = true;
             OnFail(e.Exception, "App");

@@ -3,6 +3,7 @@ using SmithereenUWP.ViewModels;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
@@ -90,6 +91,26 @@ namespace SmithereenUWP.Pages.Profile
         {
             (sender as FrameworkElement).Visibility = Visibility.Collapsed;
             NarrowWideExtraInfos.Visibility = Visibility.Visible;
+        }
+
+        private void ShowProfileContextMenu(object sender, RoutedEventArgs e)
+        {
+            MenuFlyout mf = new MenuFlyout { 
+                Placement = FlyoutPlacementMode.Bottom
+            };
+
+            foreach (var command in ViewModel.ContextCommands)
+            {
+                var mfi = new MenuFlyoutItem
+                {
+                    Text = command.Name,
+                    Command = command
+                };
+                mfi.CommandParameter = mfi;
+                mf.Items.Add(mfi);
+            }
+
+            mf.ShowAt(sender as FrameworkElement);
         }
     }
 }

@@ -25,6 +25,7 @@ namespace SmithereenUWP.ViewModels
         private string _friendshipStatusText;
         private RelayCommand _primaryButtonCommand;
         private RelayCommand _secondaryButtonCommand;
+        private List<RelayCommand> _contextCommands;
 
         private string _onlineInfo;
 
@@ -38,6 +39,7 @@ namespace SmithereenUWP.ViewModels
         public string FriendshipStatusText { get { return _friendshipStatusText; } private set { _friendshipStatusText = value; OnPropertyChanged(); } }
         public RelayCommand PrimaryButtonCommand { get { return _primaryButtonCommand; } private set { _primaryButtonCommand = value; OnPropertyChanged(); } }
         public RelayCommand SecondaryButtonCommand { get { return _secondaryButtonCommand; } private set { _secondaryButtonCommand = value; OnPropertyChanged(); } }
+        public List<RelayCommand> ContextCommands { get { return _contextCommands; } private set { _contextCommands = value; OnPropertyChanged(); } }
 
 
 
@@ -213,6 +215,20 @@ namespace SmithereenUWP.ViewModels
         
         private void UpdateCommands()
         {
+            // Context menu
+            ContextCommands = new List<RelayCommand>();
+            if (!ItsMe)
+            {
+                ContextCommands.Add(new RelayCommand(GoToConvo, User.IsFavorite ? "Remove from bookmarks" : "Add to bookmarks"));
+                ContextCommands.Add(new RelayCommand(GoToConvo, User.BlockedByMe ? $"Unblock {User.FirstName}" : $"Block {User.FirstName}"));
+            }
+            else
+            {
+                ContextCommands.Add(new RelayCommand(GoToConvo, "Edit profile"));
+            }
+
+            // Buttons under avatar
+
             if (ItsMe) return;
 
             if (User.CanWritePrivateMessage)
