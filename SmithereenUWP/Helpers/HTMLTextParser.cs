@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Text;
 using Windows.UI.Text;
 using Windows.UI.Xaml.Controls;
@@ -22,24 +23,24 @@ namespace SmithereenUWP.Helpers
             if (rtb == null) return;
             _currentObject = rtb;
 
-            StringBuilder sb = new StringBuilder(xhtml.Length);
-            sb.Append(xhtml);
-            sb.Replace("\r", " ");
-            sb.Replace("\n", "");
-
             rtb.Blocks.Clear();
 
             // Smithereen's HTML-formatted text always wrapped in <p></p> tag,
             // so we do not parse it if text is not wrapped in tag.
-            if (!xhtml.StartsWith("<p>") || !xhtml.EndsWith("</p>"))
+            if (!xhtml.StartsWith("<p>") && !xhtml.EndsWith("</p>"))
             {
-                Run run = new Run { Text = xhtml };
+                Run run = new Run { Text = WebUtility.HtmlDecode(xhtml) };
                 Paragraph paragraph = new Paragraph();
                 paragraph.Inlines.Add(run);
 
                 rtb.Blocks.Add(paragraph);
                 return;
             }
+
+            StringBuilder sb = new StringBuilder(xhtml.Length);
+            sb.Append(xhtml);
+            sb.Replace("\r", " ");
+            sb.Replace("\n", "");
 
             var blocks = GenerateBlocksForHtml(sb.ToString());
 
@@ -84,7 +85,7 @@ namespace SmithereenUWP.Helpers
             //if (clean == "\0")
             //    clean = "\n";
             //return clean;
-            return input;
+            return WebUtility.HtmlDecode(input);
         }
 
         private static void AddChildren(Paragraph p, HtmlNode node)

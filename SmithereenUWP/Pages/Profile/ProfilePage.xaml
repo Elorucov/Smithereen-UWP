@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SmithereenUWP.Pages.Profile"
     xmlns:ctrls="using:SmithereenUWP.Controls"
+    xmlns:att="using:SmithereenUWP.Controls.Attachments"
     xmlns:vm="using:SmithereenUWP.ViewModels"
     xmlns:dm="using:SmithereenUWP.DataModels"
     xmlns:st="using:SmithereenUWP.StateTriggers"
@@ -135,6 +136,12 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <DataTemplate x:Key="PostTemplate" x:DataType="api:WallPost">
+            <Border Margin="0,0,0,12" Padding="12" Background="{ThemeResource ContentBackgroundBrush}">
+                <att:WallPostView Post="{x:Bind}"/>
+            </Border>
+        </DataTemplate>
     </local:ProfilePageBase.Resources>
     
     <Grid x:DefaultBindMode="OneWay">
@@ -406,9 +413,9 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <StackPanel x:Name="PostsArea" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Top">
-                            <TextBlock Text="Posts"/>
-                        </StackPanel>
+                        <ItemsControl x:Name="PostsArea" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Top" ItemsSource="{Binding Posts}" ItemTemplate="{StaticResource PostTemplate}">
+                            <!-- TODO: paginated loading indicator in footer -->
+                        </ItemsControl>
                     </StackPanel>
                 </Grid>
             </Border>

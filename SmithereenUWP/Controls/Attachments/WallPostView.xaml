@@ -18,15 +18,12 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Image x:Name="PostAuthorAvatar" Width="36" Height="36"></Image>
-            <StackPanel Grid.Column="1" Margin="12,0,0,0" Orientation="Vertical">
-                <StackPanel.RenderTransform>
-                    <TranslateTransform Y="-2"/>
-                </StackPanel.RenderTransform>
+            <StackPanel Grid.Column="1" Margin="12,0,0,0" Orientation="Vertical" VerticalAlignment="Center">
                 <StackPanel x:Name="PostAuthorEx" Orientation="Horizontal">
                     <ctrls:FixedFontIcon x:Name="RepostIcon" Margin="0,2,6,0" Foreground="{ThemeResource MoreAccentBrush}" Visibility="Collapsed"/>
                     <HyperlinkButton x:Name="PostAuthor" Style="{StaticResource ContentAuthorTextStyle}"/>
                 </StackPanel>
-                <TextBlock x:Name="PostInfo" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                <TextBlock x:Name="PostInfo" Margin="0,2,0,0" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
             </StackPanel>
             <TextBlock x:Name="dbg" Grid.ColumnSpan="2" Visibility="Collapsed" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="12" FontFamily="Lucida Console" Foreground="Red"/>
         </Grid>

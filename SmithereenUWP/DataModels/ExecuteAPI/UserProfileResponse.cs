@@ -29,5 +29,8 @@ namespace SmithereenUWP.DataModels.ExecuteAPI
 
         [JsonProperty("mentioned_users")]
         public List<User> MentionedUsers { get; private set; }
+
+        [JsonProperty("wall_posts")]
+        public PaginatedList<WallPost> WallPosts { get; private set; }
     }
 }

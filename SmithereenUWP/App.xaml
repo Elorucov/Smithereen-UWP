@@ -657,6 +657,9 @@
             </Style>
 
             <Style x:Key="ContentAuthorTextStyle" TargetType="HyperlinkButton" BasedOn="{StaticResource SmithereenHyperlinkButtonStyle}">
+                <!-- -4 to fixing LineHeight (from 22 to 18) without copying HyperlinkButton template -->
+                <Setter Property="Margin" Value="0,-4,0,0"/>
+                <Setter Property="Padding" Value="0"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>

@@ -5,6 +5,7 @@ using SmithereenUWP.Extensions;
 using SmithereenUWP.ViewModels.Base;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace SmithereenUWP.ViewModels
         private List<PhotoAlbum> _photoAlbums;
         private List<User> _subscriptions;
         private List<Group> _groups;
+        private ObservableCollection<WallPost> _posts = new ObservableCollection<WallPost>();
         private string _friendshipStatusText;
         private RelayCommand _primaryButtonCommand;
         private RelayCommand _secondaryButtonCommand;
@@ -36,6 +38,7 @@ namespace SmithereenUWP.ViewModels
         public List<PhotoAlbum> PhotoAlbums { get { return _photoAlbums; } private set { _photoAlbums = value; OnPropertyChanged(); } }
         public List<User> Subscriptions { get { return _subscriptions; } private set { _subscriptions = value; OnPropertyChanged(); } }
         public List<Group> Groups { get { return _groups; } private set { _groups = value; OnPropertyChanged(); } }
+        public ObservableCollection<WallPost> Posts { get { return _posts; } private set { _posts = value; OnPropertyChanged(); } }
         public string FriendshipStatusText { get { return _friendshipStatusText; } private set { _friendshipStatusText = value; OnPropertyChanged(); } }
         public RelayCommand PrimaryButtonCommand { get { return _primaryButtonCommand; } private set { _primaryButtonCommand = value; OnPropertyChanged(); } }
         public RelayCommand SecondaryButtonCommand { get { return _secondaryButtonCommand; } private set { _secondaryButtonCommand = value; OnPropertyChanged(); } }
@@ -90,6 +93,8 @@ namespace SmithereenUWP.ViewModels
                 UpdateCommands();
                 OnPropertyChanged(nameof(ItsMe));
                 OnPropertyChanged(nameof(NeedToShowNarrowCarousel));
+
+                SetupWallPosts(response.WallPosts);
             }
             catch (Exception ex)
             {
@@ -291,5 +296,19 @@ namespace SmithereenUWP.ViewModels
         {
 
         }
+
+        #region Wall posts
+
+        private void SetupWallPosts(PaginatedList<WallPost> posts)
+        {
+            CacheManager.CacheUsers(posts.Profiles);
+            CacheManager.CacheGroups(posts.Groups);
+            foreach (var item in posts.Items)
+            {
+                Posts.Add(item);
+            }
+        }
+
+        #endregion
     }
 }

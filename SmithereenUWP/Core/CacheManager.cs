@@ -9,6 +9,7 @@ namespace SmithereenUWP.Core
     internal static class CacheManager
     {
         static Dictionary<int, User> _users = new Dictionary<int, User>();
+        static Dictionary<int, Group> _groups = new Dictionary<int, Group>();
 
         public static void CacheUser(User user)
         {
@@ -47,6 +48,35 @@ namespace SmithereenUWP.Core
                 return new Tuple<string, string, Uri>(user.FirstName, user.LastName, user.GetAvatar());
             }
             return new Tuple<string, string, Uri>("User", id.ToString(), null);
+        }
+
+        public static void CacheGroup(Group group)
+        {
+            if (_groups.ContainsKey(group.Id))
+            {
+                _groups[group.Id] = group;
+            }
+            else
+            {
+                _groups.Add(group.Id, group);
+            }
+        }
+
+        public static void CacheGroups(IEnumerable<Group> groups)
+        {
+            for (int i = 0; i < groups.Count(); i++)
+            {
+                CacheGroup(groups.ElementAt(i));
+            }
+        }
+
+        public static Group GetCachedGroup(int id)
+        {
+            if (_groups.ContainsKey(id))
+            {
+                return _groups[id];
+            }
+            return null;
         }
     }
 }

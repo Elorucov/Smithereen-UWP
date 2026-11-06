@@ -1,5 +1,6 @@
 ﻿var u = API.users.get({user_ids: Args.id, fields: "domain,screen_name,status,url,nickname,maiden_name,sex,bdate,home_town,relation,reelation_partner,custom,city,connections,site,activities,interests,music,movies,tv,books,games,quotes,about,personal,online,online_mobile,online_app_id,last_seen,blocked,blocked_by_me,can_send_friend_request,can_post,can_see_all_posts,can_write_private_message,is_friend,friend_status,is_favorite,lists,is_hidden_from_feed,wall_default,photo_200,photo_400,photo_id,has_photo,counters,online,online_mobile,online_app"})[0];
 
+var extendedFields = "photo_100,photo_200,sex,has_photo";
 var mids = [];
 
 var mutual_friends = [];
@@ -33,7 +34,9 @@ if (u.relation_partner) {
   mids.push(u.relation_partner.id);
 }
 
-var mentioned_users = API.users.get({ user_ids: mids, fields: "photo_100,photo_200,sex,has_photo" });
+var mentioned_users = API.users.get({ user_ids: mids, fields: extendedFields });
+
+var wall = API.wall.get({ owner_id: Args.id, count: Args.posts_count, extended: 1, fields: extendedFields });
 
 return {
     user: u,
@@ -43,5 +46,6 @@ return {
     photo_albums: photo_albums,
     subscriptions_ids: subs,
     groups: groups,
-    mentioned_users: mentioned_users
+    mentioned_users: mentioned_users,
+    wall_posts: wall
 };
